@@ -58,8 +58,7 @@ entry is active and destination contents match before claiming distribution.
    optionally writes global preferences or a project override.
 3. In each application, use `/create-verification-skill` to establish how agents
    start, drive and verify the real app. Reuse existing working tooling.
-4. Use `/poteto-help` for help. The [Portuguese getting-started guide](docs/usar-pstack.md)
-   has examples based on poteto's two articles.
+4. Use `/poteto-help` for help.
 
 Project model configuration overrides `~/.agents/pstack-models.md`, which overrides
 the bundled defaults. `capacity` selects a suitable model/account using the live
