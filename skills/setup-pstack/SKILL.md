@@ -1,14 +1,14 @@
 ---
-name: setup-p3
-description: Configure which models p3-stack uses per role and at what reasoning budget. Detects your available models and writes p3-models.md, which overrides the skill defaults. Use for /setup-p3, "configure p3 models", "p3 budget", or changing p3-stack's model choices.
+name: setup-pstack
+description: Configure which models p3-stack uses per role and at what reasoning budget. Detects your available models and writes poteto-models.md, which overrides the skill defaults. Use for /setup-pstack, "configure p3 models", "p3 budget", or changing p3-stack's model choices.
 disable-model-invocation: true
 ---
 
 # Setup p3
 
-Before resolving models or delegating, read [T3 execution](../p3-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
+Before resolving models or delegating, read [T3 execution](../poteto-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
 
-Write `p3-models.md`, a file that sets p3-stack's model per role. Default to `~/.agents/p3-models.md` for this global setup; use the project root when the user requests a project override. Preserve the bundled capacity defaults until the user configures an override.
+Write `poteto-models.md`, a file that sets p3-stack's model per role. Default to `~/.agents/poteto-models.md` for this global setup; use the project root when the user requests a project override. Preserve the bundled capacity defaults until the user configures an override.
 
 ## Steps
 
@@ -18,7 +18,7 @@ Call `orchestrator_capabilities`. It lists the providers and models you can pass
 
 ### 2. Load current state
 
-The roles are the labels shown in step 5. If `p3-models.md` already exists at the chosen location, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from the defaults in step 3(b). A line whose role is not in step 5, such as `how critics`, is from a retired role. Drop it.
+The roles are the labels shown in step 5. If `poteto-models.md` already exists at the chosen location, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from the defaults in step 3(b). A line whose role is not in step 5, such as `how critics`, is from a retired role. Drop it.
 
 ### 3. Budget, map, and confirm
 
@@ -31,7 +31,7 @@ Keep `capacity` entries as dynamic selections. Offer a fixed model only when the
 - `medium — high reasoning`
 - `small — medium reasoning`
 
-**(b) Apply it.** On a fresh run, start from the bundled `default-models.md` in p3-mode's references. Keep `capacity` values dynamic and preserve the panel seat counts. For a fixed-model request, resolve that choice from the live catalog. On a re-run, keep the user's existing choices.
+**(b) Apply it.** On a fresh run, start from the bundled `default-models.md` in poteto-mode's references. Keep `capacity` values dynamic and preserve the panel seat counts. For a fixed-model request, resolve that choice from the live catalog. On a re-run, keep the user's existing choices.
 
 When the catalog exposes reasoning options for a model, set each real entry's effort option from the budget: `unlimited` takes the highest option, and `large`, `medium`, and `small` take `xhigh`, `high`, or `medium`. The ladder is `max` > `xhigh` > `high` > `medium` > `low`. If the model does not expose the target, use the highest option at or below it, else mark the role as needing a choice. `inherit-parent` and `capacity` do not change; apply the budget when resolving a capacity seat. When the catalog exposes no reasoning options, map roles only and drop effort tokens; the budget label is still recorded.
 
@@ -43,7 +43,7 @@ Every fixed model entry written must be in the `orchestrator_capabilities` resul
 
 ### 5. Write the file
 
-Write `p3-models.md` with a `# budget` line with the chosen label and its target effort, and one line per role, using the same labels p3-mode uses. Write dynamic entries as `capacity`; write fixed entries as `<providerInstanceId>/<model>`, followed by its effort option in parentheses when step 3(b) set one. Preserve `inherit-parent`. Overwrite the whole file so re-runs stay idempotent. Shape:
+Write `poteto-models.md` with a `# budget` line with the chosen label and its target effort, and one line per role, using the same labels poteto-mode uses. Write dynamic entries as `capacity`; write fixed entries as `<providerInstanceId>/<model>`, followed by its effort option in parentheses when step 3(b) set one. Preserve `inherit-parent`. Overwrite the whole file so re-runs stay idempotent. Shape:
 
 ```
 # p3 model configuration. One line per role. Delete a line to fall back to the skill default.

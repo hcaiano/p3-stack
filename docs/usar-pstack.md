@@ -1,6 +1,7 @@
 # Usar o pstack no T3 Code
 
-Neste port, `/p3-mode` corresponde ao `/poteto-mode` dos artigos. Continua a
+Os comandos mantêm os nomes oficiais: `/poteto-mode`, `/poteto-help` e
+`/setup-pstack`. No teu setup, poteto-mode fica ativo por defeito para engineering. Continua a
 conversar no T3 com o modelo que preferires. As delegações escolhem contas e
 modelos através do catálogo do T3 e da `t3-capacity`, incluindo Cursor.
 
@@ -23,20 +24,20 @@ método; cada aplicação fornece o seu ambiente e os percursos verificáveis.
 Depois escolhe um issue pequeno e bem definido:
 
 ```text
-/p3-mode resolve o issue #123. Segue as regras de issues deste projeto,
+/poteto-mode resolve o issue #123. Segue as regras de issues deste projeto,
 reproduz o problema na app e usa a verificação do projeto para confirmar a
 correção. Prepara o PR com a evidência. Pede-me aprovação antes do merge.
 ```
 
 O agente escolhe o playbook e os passos de investigação, implementação e review.
-Não precisas de escrever uma sequência de skills em todos os pedidos. Começa
-cada nova tarefa com `/p3-mode`; a instalação global não o fixa como modo da UI.
-Se o seletor não reconhecer a barra, escreve `usa a skill p3-mode` no pedido.
+Não precisas de escrever uma sequência de skills em todos os pedidos. As tuas instruções globais ativam o método; podes descrever a tarefa normalmente.
+O comando `/poteto-mode` continua disponível para uma invocação explícita.
+Se o seletor não reconhecer a barra, escreve `usa a skill poteto-mode` no pedido.
 
 ## Quando ainda não sabes o que construir
 
 ```text
-/p3-mode lê este issue e explica por palavras tuas o problema que temos de
+/poteto-mode lê este issue e explica por palavras tuas o problema que temos de
 resolver. Investiga o comportamento e o histórico antes de propor alterações.
 ```
 
@@ -52,14 +53,14 @@ no ambiente T3; não assumes que um host consegue ler automaticamente o outro.
 Para uma decisão visual ou técnica com várias soluções:
 
 ```text
-/p3-mode cria três protótipos para melhorar este fluxo. Experimenta-os na app,
+/poteto-mode cria três protótipos para melhorar este fluxo. Experimenta-os na app,
 mostra as diferenças e deixa-me escolher antes da implementação final.
 ```
 
 Para uma alteração de arquitetura:
 
 ```text
-/p3-mode usa architect para desenhar esta alteração. Resolve as dúvidas com
+/poteto-mode usa architect para desenhar esta alteração. Resolve as dúvidas com
 protótipos e mostra-me como seria usada antes de avançar.
 ```
 
@@ -74,7 +75,7 @@ considera quota, pace e reset. Duas contas Codex não contam como duas famílias
 de modelos diferentes num painel. Capacidade desconhecida não é quota livre.
 
 Podes continuar a dizer `usa Sol`, `pede esta revisão ao Opus` ou indicar uma
-conta. A escolha explícita tem prioridade. `/setup-p3` permite guardar escolhas
+conta. A escolha explícita tem prioridade. `/setup-pstack` permite guardar escolhas
 fixas globais ou por projeto; não é necessário para começar.
 
 As subscrições dão capacidade de modelo. Não fornecem os computadores isolados

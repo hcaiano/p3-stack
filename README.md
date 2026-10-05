@@ -45,20 +45,21 @@ not require stopping unrelated agents.
 
 Install on the MBP, the Fleet source of truth. Fleet already synchronizes
 `.agents/skills` and the Skills CLI lock. The bundled defaults travel inside
-p3-mode, so another machine resolves its own live provider IDs and account usage.
-A custom `~/.agents/p3-models.md` is local unless separately synchronized.
+poteto-mode, so another machine resolves its own live provider IDs and account usage.
+A custom `~/.agents/poteto-models.md` is local unless separately synchronized.
 
 ## Get started
 
-1. Start a new task with `/p3-mode` followed by the outcome you want.
-2. Automatic account selection works from the bundled defaults. `/setup-p3`
+1. With the personal global default enabled, describe the outcome normally.
+   `/poteto-mode` remains the official explicit command.
+2. Automatic account selection works from the bundled defaults. `/setup-pstack`
    optionally writes global preferences or a project override.
 3. In each application, use `/create-verification-skill` to establish how agents
    start, drive and verify the real app. Reuse existing working tooling.
-4. Use `/p3-help` for help. The [Portuguese getting-started guide](docs/usar-pstack.md)
+4. Use `/poteto-help` for help. The [Portuguese getting-started guide](docs/usar-pstack.md)
    has examples based on poteto's two articles.
 
-Project model configuration overrides `~/.agents/p3-models.md`, which overrides
+Project model configuration overrides `~/.agents/poteto-models.md`, which overrides
 the bundled defaults. `capacity` selects a suitable model/account using the live
 T3 catalog and usage; `auto`/`inherit-parent` retain the parent's model. The
 reasoning budget is not a financial cap. Unknown usage remains unknown.
@@ -66,8 +67,10 @@ reasoning budget is not a financial cap. Unknown usage remains unknown.
 Existing project issues and acceptance criteria remain authoritative. In a p3
 task, p3 owns implementation and review; personal workflows remain installed for
 explicit use. The user's merge, production and other approval boundaries apply.
-Global installation makes the skills available; it does not activate p3-mode in
-every conversation or migrate existing threads.
+The personal global instructions load `poteto-mode` for engineering tasks by
+default. New sessions pick up this configuration; existing sessions may need an
+explicit invocation. Other installations can enable the same default using
+[the global instruction snippet](docs/default-mode.md).
 
 ## Official updates
 
@@ -90,15 +93,15 @@ node --test tests/*.test.mjs
 
 ## The mode
 
-`p3-mode` routes every task. Its playbooks: investigation, bug fix, perf issue, hillclimb, runtime forensics, trace forensics, feature, refactoring, prototype, visual parity, authoring a skill, eval, babysit, shipping, autonomous run, orchestrate, autopilot-full, autopilot-stack, session pickup, pause safely, multi-phase plan, worktree cleanup, opening a PR.
+`poteto-mode` routes every task. Its playbooks: investigation, bug fix, perf issue, hillclimb, runtime forensics, trace forensics, feature, refactoring, prototype, visual parity, authoring a skill, eval, babysit, shipping, autonomous run, orchestrate, autopilot-full, autopilot-stack, session pickup, pause safely, multi-phase plan, worktree cleanup, opening a PR.
 
 ## Skills
 
-architect, arena, automate-me, benchmark-checklist, blast-radius, bro, correct, create-verification-skill, figure-it-out, how, interrogate, maintain-verification-skill, make-bot-ui, no-comments, p3-help, recall, reflect, setup-p3, show-me-your-work, swarm, tdd, teach, technical-writing, typescript-best-practices, unslop, why.
+architect, arena, automate-me, benchmark-checklist, blast-radius, bro, correct, create-verification-skill, figure-it-out, how, interrogate, maintain-verification-skill, make-bot-ui, no-comments, poteto-help, recall, reflect, setup-pstack, show-me-your-work, swarm, tdd, teach, technical-writing, typescript-best-practices, unslop, why.
 
 ## Principles
 
-The twenty-four principle skills are indexed inside `p3-mode` and referenced by the other skills by name.
+The twenty-four principle skills are indexed inside `poteto-mode` and referenced by the other skills by name.
 
 ## Credit
 

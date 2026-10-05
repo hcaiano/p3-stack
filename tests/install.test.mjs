@@ -21,20 +21,20 @@ test('global plan preserves upstream unslop and installs the full remaining suit
   const plan = JSON.parse(r.stdout);
   assert.equal(plan.scope, f.home);
   assert.deepEqual(plan.preserved, ['unslop']);
-  assert.ok(plan.skills.includes('p3-mode'));
+  assert.ok(plan.skills.includes('poteto-mode'));
   assert.ok(plan.skills.includes('create-verification-skill'));
   assert.ok(!plan.skills.includes('unslop'));
   assert.ok(plan.command.includes('--global'));
   assert.equal(readFileSync(join(f.skills, 'unslop/SKILL.md'), 'utf8'), 'existing skill');
 });
 test('foreign skills and dangling links block installation even with update requested', () => {
-  const f = fixture(); symlinkSync(join(f.home, 'missing'), join(f.skills, 'p3-mode'));
+  const f = fixture(); symlinkSync(join(f.home, 'missing'), join(f.skills, 'poteto-mode'));
   const r = f.run('--update'); assert.notEqual(r.status, 0);
-  assert.match(r.stderr, /Preserving existing p3-mode/);
+  assert.match(r.stderr, /Preserving existing poteto-mode/);
 });
 test('reinstallation requires explicit update and recorded ownership', () => {
-  const f = fixture(); mkdirSync(join(f.skills, 'p3-mode'));
-  writeFileSync(join(f.home, '.agents/.skill-lock.json'), JSON.stringify({ skills: { 'p3-mode': { source: 'hcaiano/p3-stack' } } }));
+  const f = fixture(); mkdirSync(join(f.skills, 'poteto-mode'));
+  writeFileSync(join(f.home, '.agents/.skill-lock.json'), JSON.stringify({ skills: { 'poteto-mode': { source: 'hcaiano/p3-stack' } } }));
   assert.notEqual(f.run().status, 0);
   assert.equal(f.run('--update').status, 0);
 });
@@ -49,30 +49,30 @@ test('project installation uses project scope and retains the source as one argu
 });
 
 test('a provider-local skill is preserved even without a canonical copy', () => {
-  const f = fixture(); const local = join(f.home, '.claude/skills/p3-mode');
+  const f = fixture(); const local = join(f.home, '.claude/skills/poteto-mode');
   mkdirSync(local, { recursive: true }); writeFileSync(join(local, 'SKILL.md'), 'private workflow');
   const r = f.run(); assert.notEqual(r.status, 0);
-  assert.match(r.stderr, /Preserving existing p3-mode/);
+  assert.match(r.stderr, /Preserving existing poteto-mode/);
   assert.equal(readFileSync(join(local, 'SKILL.md'), 'utf8'), 'private workflow');
 });
 
 test('project update uses project ownership and rejects a foreign source', () => {
   const f = fixture(); const project = mkdtempSync(join(tmpdir(), 'p3-project-update-'));
-  mkdirSync(join(project, '.agents/skills/p3-mode'), { recursive: true });
+  mkdirSync(join(project, '.agents/skills/poteto-mode'), { recursive: true });
   const lock = join(project, 'skills-lock.json');
-  writeFileSync(lock, JSON.stringify({ skills: { 'p3-mode': { source: 'someone/other' } } }));
+  writeFileSync(lock, JSON.stringify({ skills: { 'poteto-mode': { source: 'someone/other' } } }));
   assert.notEqual(f.run('--project', project, '--update').status, 0);
-  writeFileSync(lock, JSON.stringify({ skills: { 'p3-mode': { source: 'hcaiano/p3-stack' } } }));
+  writeFileSync(lock, JSON.stringify({ skills: { 'poteto-mode': { source: 'hcaiano/p3-stack' } } }));
   const r = f.run('--project', project, '--update');
   assert.equal(r.status, 0, r.stderr);
-  assert.ok(JSON.parse(r.stdout).skills.includes('p3-mode'));
+  assert.ok(JSON.parse(r.stdout).skills.includes('poteto-mode'));
 });
 
 test('owned canonical skill does not authorize replacement of a foreign provider directory', () => {
-  const f = fixture(); const canonical = join(f.skills, 'p3-mode');
+  const f = fixture(); const canonical = join(f.skills, 'poteto-mode');
   mkdirSync(canonical); writeFileSync(join(canonical, 'SKILL.md'), 'owned workflow');
-  writeFileSync(join(f.home, '.agents/.skill-lock.json'), JSON.stringify({ skills: { 'p3-mode': { source: 'hcaiano/p3-stack' } } }));
-  const provider = join(f.home, '.claude/skills/p3-mode');
+  writeFileSync(join(f.home, '.agents/.skill-lock.json'), JSON.stringify({ skills: { 'poteto-mode': { source: 'hcaiano/p3-stack' } } }));
+  const provider = join(f.home, '.claude/skills/poteto-mode');
   mkdirSync(provider, { recursive: true }); writeFileSync(join(provider, 'SKILL.md'), 'private workflow');
   const r = f.run('--update'); assert.notEqual(r.status, 0);
   assert.match(r.stderr, /Preserving provider-local/);
@@ -80,10 +80,10 @@ test('owned canonical skill does not authorize replacement of a foreign provider
 });
 
 test('updates accept provider symlinks pointing at the owned canonical skill', () => {
-  const f = fixture(); const canonical = join(f.skills, 'p3-mode');
+  const f = fixture(); const canonical = join(f.skills, 'poteto-mode');
   mkdirSync(canonical); writeFileSync(join(canonical, 'SKILL.md'), 'owned workflow');
-  writeFileSync(join(f.home, '.agents/.skill-lock.json'), JSON.stringify({ skills: { 'p3-mode': { source: 'hcaiano/p3-stack' } } }));
+  writeFileSync(join(f.home, '.agents/.skill-lock.json'), JSON.stringify({ skills: { 'poteto-mode': { source: 'hcaiano/p3-stack' } } }));
   const provider = join(f.home, '.claude/skills'); mkdirSync(provider, { recursive: true });
-  symlinkSync('../../.agents/skills/p3-mode', join(provider, 'p3-mode'));
+  symlinkSync('../../.agents/skills/poteto-mode', join(provider, 'poteto-mode'));
   const r = f.run('--update'); assert.equal(r.status, 0, r.stderr);
 });

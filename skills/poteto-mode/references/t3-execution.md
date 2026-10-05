@@ -9,7 +9,7 @@ never substitute a reduced workflow.
 ## Configuration and accounts
 
 Resolve resources relative to the installed skill, not the application checkout.
-Read the project's `p3-models.md`, otherwise `~/.agents/p3-models.md`, otherwise
+Read the project's `poteto-models.md`, otherwise `~/.agents/poteto-models.md`, otherwise
 [the bundled defaults](default-models.md). The first file found wins. Defaults
 travel with the skills; resolve provider IDs on the machine executing the task.
 

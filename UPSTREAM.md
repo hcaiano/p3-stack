@@ -12,7 +12,7 @@ which original pstack revision it adapted. Do not claim a byte-identical import.
 Keep the port's engineering content unchanged. No local engineering improvements,
 model-quality opinions, reduced review panels or reasoning caps. Our changes are account resolution,
 T3 transport compatibility, installation packaging, and the user guide.
-The worker briefs moved into p3-mode so Skills CLI includes them; the existing
+The worker briefs moved into poteto-mode so Skills CLI includes them; the existing
 installed upstream unslop is reused. No Firstmate runtime is included.
 
 ## Checking for updates
