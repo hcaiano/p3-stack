@@ -33,9 +33,9 @@ cd p3-stack
 ```
 
 During review, check out `feat/global-t3-accounts` and pass
-`--source https://github.com/hcaiano/p3-stack/tree/feat/global-t3-accounts`.
-Use `--source https://github.com/hcaiano/p3-stack/tree/<reviewed-commit>` to pin
-an installation. Global is the default; `--project /path/to/repo` selects a
+`--source https://github.com/hcaiano/p3-stack/tree/<full-40-character-commit>`
+using `git rev-parse HEAD` for the reviewed commit. This pins the installation;
+the Skills CLI misparses branch names containing a slash. Global is the default; `--project /path/to/repo` selects a
 project installation. Existing unrelated skills cause a stop before any writes.
 
 To update this fork's installed copies, use `./install.sh --update` with the
