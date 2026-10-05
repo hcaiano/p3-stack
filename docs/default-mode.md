@@ -2,10 +2,10 @@
 
 Keep activation in personal instructions, separate from the upstream engineering
 method. All providers use `~/.agents/AGENTS.md`. Codex accounts, Claude and Grok
-reach it through their existing links. Cursor's always-applied
-`~/.cursor/rules/henrique.mdc` only tells the agent to read that shared file;
-it contains no separate personal policy. Fleet distributes the shared file and
-the Cursor entrypoint. Keep this instruction in the shared file only:
+reach it through their existing links. Cursor ACP loads the rule-only local
+plugin at `~/.cursor/plugins/local/shared-personal-instructions`, whose one rule
+requires reading the shared file. Its source is in `adapters/cursor/` in this
+repository. Keep this instruction in the shared file only:
 
 > For engineering tasks, read `~/.agents/skills/poteto-mode/SKILL.md` and follow
 > its matching playbook by default, without requiring an explicit command.
@@ -16,6 +16,14 @@ the Cursor entrypoint. Keep this instruction in the shared file only:
 Start a new session after changing global instructions. Existing sessions may
 retain their initial instruction context. This selects the workflow; it does
 not enable every skill or change the main conversation's model.
+
+The MBP runtime probe confirmed the plugin rule was injected and the Cursor
+agent read the shared file. Merely placing a rule in `~/.cursor/rules` or adding
+an ancestor `AGENTS.md` link did not pass that probe with Cursor ACP. The editor
+rule may remain a pointer, but it is not the verified CLI entrypoint.
+
+Fleet must capture the local plugin directory as well as `.agents/AGENTS.md`.
+This adapter has no skills, tools, credentials or duplicate personal policy.
 
 ## Migrating the port names
 
