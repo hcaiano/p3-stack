@@ -55,3 +55,15 @@ test('a provider-local skill is preserved even without a canonical copy', () => 
   assert.match(r.stderr, /Preserving existing p3-mode/);
   assert.equal(readFileSync(join(local, 'SKILL.md'), 'utf8'), 'private workflow');
 });
+
+test('project update uses project ownership and rejects a foreign source', () => {
+  const f = fixture(); const project = mkdtempSync(join(tmpdir(), 'p3-project-update-'));
+  mkdirSync(join(project, '.agents/skills/p3-mode'), { recursive: true });
+  const lock = join(project, 'skills-lock.json');
+  writeFileSync(lock, JSON.stringify({ skills: { 'p3-mode': { source: 'someone/other' } } }));
+  assert.notEqual(f.run('--project', project, '--update').status, 0);
+  writeFileSync(lock, JSON.stringify({ skills: { 'p3-mode': { source: 'hcaiano/p3-stack' } } }));
+  const r = f.run('--project', project, '--update');
+  assert.equal(r.status, 0, r.stderr);
+  assert.ok(JSON.parse(r.stdout).skills.includes('p3-mode'));
+});

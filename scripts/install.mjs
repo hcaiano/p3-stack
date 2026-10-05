@@ -24,7 +24,7 @@ for (let i = 0; i < input.length; i++) {
 
 const scope = project ?? homedir();
 const canonical = join(scope, '.agents', 'skills');
-const lockPath = join(scope, '.agents', '.skill-lock.json');
+const lockPath = project ? join(project, 'skills-lock.json') : join(scope, '.agents', '.skill-lock.json');
 const lock = existsSync(lockPath) ? JSON.parse(readFileSync(lockPath, 'utf8')).skills ?? {} : {};
 const skills = [];
 const preserved = [];

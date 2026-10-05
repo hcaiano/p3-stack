@@ -35,14 +35,14 @@ Write one clear paragraph. If you're unsure about the intent, ask the user befor
 
 ## Step 3, Spawn Reviewers
 
-Launch all reviewers in a single turn, one `delegate_task` per reviewer with `mode: "async"`. Use the `interrogate reviewers` line in `p3-models.md`, one reviewer per entry, labeled Reviewer A, B, C, and so on for the configured entry count. Resolve each entry's provider and model through `orchestrator_capabilities`. If the line is missing, run `setup-p3` first.
+Launch all reviewers in a single turn, one `delegate_task` per reviewer with `mode: "async"`. Use the `interrogate reviewers` line in `p3-models.md`, one reviewer per entry, labeled Reviewer A, B, C, and so on for the configured entry count. Resolve each entry's provider and model through `orchestrator_capabilities`. If the line is missing, use the bundled default for that role.
 
 For each reviewer:
 - The brief is self-contained. A delegated reviewer gets only the brief, never your context.
 - The brief says read-only: inspect only, no writes, no git commands that change state.
 - For an `auto` or `inherit-parent` entry, omit the model so that reviewer runs on the parent model.
 
-If `delegate_task` rejects a configured entry, say so and run that reviewer on the closest available model of the same family from `orchestrator_capabilities`. Do not block the review on it.
+If a capacity-selected reviewer is unavailable, resolve another suitable account/model through the execution reference. Report a fixed or user-selected model failure and ask before replacing it.
 
 Read `references/reviewer-prompt.md` and fill in the template with:
 1. The stated intent

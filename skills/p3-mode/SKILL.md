@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Skills are invoked by name (`/p3-mode`). There are no mode toggles.
 
-Read [T3 execution](references/t3-execution.md) before selecting models or executing a playbook. These installation and transport rules apply throughout the playbooks.
+Read [T3 execution](references/t3-execution.md) before selecting models or executing a playbook. These installation and transport rules override transport shortcuts throughout the playbooks. In particular, every `t3_thread_launch` requires an explicit user request for separate top-level conversations; otherwise use supported child isolation or serialize writers.
 
 ## Non-negotiables
 
