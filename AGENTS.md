@@ -79,3 +79,8 @@ requirements unchanged. Changes here may translate T3 tools, resolve accounts,
 repair installation paths, or document usage. Capacity never lowers the method's
 bar. Any proposed change to upstream engineering belongs in a separate proposal
 and is outside this fork's authorized scope.
+
+For official updates, follow `upstream/MAINTENANCE.md`. `upstream/sources.json`
+records observed and reviewed revisions separately. Detection must never advance
+the reviewed baseline or install changes; those happen through a reviewed PR
+and the user's merge/install approval.

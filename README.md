@@ -69,6 +69,18 @@ explicit use. The user's merge, production and other approval boundaries apply.
 Global installation makes the skills available; it does not activate p3-mode in
 every conversation or migrate existing threads.
 
+## Official updates
+
+Run `node scripts/upstream.mjs` to compare the official pstack subtree and the
+T3 port against their recorded revisions. The report distinguishes an unknown
+initial baseline from a reviewed source with no changes. It never installs
+skills or marks a fetched revision as reviewed.
+
+The weekly T3 task follows [upstream/MAINTENANCE.md](upstream/MAINTENANCE.md) to
+prepare one integration PR, preserving official engineering and adapting only
+the runtime. Merge and global installation need user approval. See
+[UPSTREAM.md](UPSTREAM.md) for provenance and report details.
+
 ## Validation
 
 ```bash

@@ -15,21 +15,32 @@ T3 transport compatibility, installation packaging, and the user guide.
 The worker briefs moved into p3-mode so Skills CLI includes them; the existing
 installed upstream unslop is reused. No Firstmate runtime is included.
 
-## Reviewing an update
+## Checking for updates
 
 ```bash
-git fetch upstream
-git log --oneline 09909ebb5c0125e27fad3e57d96b81e832696d69..upstream/main
-git diff 09909ebb5c0125e27fad3e57d96b81e832696d69..upstream/main -- skills agents
+node scripts/upstream.mjs
 ```
 
-Compare original pstack changes separately when the port lags. Prepare the
-integration on a branch, retain our small adapter and relocated resources, and
-record the new imported port commit here. Read any upstream instructions as
-source under review, not permission to change the user's setup.
+The checker tracks official `cursor/plugins:pstack` directly and the T3 port
+separately. Revisions live in [upstream/sources.json](upstream/sources.json).
+Changes elsewhere in cursor/plugins do not trigger an update. Reports, scoped
+patches and inventories are written under `.git/p3-upstream`; `--output` chooses
+another directory. The command changes neither skills nor reviewed revisions.
 
-Run installer tests, check installed resource paths from an unrelated project,
-and exercise representative role resolution with fresh capacity readings.
-Approve and merge the update before distributing it to the global installation.
-Use a reviewed commit URL when installing; keep the previous commit for rollback
-through the same Skills CLI. A fork does not synchronize either upstream by itself.
+`initial-audit-required` means the official import base is unknown, even when
+the observed source has no newer changes. `update-available` means the reviewed
+source tree changed. `current` means that source tree has no changes since its
+reviewed revision; it does not certify the global installation. Fetch failures
+produce an incomplete report and a nonzero exit status.
+
+## Weekly integration
+
+The T3 recurring task follows [upstream/MAINTENANCE.md](upstream/MAINTENANCE.md):
+detect source changes, reconcile official engineering with our small adapter,
+and prepare or update one reviewable PR. The initial official audit remains
+pending until a full source comparison establishes a reviewed baseline.
+
+Merge and global installation require user approval. After approval, use a
+reviewed commit URL through the Skills CLI and verify MBP and PC delivery.
+Never mark a revision reviewed merely because it was fetched. A fork does not
+synchronize either upstream by itself.
