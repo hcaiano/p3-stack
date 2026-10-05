@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Architect
 
+Before resolving models or delegating, read [T3 execution](../p3-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
+
 Design before implementing. Sketch types, function signatures, class shapes, and module boundaries with `not implemented` bodies and pseudocode. Synthesize across multiple model perspectives, then fill in code against the chosen sketch. If implementation proves the sketch wrong, throw it out and redesign.
 
 ## Start

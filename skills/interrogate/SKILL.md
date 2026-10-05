@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Interrogate
 
+Before resolving models or delegating, read [T3 execution](../p3-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
+
 Spawn one reviewer per configured model to adversarially review code changes. Each model gets the same prompt and rubric. The adversarial signal comes from model diversity, not assigned personas.
 
 The deliverable is a synthesized verdict. Do NOT auto-apply changes.

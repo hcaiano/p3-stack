@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Recall
 
+Before resolving models or delegating, read [T3 execution](../p3-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
+
 **Before you start or resume work, you rebuild the user's recent working context and hand back a tight capsule of where things stand now and what to do next.**
 
 Keep it tight and on-topic. Read only what the in-scope threads need, then stop.

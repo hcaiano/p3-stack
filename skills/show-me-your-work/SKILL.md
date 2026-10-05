@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Show me your work
 
+Before resolving models or delegating, read [T3 execution](../p3-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
+
 Keep one canonical log.
 
 ## The format

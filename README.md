@@ -11,21 +11,70 @@ pstack is poteto's answer to AI slop code. It turns an agent into an engineering
 - **Memory.** `t3_thread_read` and `t3_thread_search` replace mining Cursor transcript files.
 - **Proof.** `preview_*` browser tools and `device_*` simulators replace external control skills. Screenshots and recordings land in the thread.
 
+## Personal fork
+
+This fork preserves pstack's engineering playbooks and the T3 port. It adds
+capacity-aware account selection, globally installable worker briefs, and a
+collision-safe Skills CLI installer. All enabled accounts, including Cursor,
+are eligible. See [UPSTREAM.md](UPSTREAM.md) for the exact port baseline and
+how to review updates.
+
 ## Install
 
+Requires Node.js/npx and the existing `t3-capacity` and `pair` skills from
+`hcaiano/skills`. Installation uses the Skills CLI, not hand-edited installed
+copies. Keep an existing upstream `unslop`.
+
 ```bash
-git clone https://github.com/uzairansaruzi/p3-stack.git
+git clone https://github.com/hcaiano/p3-stack.git
 cd p3-stack
+./install.sh --dry-run
 ./install.sh
 ```
 
-`install.sh` links every `skills/*` directory into `~/.agents/skills/`, where T3 Code reads skills. Use `./install.sh --project /path/to/repo` to install into a project's `.agents/skills/` instead.
+During review, check out `feat/global-t3-accounts` and pass
+`--source https://github.com/hcaiano/p3-stack/tree/feat/global-t3-accounts`.
+Use `--source https://github.com/hcaiano/p3-stack/tree/<reviewed-commit>` to pin
+an installation. Global is the default; `--project /path/to/repo` selects a
+project installation. Existing unrelated skills cause a stop before any writes.
+
+To update this fork's installed copies, use `./install.sh --update` with the
+reviewed source. Finish active sessions that may read the replaced skills first;
+the Skills CLI does not replace folders atomically. Adding new skill names does
+not require stopping unrelated agents.
+
+Install on the MBP, the Fleet source of truth. Fleet already synchronizes
+`.agents/skills` and the Skills CLI lock. The bundled defaults travel inside
+p3-mode, so another machine resolves its own live provider IDs and account usage.
+A custom `~/.agents/p3-models.md` is local unless separately synchronized.
 
 ## Get started
 
-1. Run `/setup-p3`. It reads `orchestrator_capabilities` and writes `p3-models.md`, mapping each role (code, judgment, the review panels) to a provider and model you actually have.
-2. Use `/p3-mode` whenever you want rigorous work. It reads the request, picks a playbook, and runs the other skills as the steps need them.
-3. Stuck or unsure which skill fits? Ask `/p3-help`.
+1. Start a new task with `/p3-mode` followed by the outcome you want.
+2. Automatic account selection works from the bundled defaults. `/setup-p3`
+   optionally writes global preferences or a project override.
+3. In each application, use `/create-verification-skill` to establish how agents
+   start, drive and verify the real app. Reuse existing working tooling.
+4. Use `/p3-help` for help. The [Portuguese getting-started guide](docs/usar-pstack.md)
+   has examples based on poteto's two articles.
+
+Project model configuration overrides `~/.agents/p3-models.md`, which overrides
+the bundled defaults. `capacity` selects a suitable model/account using the live
+T3 catalog and usage; `auto`/`inherit-parent` retain the parent's model. The
+reasoning budget is not a financial cap. Unknown usage remains unknown.
+
+Existing project issues and acceptance criteria remain authoritative. In a p3
+task, p3 owns implementation and review; personal workflows remain installed for
+explicit use. The user's merge, production and other approval boundaries apply.
+Global installation makes the skills available; it does not activate p3-mode in
+every conversation or migrate existing threads.
+
+## Validation
+
+```bash
+node --test tests/*.test.mjs
+./install.sh --dry-run
+```
 
 ## The mode
 

@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Reflect
 
+Before resolving models or delegating, read [T3 execution](../p3-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
+
 Mine the current conversation for durable learnings, then route them into skill edits.
 
 ## When to invoke

@@ -5,6 +5,8 @@ description: Guides users through p3-stack setup, /p3-mode, and picking the skil
 
 # P3 help
 
+Before resolving models or delegating, read [T3 execution](../p3-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
+
 Answer the user's question about p3-stack, hand them a prompt they can send, and link the file the answer came from. For a help question, don't start the work. The user asked how, and a p3-stack run spends real tokens, so let them send the prompt.
 
 A message that asks for work, such as "use p3-stack to fix this bug", is not a help question. Read [`p3-mode`](../p3-mode/SKILL.md), do the work under it, and mention once that invoking `/p3-mode` keeps the work in this style.
@@ -15,15 +17,15 @@ This file maps questions to the skills and playbooks that hold the answers. Thos
 
 Infer the need from the message and the conversation. A named situation, such as "which skill reviews a PR?", goes straight to its section. If the need is still unclear, ask one multiple-choice question with these options, then answer only the section they pick: get set up, start a task with `/p3-mode`, pick a skill for a situation, fix a run that went wrong, or make p3-stack my own.
 
-Check the state that changes the answer, and mention it only when it does. No `p3-models.md` means `/setup-p3` hasn't run for this user, so every role uses its default model. No `verify-*` skill or other app harness in the project means agents have no scripted way to drive the app; mention `/create-verification-skill` when the question is about proving a change works.
+Check the state that changes the answer, and mention it only when it does. Without a project or global `p3-models.md`, the bundled capacity defaults apply. No `verify-*` skill or other app harness in the project means agents have no scripted way to drive the app; mention `/create-verification-skill` when the question is about proving a change works.
 
 ## Get set up
 
-1. Install by cloning the repo and running `./install.sh`. It links every skill into `~/.agents/skills/`, where T3 Code reads skills; `./install.sh --project /path/to/repo` targets a project's `.agents/skills/` instead.
-2. Run [`/setup-p3`](../setup-p3/SKILL.md). It asks for a reasoning budget, maps a model to each role, and writes `p3-models.md`. The file applies to new sessions.
+1. Install by cloning the repo and running `./install.sh`. It uses the Skills CLI to install into `~/.agents/skills/`, preserving an existing unslop; `./install.sh --project /path/to/repo` targets a project's `.agents/skills/` instead.
+2. Optionally run [`/setup-p3`](../setup-p3/SKILL.md) to override the automatic capacity defaults. It asks for a reasoning budget, maps a model to each role, and writes `p3-models.md`. The file applies to new sessions.
 3. Start a real task with `/p3-mode`, a goal, and a check that can pass or fail.
 
-Installing changes nothing until the user invokes a skill. Only `/p3-help` loads from the user's words. The [README](../../README.md) has the details. Offer to word their first prompt with them.
+Installing changes nothing until the user invokes a skill. Only `/p3-help` loads from the user's words. The [fork README](https://github.com/hcaiano/p3-stack) has installation details. Offer to word their first prompt with them.
 
 If cost is the worry, say where the tokens go and how to spend fewer. p3-stack spends extra tokens on subagents and review panels. Rerun `/setup-p3` and pick a smaller budget or cheaper models. A role set to `auto` or `inherit-parent` runs on the parent thread's model, which saves tokens when that model is cheaper. A shorter panel list runs fewer subagents, one for each entry. Save `/p3-mode` for work that needs rigor.
 
@@ -31,7 +33,7 @@ If cost is the worry, say where the tokens go and how to spend fewer. p3-stack s
 
 `/p3-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep.
 
-Skills are invoked by name (`/p3-mode`). There are no mode toggles, so start each new task with `/p3-mode`. Mid-chat, "new task" makes the mode match a fresh playbook. `/p3-mode` already uses `agents/p3-agent.md` for the delegates its playbook steps spawn. To get the same style from a delegate of your own, open its brief with `agents/p3-agent.md`.
+Skills are invoked by name (`/p3-mode`). There are no mode toggles, so start each new task with `/p3-mode`. Mid-chat, "new task" makes the mode match a fresh playbook. `/p3-mode` already uses the p3-mode skill's `references/p3-agent.md` for the delegates its playbook steps spawn. To get the same style from a delegate of your own, open its brief with the p3-mode skill's `references/p3-agent.md`.
 
 ## Pick a skill
 
@@ -101,7 +103,7 @@ Principles are one-rule skills that `/p3-mode` reads and cites in its replies. T
 | A new model choice had no effect | The file from `/setup-p3` applies to new sessions. Start one. |
 | Runs cost more than expected | See the cost paragraph under Get set up. |
 | A skill didn't load on its own | Only `/p3-help` loads from the user's words. The others load when the user invokes them by name or when `/p3-mode` runs them, and it doesn't run every skill. |
-| Parallel agents overwrote each other | Give each worker its own worktree through `t3_thread_launch`, and keep one writer per worktree. |
+| Parallel agents overwrote each other | Use supported child-workspace isolation or serialize writers; top-level threads require an explicit user request. |
 | An overnight run moved but finished nothing | It needs a check that can pass or fail, not a duration. |
 | The reply claims success from a green build | Ask for the real command, flow, stored value, or profile. That's the prove-it-works principle. |
 
