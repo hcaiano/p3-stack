@@ -67,3 +67,23 @@ test('project update uses project ownership and rejects a foreign source', () =>
   assert.equal(r.status, 0, r.stderr);
   assert.ok(JSON.parse(r.stdout).skills.includes('p3-mode'));
 });
+
+test('owned canonical skill does not authorize replacement of a foreign provider directory', () => {
+  const f = fixture(); const canonical = join(f.skills, 'p3-mode');
+  mkdirSync(canonical); writeFileSync(join(canonical, 'SKILL.md'), 'owned workflow');
+  writeFileSync(join(f.home, '.agents/.skill-lock.json'), JSON.stringify({ skills: { 'p3-mode': { source: 'hcaiano/p3-stack' } } }));
+  const provider = join(f.home, '.claude/skills/p3-mode');
+  mkdirSync(provider, { recursive: true }); writeFileSync(join(provider, 'SKILL.md'), 'private workflow');
+  const r = f.run('--update'); assert.notEqual(r.status, 0);
+  assert.match(r.stderr, /Preserving provider-local/);
+  assert.equal(readFileSync(join(provider, 'SKILL.md'), 'utf8'), 'private workflow');
+});
+
+test('updates accept provider symlinks pointing at the owned canonical skill', () => {
+  const f = fixture(); const canonical = join(f.skills, 'p3-mode');
+  mkdirSync(canonical); writeFileSync(join(canonical, 'SKILL.md'), 'owned workflow');
+  writeFileSync(join(f.home, '.agents/.skill-lock.json'), JSON.stringify({ skills: { 'p3-mode': { source: 'hcaiano/p3-stack' } } }));
+  const provider = join(f.home, '.claude/skills'); mkdirSync(provider, { recursive: true });
+  symlinkSync('../../.agents/skills/p3-mode', join(provider, 'p3-mode'));
+  const r = f.run('--update'); assert.equal(r.status, 0, r.stderr);
+});

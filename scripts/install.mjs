@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync, lstatSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, lstatSync, readlinkSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -45,6 +45,13 @@ for (const name of readdirSync(join(root, 'skills')).sort()) {
     }
     if (!update || lock[name]?.source !== 'hcaiano/p3-stack') {
       throw new Error(`Preserving existing ${name}. Only this fork's skills may be replaced with --update.`);
+    }
+    for (const destination of present) {
+      if (destination === join(canonical, name)) continue;
+      if (!lstatSync(destination).isSymbolicLink() ||
+          resolve(dirname(destination), readlinkSync(destination)) !== join(canonical, name)) {
+        throw new Error(`Preserving provider-local ${destination}; it is not a link to this fork's canonical skill.`);
+      }
     }
   }
   skills.push(name);
