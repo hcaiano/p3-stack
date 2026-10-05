@@ -22,7 +22,7 @@ If you are a delegated worker, your brief names exactly one file. Write only tha
 | `agent-transcripts/*.jsonl` mining | `t3_thread_read`, `t3_thread_search`; `t3_queue_list`/`t3_queue_read`/`t3_queue_edit`/`t3_queue_reorder`/`t3_queue_cancel`/`t3_queue_promote_to_steer` for queued input. |
 | `AskQuestion` | Ask plainly in the thread. `t3_pending_request_list`/`t3_pending_request_read`/`t3_pending_request_respond` answer questions in other threads. |
 | `control-ui`, `control-cli` (from cursor-team-kit) | `preview_*` browser tools and `device_*` simulator tools; `preview_recording_start`/`preview_recording_stop` and `device_screenshot` for evidence; `browser.preview` shows a file to the user. |
-| `~/.cursor/rules/pstack-models.mdc`, `/add-plugin` | `setup-pstack` writes `poteto-models.md`; install uses the Skills CLI (see README). |
+| `~/.cursor/rules/pstack-models.mdc`, `/add-plugin` | `setup-pstack` writes `pstack-models.md`; install uses the Skills CLI (see README). |
 | Official skill names | Keep them unchanged. Bundle `poteto-agent` at `skills/poteto-mode/references/poteto-agent.md`. |
 | Cursor custom modes ("press option+enter") | The user’s global instructions enable `poteto-mode`; `/poteto-mode` is also available explicitly. |
 
@@ -30,7 +30,7 @@ Everything else in pstack transfers as written: the principles, the playbook sha
 
 ## Role names
 
-Code work reads its line in `poteto-models.md`: `feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`. Prose and judgment read `judgment and prose`; the hardest changes read `hardest tasks`.
+Code work reads its line in `pstack-models.md`: `feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`. Prose and judgment read `judgment and prose`; the hardest changes read `hardest tasks`.
 
 Panels and investigators: `how explorer`, `how explainer`, `why investigators`, `why synthesizer`, `arena runners`, `arena cross-judge pool`, `swarm workers`, `architect runners`, `interrogate reviewers`, `reflect tooling`, `reflect judgment, divergent, synthesizer`.
 

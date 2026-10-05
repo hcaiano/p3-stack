@@ -27,7 +27,7 @@ The N candidates will receive the same prompt, so the prompt is the contract.
 
 1. State the artifact each candidate is producing.
 2. Derive the rubric. State what success looks like for *this* task, then turn it into 3-6 concrete gradeable criteria. The rubric is the picker's tool in Phase D. Candidates only see the task.
-3. Pick the runners. Use the `arena runners` line in `poteto-models.md`, resolved against `orchestrator_capabilities`. If the file or role is missing, use the bundled default for that role. An `auto` or `inherit-parent` entry in this line or the cross-judge line means the parent model, so omit `model` for it. If a capacity-selected seat is unavailable, resolve another suitable account/model through the execution reference. Ask before replacing a fixed or user-selected model. Spawn more when the arena covers multiple design directions. Same model N times when the work is generation-bound rather than judgment-sensitive.
+3. Pick the runners. Use the `arena runners` line in `pstack-models.md`, resolved against `orchestrator_capabilities`. If the file or role is missing, use the bundled default for that role. An `auto` or `inherit-parent` entry in this line or the cross-judge line means the parent model, so omit `model` for it. If a capacity-selected seat is unavailable, resolve another suitable account/model through the execution reference. Ask before replacing a fixed or user-selected model. Spawn more when the arena covers multiple design directions. Same model N times when the work is generation-bound rather than judgment-sensitive.
 4. Assign output paths. Each candidate writes to its own location (a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/`), per the **separate-before-serializing-shared-state** principle skill. A candidate that needs its own worktree gets one through `t3_thread_launch` with a `workspaceStrategy`. One writer per worktree.
 
 ## Phase B: Fan out
@@ -40,7 +40,7 @@ Drain the candidates with `task_status`. If a candidate fails to produce output,
 
 ## Phase C: Cross-judge
 
-After all Phase B candidates complete, choose one model from the `arena cross-judge pool` line in `poteto-models.md`. Prefer a different provider from the parent's. Spawn one judge with `delegate_task` on that model. The brief says read-only: inspect only, no writes. It sees the rubric and the candidates by path label, scores each criterion, and recommends a base with rationale. It runs in parallel with the parent's reading in Phase D, not with the candidates themselves. Don't spawn the judge while candidates are still writing.
+After all Phase B candidates complete, choose one model from the `arena cross-judge pool` line in `pstack-models.md`. Prefer a different provider from the parent's. Spawn one judge with `delegate_task` on that model. The brief says read-only: inspect only, no writes. It sees the rubric and the candidates by path label, scores each criterion, and recommends a base with rationale. It runs in parallel with the parent's reading in Phase D, not with the candidates themselves. Don't spawn the judge while candidates are still writing.
 
 ## Phase D: Pick a base
 
