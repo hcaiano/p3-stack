@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Swarm
 
-Before resolving models or delegating, read [T3 execution](../p3-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints. Its top-level conversation requirement applies to every launch below; use child isolation or serialize writes otherwise.
+Before resolving models or delegating, read [T3 execution](../p3-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints. Its top-level conversation requirement applies to every launch below; use supported child isolation or report the runtime limitation otherwise.
 
 Fan out N parallel workers. They may cover separate slices, race the same brief, or mix both. The parent waits, aggregates, and returns one report.
 

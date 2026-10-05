@@ -6,8 +6,6 @@ disable-model-invocation: true
 
 # Guard the Context Window
 
-Before resolving models or delegating, read [T3 execution](../p3-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
-
 The context window is finite and non-renewable within a session. Every token should be worth its cost.
 
 **Why:** Context overflow degrades reasoning quality, creates compression artifacts, and halts progress.

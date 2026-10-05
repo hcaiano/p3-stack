@@ -1,5 +1,5 @@
 # p3 global model configuration
-# budget: medium (high reasoning; not a spending limit)
+# No reasoning-effort override: retain the invoking skill's requirements.
 # capacity resolves from the live T3 catalog and account usage for each wave.
 feature, refactoring: capacity
 bug-fix: capacity
