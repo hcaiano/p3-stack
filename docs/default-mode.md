@@ -1,9 +1,11 @@
 # Personal default mode
 
 Keep activation in personal instructions, separate from the upstream engineering
-method. The MBP uses `~/.agents/AGENTS.md`, shared by its Codex accounts, Claude
-and Grok; Cursor uses `~/.cursor/rules/henrique.mdc`. Fleet distributes these
-settings to the PC. Use this instruction in those existing files:
+method. All providers use `~/.agents/AGENTS.md`. Codex accounts, Claude and Grok
+reach it through their existing links. Cursor's always-applied
+`~/.cursor/rules/henrique.mdc` only tells the agent to read that shared file;
+it contains no separate personal policy. Fleet distributes the shared file and
+the Cursor entrypoint. Keep this instruction in the shared file only:
 
 > For engineering tasks, read `~/.agents/skills/poteto-mode/SKILL.md` and follow
 > its matching playbook by default, without requiring an explicit command.
