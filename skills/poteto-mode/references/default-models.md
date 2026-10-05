@@ -1,4 +1,4 @@
-# p3 global model configuration
+# pstack global model configuration
 # No reasoning-effort override: retain the invoking skill's requirements.
 # capacity resolves from the live T3 catalog and account usage for each wave.
 feature, refactoring: capacity

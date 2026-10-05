@@ -22,7 +22,7 @@ Check the state that changes the answer, and mention it only when it does. Witho
 ## Get set up
 
 1. Install by cloning the repo and running `./install.sh`. It uses the Skills CLI to install into `~/.agents/skills/`, preserving an existing unslop; `./install.sh --project /path/to/repo` targets a project's `.agents/skills/` instead.
-2. Optionally run [`/setup-pstack`](../setup-pstack/SKILL.md) to override the automatic capacity defaults. It asks for a reasoning budget, maps a model to each role, and writes `pstack-models.md`. The file applies to new sessions.
+2. Optionally run [`/setup-pstack`](../setup-pstack/SKILL.md) to choose automatic selection, candidate pools or fixed models per role. It writes `pstack-models.md`; reasoning overrides are optional. The adapter reads changes before the next delegation wave.
 3. Start a real task with `/poteto-mode`, a goal, and a check that can pass or fail.
 
 The personal global instructions enable `poteto-mode` by default. Installation alone does not enable it on other setups. The [fork README](https://github.com/hcaiano/p3-stack) has installation details. Offer to word their first prompt with them.
@@ -100,7 +100,7 @@ Principles are one-rule skills that `/poteto-mode` reads and cites in its replie
 |---|---|
 | The mode stopped applying after a few turns | Check that the global instructions load `poteto-mode`; invoke it explicitly in an older session. |
 | A question got treated as the next step of the last task | Say "new task", or say the turn doesn't need the mode. |
-| A new model choice had no effect | The file from `/setup-pstack` applies to new sessions. Start one. |
+| A new model choice had no effect | Check for a project override. The next delegation wave reads the file; running children keep their original selection. |
 | Runs cost more than expected | See the cost paragraph under Get set up. |
 | A skill didn't load on its own | The global instructions load `poteto-mode`, which selects the needed skills. Explicit skill names remain available; the mode does not run every skill. |
 | Parallel agents overwrote each other | Use supported child-workspace isolation; report unavailable isolation. Top-level threads require an explicit user request. |

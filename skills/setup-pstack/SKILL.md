@@ -1,30 +1,45 @@
 ---
 name: setup-pstack
-description: Configure which models p3-stack uses per role and at what reasoning budget. Detects your available models and writes pstack-models.md, which overrides the skill defaults. Use for /setup-pstack, "configure p3 models", "p3 budget", or changing p3-stack's model choices.
+description: Configure pstack model and account selection in T3, with automatic choices, candidate pools or fixed selections per role. Use for /setup-pstack or changing global or project model preferences.
 disable-model-invocation: true
 ---
 
-# Setup p3
+# Setup pstack for T3
 
 Before resolving models or delegating, read [T3 execution](../poteto-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
 
-Write `pstack-models.md`, a file that sets p3-stack's model per role. Default to `~/.agents/pstack-models.md` for this global setup; use the project root when the user requests a project override. Preserve the bundled capacity defaults until the user configures an override.
+Write `pstack-models.md`, a file that sets pstack's model selection per role.
+Default to `~/.agents/pstack-models.md`; use the project root only for a requested
+project override. Read [model selection](../poteto-mode/references/model-selection.md)
+for candidate-pool syntax, update behavior and Fleet persistence. Preserve existing
+choices. For this user's automatic setup, use open `capacity` and retain the
+skill's reasoning requirements; do not make them choose a fixed roster to start.
+This initial default does not replace existing pins or pools unless requested.
 
 ## Steps
 
 ### 1. Detect available models
 
-Call `orchestrator_capabilities`. It lists the providers and models you can pass to `delegate_task` in this session, custom models included, with each one's provider instance ID and any reasoning options. That is the only source. If it returns nothing, stop and tell the user. Never write a provider or model it did not return. `inherit-parent` and `capacity` are valid even though they are not detected models.
+Call `orchestrator_capabilities`. It lists the providers and models you can pass to `delegate_task` in this session, custom models included, with each one's provider instance ID and any reasoning options. That is the only source. Use enabled providers that can run child tasks. If none qualify, report the limitation. Never add a fixed model or pool entry absent from that catalog. `inherit-parent` and `capacity` are policies, not model IDs. Read `t3-capacity` for current account availability, but persist no usage snapshots.
 
 ### 2. Load current state
 
-The roles are the labels shown in step 5. If `pstack-models.md` already exists at the chosen location, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from the defaults in step 3(b). A line whose role is not in step 5, such as `how critics`, is from a retired role. Drop it.
+The roles are the labels shown in step 5. Read the existing file and its optional
+`# budget` line. Otherwise start from the bundled defaults. Identify obsolete
+roles for review rather than dropping unrecognized user settings silently.
 
 ### 3. Budget, map, and confirm
 
-Keep `capacity` entries as dynamic selections. Offer a fixed model only when the user wants one; panel list length still controls seat count.
+Offer open automatic selection (`capacity`), a restricted pool
+(`capacity[model-id-a | model-id-b]`), or a pinned account/model. A pool selects
+one alternative for each seat; a panel's top-level list still controls its seat
+count. Preserve the invoking skill's required count and diversity. Existing
+user choices are authorization to keep them; ask only for unresolved preferences.
 
-**(a) Ask for a budget.** Ask plainly in the thread. Offer these four options with these exact labels, and name the current budget when the file records one.
+**(a) Reasoning preference.** Keep the skill's requirements by omitting `# budget`
+unless the user chooses an override. When they ask to change reasoning, explain
+that this controls effort, not subscription spending. Show the current setting
+and the existing options:
 
 - `unlimited — keep max`
 - `large — xhigh reasoning`
@@ -33,23 +48,49 @@ Keep `capacity` entries as dynamic selections. Offer a fixed model only when the
 
 **(b) Apply it.** On a fresh run, start from the bundled `default-models.md` in poteto-mode's references. Keep `capacity` values dynamic and preserve the panel seat counts. For a fixed-model request, resolve that choice from the live catalog. On a re-run, keep the user's existing choices.
 
-When the catalog exposes reasoning options for a model, set each real entry's effort option from the budget: `unlimited` takes the highest option, and `large`, `medium`, and `small` take `xhigh`, `high`, or `medium`. The ladder is `max` > `xhigh` > `high` > `medium` > `low`. If the model does not expose the target, use the highest option at or below it, else mark the role as needing a choice. `inherit-parent` and `capacity` do not change; apply the budget when resolving a capacity seat. When the catalog exposes no reasoning options, map roles only and drop effort tokens; the budget label is still recorded.
+When the user chose an override and the catalog exposes reasoning options, set
+the model's actual effort option: `unlimited` takes the highest reasoning value;
+`large`, `medium`, and `small` target `xhigh`, `high`, or `medium`. The ladder is
+`max` > `xhigh` > `high` > `medium` > `low`; if the target is unsupported, use the
+highest supported value at or below it, otherwise report the mismatch. Preserve
+catalog-specific option keys and distinguish effort from workflow modes. Apply
+the preference when resolving each capacity seat; keep policy entries dynamic.
 
-**(c) Show the roles and confirm.** Show every role with its model, marking any fixed model not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering `capacity`, the detected models, and `inherit-parent` (the role runs on the parent thread's model, so omit the model in `delegate_task`) as the options. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one `delegate_task` runs per entry, `inherit-parent` entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena selects one value from it whose provider differs from the parent's when possible. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
+**(c) Show the resulting selection.** Show roles grouped by identical policy,
+explicit pools and pins, reasoning overrides and unresolved choices. One
+`delegate_task` runs per panel seat, not per pool candidate. `arena cross-judge
+pool` retains Arena's own selection rules. `swarm workers` is the default for
+each worker unless its workflow assigns another choice. Ask before replacing
+an unavailable explicit choice; do not ask again to apply preferences already
+given by the user.
 
 ### 4. Validate
 
-Every fixed model entry written must be in the `orchestrator_capabilities` result, under the provider instance it came from. `inherit-parent` and `capacity` always pass. If a chosen entry is not available, stop and ask again.
+Validate every new pin and pool candidate against the live catalog. Unqualified
+pool IDs may resolve through several accounts. Preserve existing unavailable
+pins as unresolved until the user decides. Validate panel seat count and whether
+its candidates can meet the invoking skill's diversity rules. Report quota or
+host limitations without silently broadening a restricted pool.
+If a candidate cannot meet a requested effort, try another eligible candidate
+within the same policy; report a blocker when none qualifies. Never silently
+lower the invoking skill's required effort.
 
 ### 5. Write the file
 
-Write `pstack-models.md` with a `# budget` line with the chosen label and its target effort, and one line per role, using the same labels poteto-mode uses. Write dynamic entries as `capacity`; write fixed entries as `<providerInstanceId>/<model>`, followed by its effort option in parentheses when step 3(b) set one. Preserve `inherit-parent`. Overwrite the whole file so re-runs stay idempotent. Shape:
+For a Fleet global change, the chosen file is on the MBP source, even when the
+setup runs on PC. Use an available authorized connection to read and update that
+source, preserving its current contents. If unavailable, return a proposed edit
+and report persistence pending; do not write a competing local global file.
+
+Write the chosen file with one line per role. Include `# budget` only for an
+explicit effort override. Use role values from the model-selection reference;
+record fixed-model effort as the catalog's option key and value when needed.
+Keep unrelated user settings intact. The role map is:
 
 ```
-# p3 model configuration. One line per role. Delete a line to fall back to the skill default.
+# pstack model configuration. One line per role. Delete a line to fall back to the skill default.
 # `capacity` resolves model/account per wave via the execution reference.
 # `inherit-parent` as a value: the role runs on the parent thread's model (omit the delegate_task model). Entries in a panel list still count toward its fan-out.
-# budget: unlimited (max)
 feature, refactoring: <providerInstanceId>/<model> (<effort>)
 bug-fix: <providerInstanceId>/<model> (<effort>)
 perf-issue: <providerInstanceId>/<model> (<effort>)
@@ -71,8 +112,15 @@ interrogate reviewers: <entry>, <entry>, <entry>
 
 ### 6. Confirm
 
-Tell the user the file was written, where, and that it applies to new sessions. Re-running this skill updates it.
+Report the path, scope and actual host delivery. The adapter reads it before
+each delegation wave; running children keep their existing selection. Open
+`capacity` considers newly exposed T3 models without a setup rerun. Explicit
+pools and pins change only when requested. For Fleet globals, update the MBP
+source and verify destination contents; a configured sync is not delivery proof.
 
 ### 7. Offer a verification skill (optional)
 
-Check whether the project has a way to drive the real app for proof (a `verify-*` skill, or an existing harness). If not, offer once: "want a project-local verification skill, so agents can drive the app the way a user does and prove changes work? I can generate one with /create-verification-skill." On yes, invoke `/create-verification-skill`. On no, move on without pushing.
+When setup is for an application project, check whether it has a way to drive
+the real app for proof (a `verify-*` skill or existing harness). If missing, offer
+`/create-verification-skill` once. Skip this step for global configuration without
+an application project.

@@ -13,6 +13,10 @@ Read the project's `pstack-models.md`, otherwise `~/.agents/pstack-models.md`, o
 [the bundled defaults](default-models.md). The first file found wins. Defaults
 travel with the skills; resolve provider IDs on the machine executing the task.
 
+Read [model selection](model-selection.md) when configuring roles or resolving
+a restricted candidate pool. Re-read the selected configuration before each
+delegation wave; a running child retains its original selection.
+
 Before a delegation wave, call `orchestrator_capabilities` and the installed
 `t3-capacity` skill using that server's settings and confirmed account mappings.
 Missing readings or mappings mean unknown capacity. Refresh after usage limits.

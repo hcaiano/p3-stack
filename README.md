@@ -46,7 +46,9 @@ not require stopping unrelated agents.
 Install on the MBP, the Fleet source of truth. Fleet already synchronizes
 `.agents/skills` and the Skills CLI lock. The bundled defaults travel inside
 poteto-mode, so another machine resolves its own live provider IDs and account usage.
-A custom `~/.agents/pstack-models.md` is local unless separately synchronized.
+A custom `~/.agents/pstack-models.md` needs its own Fleet manifest entry. The
+Fleet integration tracks that file separately from installed skills; verify the
+entry is active and destination contents match before claiming distribution.
 
 ## Get started
 
@@ -63,6 +65,9 @@ Project model configuration overrides `~/.agents/pstack-models.md`, which overri
 the bundled defaults. `capacity` selects a suitable model/account using the live
 T3 catalog and usage; `auto`/`inherit-parent` retain the parent's model. The
 reasoning budget is not a financial cap. Unknown usage remains unknown.
+Open `capacity` considers new models when the local T3 catalog exposes them.
+Restricted candidate pools and fixed selections stay as chosen. See
+[model selection](skills/poteto-mode/references/model-selection.md) for details.
 
 Existing project issues and acceptance criteria remain authoritative. In a p3
 task, p3 owns implementation and review; personal workflows remain installed for

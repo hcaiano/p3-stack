@@ -78,6 +78,21 @@ Podes continuar a dizer `usa Sol`, `pede esta revisão ao Opus` ou indicar uma
 conta. A escolha explícita tem prioridade. `/setup-pstack` permite guardar escolhas
 fixas globais ou por projeto; não é necessário para começar.
 
+O setup permite deixar a escolha automática aberta, indicar vários modelos
+alternativos para cada papel, ou fixar um modelo e conta. Várias alternativas
+para um lugar não aumentam o número de agentes de um painel. O método continua
+a definir quantos agentes e que diversidade são necessários.
+
+Com `capacity`, modelos novos passam a candidatos quando o T3 os expõe no seu
+catálogo; não precisas de repetir o setup. Uma lista fechada ou uma escolha fixa
+só muda quando a alteras. Isto é separado da atualização semanal das skills.
+
+As preferências globais ficam em `~/.agents/pstack-models.md`, fora das skills,
+para sobreviverem às reinstalações. O MBP é a origem da Fleet. A distribuição
+automática desse ficheiro exige a respetiva entrada ativa no manifesto; confirma
+a entrega nos destinos. Uma configuração no projeto tem prioridade sobre a
+global. Cada máquina consulta as suas próprias contas e quotas.
+
 As subscrições dão capacidade de modelo. Não fornecem os computadores isolados
 dos cloud agents descritos no artigo. O paralelismo local depende dos recursos
 do PC/MBP, da verificação e do isolamento que o T3 disponibiliza.
