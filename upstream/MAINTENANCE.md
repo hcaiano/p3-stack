@@ -8,8 +8,7 @@ budgets, model diversity or verification requirements to fit available capacity.
 
 1. Work in the personal p3-stack fork. Inspect its branch, dirty files, remotes
    and open PRs before editing. Preserve other work. Fetch origin; use the latest
-   merged `upstream/sources.json` as the accepted baseline. If the bootstrap PR
-   is still open, use its manifest and update that PR rather than duplicating it.
+   merged `upstream/sources.json` as the accepted baseline.
 2. Run `node scripts/upstream.mjs`. Read the emitted `reportPath` and adjacent
    `report.json`. Output and bare source caches live under `.git/p3-upstream`.
    Fetches do not edit installed skills or advance accepted revisions.
