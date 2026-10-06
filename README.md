@@ -32,7 +32,7 @@ cd p3-stack
 ./install.sh
 ```
 
-During review, check out `feat/global-t3-accounts` and pass
+During review, check out `main` and pass
 `--source https://github.com/hcaiano/p3-stack/tree/<full-40-character-commit>`
 using `git rev-parse HEAD` for the reviewed commit. This pins the installation;
 the Skills CLI misparses branch names containing a slash. Global is the default; `--project /path/to/repo` selects a
