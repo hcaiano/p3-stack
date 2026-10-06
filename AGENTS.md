@@ -13,8 +13,8 @@ If you are a delegated worker, your brief names exactly one file. Write only tha
 | pstack | p3-stack |
 |---|---|
 | `Task` tool, `subagent_type`, `run_in_background` | `delegate_task` with a self-contained brief; `mode: "async"` for background work; `task_status` to drain; `task_cancel` to stop |
-| Model slugs (`claude-opus-5-5-max`, `grok-4.7-xhigh-fast`, `gpt-5.6-sol-max`) | Named roles resolved from `orchestrator_capabilities` by `setup-p3` (role names below). Never hardcode a slug. |
-| "cloud agent", `environment: "cloud"`, `cloud_base_branch` | A delegated child task. Use `t3_thread_launch` only when the worker needs its own top-level thread, worktree, or branch. |
+| Model slugs (`claude-opus-5-5-max`, `grok-4.7-xhigh-fast`, `gpt-5.6-sol-max`) | Named roles resolved from `orchestrator_capabilities` by `setup-pstack` (role names below). Never hardcode a slug. |
+| "cloud agent", `environment: "cloud"`, `cloud_base_branch` | A delegated child task. Use `t3_thread_launch` only when the user explicitly requests separate top-level conversations. |
 | "each worker gets its own worktree or branch" | `t3_thread_launch` with `workspaceStrategy`: `{"type":"worktree","baseRef":...,"branch":...}`, `{"type":"existing_worktree","worktreePath":...}`, or `{"type":"root"}`. One writer per worktree. |
 | `/loop`, poll loops, `scripts/watch-pr` | `watch_pull_request`: T3 watches the PR and wakes the thread on checks finishing, new comments, or conflicts. Arm it, end the turn, triage on wake. For other cadences use `schedule_task`. |
 | Hourly audit ticks, recurring runs | `schedule_task` with `{"type":"interval","everyMs":...}` or `{"type":"fixed_time","timeOfDay":...,"weekdays":[...]}`; `run_scheduled_task_now` for an immediate run. |
@@ -22,15 +22,15 @@ If you are a delegated worker, your brief names exactly one file. Write only tha
 | `agent-transcripts/*.jsonl` mining | `t3_thread_read`, `t3_thread_search`; `t3_queue_list`/`t3_queue_read`/`t3_queue_edit`/`t3_queue_reorder`/`t3_queue_cancel`/`t3_queue_promote_to_steer` for queued input. |
 | `AskQuestion` | Ask plainly in the thread. `t3_pending_request_list`/`t3_pending_request_read`/`t3_pending_request_respond` answer questions in other threads. |
 | `control-ui`, `control-cli` (from cursor-team-kit) | `preview_*` browser tools and `device_*` simulator tools; `preview_recording_start`/`preview_recording_stop` and `device_screenshot` for evidence; `browser.preview` shows a file to the user. |
-| `~/.cursor/rules/pstack-models.mdc`, `/add-plugin` | `setup-p3` writes `p3-models.md`; install is a symlink of `skills/*` into `~/.agents/skills/` (see README). |
-| `poteto-mode`, `poteto-agent`, `poteto-help`, `setup-pstack` | `p3-mode`, `agents/p3-agent.md`, `p3-help`, `setup-p3`. |
-| Cursor custom modes ("press option+enter") | Skills are invoked by name (`/p3-mode`). No mode toggles. |
+| `~/.cursor/rules/pstack-models.mdc`, `/add-plugin` | `setup-pstack` writes `pstack-models.md`; install uses the Skills CLI (see README). |
+| Official skill names | Keep them unchanged. Bundle `poteto-agent` at `skills/poteto-mode/references/poteto-agent.md`. |
+| Cursor custom modes ("press option+enter") | The user’s global instructions enable `poteto-mode`; `/poteto-mode` is also available explicitly. |
 
 Everything else in pstack transfers as written: the principles, the playbook shapes, the brief template, the reply style, the autonomy rules. Adopt it.
 
 ## Role names
 
-Code work reads its line in `p3-models.md`: `feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`. Prose and judgment read `judgment and prose`; the hardest changes read `hardest tasks`.
+Code work reads its line in `pstack-models.md`: `feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`. Prose and judgment read `judgment and prose`; the hardest changes read `hardest tasks`.
 
 Panels and investigators: `how explorer`, `how explainer`, `why investigators`, `why synthesizer`, `arena runners`, `arena cross-judge pool`, `swarm workers`, `architect runners`, `interrogate reviewers`, `reflect tooling`, `reflect judgment, divergent, synthesizer`.
 
@@ -48,8 +48,8 @@ Keep these names exactly.
 ## Layout
 
 - `skills/<name>/SKILL.md` is a skill. `skills/principle-*/SKILL.md` are the short principles.
-- `skills/p3-mode/SKILL.md` is the mode router; its playbooks live in `skills/p3-mode/playbooks/`.
-- `agents/` holds prompt briefs for delegated roles (`p3-agent.md`, `comment-sicko.md`), not harness agent definitions.
+- `skills/poteto-mode/SKILL.md` is the mode router; its playbooks live in `skills/poteto-mode/playbooks/`.
+- `skills/poteto-mode/references/` bundles delegated-role briefs so the Skills CLI installs them.
 
 ## T3 tool quick reference
 
@@ -68,3 +68,19 @@ Keep these names exactly.
 1. Every step names a T3 mechanism or a vendor-neutral habit. Grep for `Cursor`, `Task tool`, `subagent_type`, `cloud agent`, `.cursor`, `agent-transcripts`, `AskQuestion`, `icon:`, `claude-`, `grok-`, `gpt-`, `/loop`. None may remain.
 2. It is shorter than the pstack source unless the T3 rewrite genuinely needs the lines.
 3. Frontmatter matches the rules above, and references to other skills resolve to files in this repo.
+
+## Personal fork integration
+
+Preserve upstream playbooks. The shared `skills/poteto-mode/references/t3-execution.md` owns account selection and live T3 transport constraints. `capacity` is a dynamic role value. Use `npx skills@latest` for installation; preserve unrelated installed skills. Run `node --test tests/*.test.mjs` for installer changes. See UPSTREAM.md for provenance.
+
+The fork is an orchestration port, not a new engineering method. Keep pstack's
+engineering instructions, principles, playbook steps, rubrics and verification
+requirements unchanged. Changes here may translate T3 tools, resolve accounts,
+repair installation paths, or document usage. Capacity never lowers the method's
+bar. Any proposed change to upstream engineering belongs in a separate proposal
+and is outside this fork's authorized scope.
+
+For official updates, follow `upstream/MAINTENANCE.md`. `upstream/sources.json`
+records observed and reviewed revisions separately. Detection must never advance
+the reviewed baseline or install changes; those happen through a reviewed PR
+and the user's merge/install approval.

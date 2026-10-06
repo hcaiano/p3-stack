@@ -6,11 +6,13 @@ disable-model-invocation: true
 
 # Figure it out
 
+Before resolving models or delegating, read [T3 execution](../poteto-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints. Its top-level conversation requirement applies to every launch below; use supported child isolation or report the runtime limitation otherwise.
+
 When the task matches no playbook, design one. The deliverable before any code is the workflow itself: a sequence of phases that scales rigor to the task, runs the scientific method, and leaves a decision trail a human can audit after stepping away.
 
 ## Start
 
-Open a todolist whose first item is to read the Principles section of the **p3-mode** skill. Then add the phases below as todos.
+Open a todolist whose first item is to read the Principles section of the **poteto-mode** skill. Then add the phases below as todos.
 
 ## Phase A: Frame
 
@@ -29,7 +31,7 @@ Decompose into atomic, independently-landable units. Sequence riskiest-unknown-f
 - Build the verification harness before the work, with the baseline captured from the pre-change state, so the check reads as "old value vs new value".
 - For one-way-door design decisions, run the **architect** skill (it runs **arena**). Skip it for mechanical work whose shape is already concrete. A second arena over a settled design is over-engineering (the **laziness-protocol** principle skill).
 - Decide what fans out. Parallelize only across seams, and give each writer its own worktree via `t3_thread_launch` with a `workspaceStrategy`, one writer per worktree (the **separate-before-serializing-shared-state** principle skill). Don't over-fan.
-- Every `delegate_task` brief stands alone: the child gets only the brief, never your context. Read-only workers get a brief that says read-only, inspect only, no writes. Resolve models from named roles in `p3-models.md` via `orchestrator_capabilities`; never hardcode a slug.
+- Every `delegate_task` brief stands alone: the child gets only the brief, never your context. Read-only workers get a brief that says read-only, inspect only, no writes. Resolve models from named roles in `pstack-models.md` via `orchestrator_capabilities`; never hardcode a slug.
 - Write the designed phase list down. That list is what the human reviews.
 
 Then execute the design. Add its steps to the todolist as concrete items, after the Phase C entry and before Phase D. Run each under the Phase C loop discipline, and weave the Phase D log through them, a row as each step lands, rather than saving the whole trail for the end.

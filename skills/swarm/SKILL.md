@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Swarm
 
+Before resolving models or delegating, read [T3 execution](../poteto-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints. Its top-level conversation requirement applies to every launch below; use supported child isolation or report the runtime limitation otherwise.
+
 Fan out N parallel workers. They may cover separate slices, race the same brief, or mix both. The parent waits, aggregates, and returns one report.
 
 ## Start
@@ -22,7 +24,7 @@ Open a todolist with one entry per phase before launching anything.
 1. State the done predicate and the artifact or report the swarm must return.
 2. Choose the shape. Partition into slices, race N workers on identical briefs, or mix both. For a race or mixed shape, declare `first pass`, `rank all`, or `best-of` before spawning.
 3. Set N from the user or derive it from the shape. N is total workers.
-4. Pick the worker model from the `swarm workers` line in `p3-models.md`, resolved through `orchestrator_capabilities`. If the file or that line is missing, run `setup-p3`. For `auto` or `inherit`, omit `target` so the workers run on the parent model. If `delegate_task` rejects the target, fall back to the closest valid model of the same family from `orchestrator_capabilities` and say so. For a model race, name each arm's model up front.
+4. Pick the worker model from the `swarm workers` line in `pstack-models.md`, resolved through `orchestrator_capabilities`. If the file or role is missing, use the bundled default for that role. For `auto` or `inherit`, omit `target` so the workers run on the parent model. If a capacity-selected target is unavailable, resolve another suitable account/model through the execution reference. Ask before replacing a fixed or user-selected model. For a model race, name each arm's model up front.
 5. Give each worker its own writable output when it writes. When workers verify or measure commits, each brief names the exact SHAs. A measurement brief also names the method (sample count, what one sample is, order). The worker records both in its result.
 
 ## Phase B: Fan out

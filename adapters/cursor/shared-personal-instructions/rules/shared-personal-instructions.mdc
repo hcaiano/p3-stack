@@ -1,0 +1,6 @@
+---
+description: Shared personal instructions
+alwaysApply: true
+---
+
+Before starting a task, read and follow `~/.agents/AGENTS.md` as the user's global instructions. Resolve `~` on the current machine. This is the single source of personal policy; use it instead of older personal workflow or delegated-model tables. Project instructions and explicit user requests keep their normal precedence.
