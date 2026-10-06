@@ -22,8 +22,10 @@ Before a delegation wave, call `orchestrator_capabilities` and the installed
 Missing readings or mappings mean unknown capacity. Refresh after usage limits.
 
 `capacity` chooses among models satisfying the invoking skill's role requirements,
-then among their accounts using headroom, pace and resets. All enabled accounts
-are eligible, including both Codex accounts, Claude, Grok and Cursor. Do not impose
+then among their accounts using headroom, pace and resets. Ordered pools keep
+the user's preference tiers; `t3-capacity --candidate` computes the choice.
+All enabled accounts are eligible, including both Codex accounts, Claude, Grok
+and Cursor. Do not impose
 an additional model ranking or reasoning-effort cap. Keep explicit model/account
 choices and the existing `inherit-parent`/`auto` semantics; ask before replacing
 an explicit choice. Use current catalog IDs and supported option keys.

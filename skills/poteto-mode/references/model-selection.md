@@ -9,13 +9,22 @@ invoking skill's roles, seat count, diversity, reasoning and verification rules.
 |---|---|---|
 | `capacity` | Any eligible model from enabled T3 providers, then a suitable account | Become candidates on the next live catalog refresh |
 | `capacity[model-id-a \| model-id-b]` | One model from this explicit pool, across eligible accounts | Require an explicit pool edit |
+| `capacity[model-id-a > model-id-b \| model-id-c]` | The first tier with usable capacity: `a`, else `b` or `c` | Require an explicit pool edit |
 | `<providerInstanceId>/<model>` | This exact account and model | Remain pinned until changed |
 | `inherit-parent` or `auto` | Parent provider and model | Follow the parent selection |
 
 Pool entries are exact model IDs returned by `orchestrator_capabilities`. An
 entry may instead be `<providerInstanceId>/<model>` to restrict that candidate
-to an account. Use ` | ` between alternatives. Never guess model equivalence
-from names. A catalog alias cannot prove a panel's required model diversity.
+to an account. Use ` | ` between alternatives and ` > ` between preference
+tiers; `|` binds tighter, so `A > B | C` is tier `A`, then tier `B | C`. Never
+guess model equivalence from names. A catalog alias cannot prove a panel's
+required model diversity.
+
+Resolve a pool with `t3-capacity`: pass each tier as one `--candidate` flag
+listing `<providerInstanceId>/<model>` for every account exposing each model,
+and delegate to its `choice`. It takes the first tier with an available
+account, then the first with a protected one, lowest pace within a tier.
+A null `choice` means no candidate in the pool can take work.
 
 An unqualified model ID allows all enabled accounts exposing that exact ID.
 For example, both Codex accounts can serve one GPT model without requiring two

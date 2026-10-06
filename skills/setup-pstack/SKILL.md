@@ -31,7 +31,8 @@ roles for review rather than dropping unrecognized user settings silently.
 ### 3. Budget, map, and confirm
 
 Offer open automatic selection (`capacity`), a restricted pool
-(`capacity[model-id-a | model-id-b]`), or a pinned account/model. A pool selects
+(`capacity[model-id-a | model-id-b]`), an ordered pool that falls back by tier
+(`capacity[model-id-a > model-id-b]`), or a pinned account/model. A pool selects
 one alternative for each seat; a panel's top-level list still controls its seat
 count. Preserve the invoking skill's required count and diversity. Existing
 user choices are authorization to keep them; ask only for unresolved preferences.
