@@ -21,7 +21,7 @@ how to review updates.
 
 ## Install
 
-Requires Node.js/npx and the existing `t3-capacity` and `pair` skills from
+Requires Node.js/npx and the existing `t3-capacity` skill from
 `hcaiano/skills`. Installation uses the Skills CLI, not hand-edited installed
 copies. Keep an existing upstream `unslop`.
 
