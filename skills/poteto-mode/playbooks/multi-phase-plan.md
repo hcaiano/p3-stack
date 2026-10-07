@@ -41,7 +41,7 @@ The program runs `skills/poteto-mode/playbooks/<execution playbook>.md`. <Who me
 
 ### PR mechanics, for every PR
 - [ ] GitHub CLI (`gh`) is the forge. Never require Graphite (`gt`). Call `link_pull_request` for every PR the moment it opens.
-- [ ] Open the PR ready, never draft, per **Opening a PR**. Use `gh pr create --base <base-branch>`. A stack child targets its parent branch.
+- [ ] Open the PR ready, never draft, per **Opening a PR**, only after the shipped code is final and **review-it** has passed on it. Use `gh pr create --base <base-branch>`. A stack child targets its parent branch.
 - [ ] Run the repo's lint and typecheck once before the PR-facing push. Push with hooks on.
 - [ ] Run the **unslop** skill before each commit and the **no-comments** skill before review.
 - [ ] Triage every Bugbot and security-reviewer comment per `../references/bugbot-triage.md`.
