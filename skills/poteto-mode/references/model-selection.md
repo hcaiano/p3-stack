@@ -22,8 +22,8 @@ required model diversity.
 
 Resolve a pool with `t3-capacity`: pass each tier as one `--candidate` flag
 listing `<providerInstanceId>/<model>` for every account exposing each model,
-and delegate to its `choice`. It takes the first tier with an available
-account, then the first with a protected one, lowest pace within a tier.
+and delegate to its `choice`. It takes the first tier with an available or
+protected account, preferring available, then lowest pace, within that tier.
 A null `choice` means no candidate in the pool can take work.
 
 An unqualified model ID allows all enabled accounts exposing that exact ID.
