@@ -26,6 +26,16 @@ official updates.
   `skills/poteto-mode/playbooks/opening-a-pr.md` (no PR body template),
   `skills/poteto-mode/SKILL.md`, `skills/poteto-help/SKILL.md`,
   `skills/technical-writing/SKILL.md` and `skills/benchmark-checklist/SKILL.md`.
+- **Autopilot PR timing.** An Autopilot-full or Autopilot-stack owner opens
+  its PR only when the shipped code is final and self-proof and `review-it`
+  have both passed on that exact head. It writes the PR with `write-pr`, opens it
+  ready, links it, reports the code-ready head, and starts the babysit loop in
+  `drive` mode. Upstream opens the PR within about 15 minutes, before
+  self-proof. Files:
+  `skills/poteto-mode/playbooks/autopilot-full.md`,
+  `skills/poteto-mode/playbooks/autopilot-stack.md`,
+  `skills/poteto-mode/playbooks/opening-a-pr.md` and
+  `skills/poteto-mode/playbooks/multi-phase-plan.md`.
 - **Installer dependencies.** The installer requires only `t3-capacity` from
   `hcaiano/skills`. `pair` moved to that repo's `deprecated/` folder.
 
