@@ -15,6 +15,20 @@ T3 transport compatibility, installation packaging, and the user guide.
 The worker briefs moved into poteto-mode so Skills CLI includes them; the existing
 installed upstream unslop is reused. No Firstmate runtime is included.
 
+## Approved local deltas
+
+The user approved these changes to upstream text. Keep them when you port
+official updates.
+
+- **PR workflow.** Agents run `review-it` before they open or update a PR and
+  write PR titles and bodies with `write-pr`, both from `hcaiano/skills`.
+  `interrogate` stays as the `dual` panel that `review-it` calls. Files:
+  `skills/poteto-mode/playbooks/opening-a-pr.md` (no PR body template),
+  `skills/poteto-mode/SKILL.md`, `skills/poteto-help/SKILL.md`,
+  `skills/technical-writing/SKILL.md` and `skills/benchmark-checklist/SKILL.md`.
+- **Installer dependencies.** The installer requires only `t3-capacity` from
+  `hcaiano/skills`. `pair` moved to that repo's `deprecated/` folder.
+
 ## Checking for updates
 
 ```bash

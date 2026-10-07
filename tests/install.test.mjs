@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, symlinkSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, symlinkSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { resolve, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -9,7 +9,7 @@ const installer = resolve('scripts/install.mjs');
 function fixture() {
   const home = mkdtempSync(join(tmpdir(), 'p3-installer-test-'));
   const skills = join(home, '.agents/skills');
-  for (const name of ['pair', 't3-capacity', 'unslop']) {
+  for (const name of ['t3-capacity', 'unslop']) {
     mkdirSync(join(skills, name), { recursive: true });
     writeFileSync(join(skills, name, 'SKILL.md'), 'existing skill');
   }
@@ -86,4 +86,11 @@ test('updates accept provider symlinks pointing at the owned canonical skill', (
   const provider = join(f.home, '.claude/skills'); mkdirSync(provider, { recursive: true });
   symlinkSync('../../.agents/skills/poteto-mode', join(provider, 'poteto-mode'));
   const r = f.run('--update'); assert.equal(r.status, 0, r.stderr);
+});
+
+test('t3-capacity is the only hcaiano/skills dependency', () => {
+  const f = fixture(); assert.equal(f.run().status, 0);
+  rmSync(join(f.skills, 't3-capacity'), { recursive: true });
+  const r = f.run(); assert.notEqual(r.status, 0);
+  assert.match(r.stderr, /dependency t3-capacity/);
 });

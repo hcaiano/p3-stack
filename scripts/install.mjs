@@ -56,7 +56,7 @@ for (const name of readdirSync(join(root, 'skills')).sort()) {
   }
   skills.push(name);
 }
-for (const name of ['t3-capacity', 'pair']) {
+for (const name of ['t3-capacity']) {
   if (![canonical, join(homedir(), '.agents', 'skills')].some(p => existsSync(join(p, name, 'SKILL.md')))) {
     throw new Error(`Install the existing hcaiano/skills dependency ${name} with the Skills CLI first.`);
   }

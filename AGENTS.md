@@ -76,7 +76,8 @@ Preserve upstream playbooks. The shared `skills/poteto-mode/references/t3-execut
 The fork is an orchestration port, not a new engineering method. Keep pstack's
 engineering instructions, principles, playbook steps, rubrics and verification
 requirements unchanged. Changes here may translate T3 tools, resolve accounts,
-repair installation paths, or document usage. Capacity never lowers the method's
+repair installation paths, document usage, or carry an approved local delta
+listed in UPSTREAM.md. Capacity never lowers the method's
 bar. Any proposed change to upstream engineering belongs in a separate proposal
 and is outside this fork's authorized scope.
 
