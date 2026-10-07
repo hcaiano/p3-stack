@@ -53,7 +53,8 @@ budgets, model diversity or verification requirements to fit available capacity.
    `npx skills@latest` into a disposable project and inspect actual resources.
    For transport changes, check live T3 capabilities and representative role
    resolution. Do not invent successful runtime evidence.
-2. Prepare or update one draft integration PR. Include source revisions,
+2. Run `review-it`, then prepare or update one integration PR, written with
+   `write-pr` and opened ready for review. Include source revisions,
    fingerprint, engineering changes imported from official, transport-only
    adaptations, validation and unresolved gaps. Report partial work honestly.
 3. Stop before merge or installation. The user approves these steps. After that
