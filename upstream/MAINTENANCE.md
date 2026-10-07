@@ -36,6 +36,8 @@ budgets, model diversity or verification requirements to fit available capacity.
    bundle briefs under `skills/poteto-mode/references/`. Translate only the runtime
    mechanisms described in AGENTS.md. Include added and removed resources and
    repair affected references. Never apply the source patch blindly to this fork.
+   Keep each approved local delta listed in UPSTREAM.md. When official changes
+   the same text, port the rest, keep the delta, and name it in the PR.
 5. Keep existing `unslop` ownership with cursor/plugins. Report an upstream change
    to it as a separate Skills CLI update, rather than copying over its installed
    files. Preserve unrelated global skills and Matt Pocock's issue workflow.
