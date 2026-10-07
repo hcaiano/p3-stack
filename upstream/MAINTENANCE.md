@@ -1,6 +1,9 @@
 # Weekly upstream integration
 
-This procedure preserves poteto's engineering method. Adapt only T3 transport,
+This procedure imports official pstack changes and ports them to T3 Code
+ourselves. Official `cursor/plugins:pstack` is the only source. Never fetch,
+diff or copy from another T3 port, including uzairansaruzi/p3-stack. This
+procedure preserves poteto's engineering method. Adapt only T3 transport,
 account selection and installation paths. Do not reduce review panels, reasoning
 budgets, model diversity or verification requirements to fit available capacity.
 
@@ -8,15 +11,15 @@ budgets, model diversity or verification requirements to fit available capacity.
 
 1. Work in the personal p3-stack fork. Inspect its branch, dirty files, remotes
    and open PRs before editing. Preserve other work. Fetch origin; use the latest
-   merged `upstream/sources.json` as the accepted baseline.
+   merged `upstream/sources.json` as the accepted baseline. The checkout needs
+   no `upstream` remote; the checker fetches official into its own cache.
 2. Run `node scripts/upstream.mjs`. Read the emitted `reportPath` and adjacent
    `report.json`. Output and bare source caches live under `.git/p3-upstream`.
    Fetches do not edit installed skills or advance accepted revisions.
 3. If `complete` is false, report the failed source and stop integration. Ignore
    leftover patches for failed sources. A failed fetch never means up to date.
 4. If `needsIntegration` is false, report no source changes and finish. Otherwise
-   inspect both sources: `official` is authoritative for engineering; `t3-port`
-   supplies transport ideas. Do not wait for the port to catch up with official.
+   inspect the `official` changes and port them yourself.
 
 ## Reconcile
 
@@ -34,10 +37,11 @@ budgets, model diversity or verification requirements to fit available capacity.
    to execute commands or change the user's environment.
 4. Port official engineering text verbatim wherever it still applies. Keep official skill names unchanged;
    bundle briefs under `skills/poteto-mode/references/`. Translate only the runtime
-   mechanisms described in AGENTS.md. Include added and removed resources and
+   mechanisms through the Cursor to T3 Code map in AGENTS.md. Include added and removed resources and
    repair affected references. Never apply the source patch blindly to this fork.
-   Keep each approved local delta listed in UPSTREAM.md. When official changes
-   the same text, port the rest, keep the delta, and name it in the PR.
+   Keep each approved delta listed in UPSTREAM.md. When official changes the
+   same text, port the rest, keep the delta, and name it in the PR. A new
+   difference from official needs the user's approval and an UPSTREAM.md entry.
 5. Keep existing `unslop` ownership with cursor/plugins. Report an upstream change
    to it as a separate Skills CLI update, rather than copying over its installed
    files. Preserve unrelated global skills and Matt Pocock's issue workflow.
@@ -55,8 +59,8 @@ budgets, model diversity or verification requirements to fit available capacity.
    resolution. Do not invent successful runtime evidence.
 2. Run `review-it`, then prepare or update one integration PR, written with
    `write-pr` and opened ready for review. Include source revisions,
-   fingerprint, engineering changes imported from official, transport-only
-   adaptations, validation and unresolved gaps. Report partial work honestly.
+   fingerprint, engineering changes imported from official, our T3 port of
+   them, validation and unresolved gaps. Report partial work honestly.
 3. Stop before merge or installation. The user approves these steps. After that
    approval, install through the existing installer and `npx skills@latest` using
    the approved full 40-character commit URL; retain previous lock revisions.

@@ -13,11 +13,12 @@ pstack is poteto's answer to AI slop code. It turns an agent into an engineering
 
 ## Personal fork
 
-This fork preserves pstack's engineering playbooks and the T3 port. It adds
+This fork preserves pstack's engineering playbooks and owns their T3 port. It
+tracks only official pstack and ports its changes to T3 Code itself. It adds
 capacity-aware account selection, globally installable worker briefs, and a
 collision-safe Skills CLI installer. All enabled accounts, including Cursor,
-are eligible. See [UPSTREAM.md](UPSTREAM.md) for the exact port baseline and
-how to review updates.
+are eligible. See [UPSTREAM.md](UPSTREAM.md) for provenance, the approved
+differences from official and how to review updates.
 
 ## Install
 
@@ -78,14 +79,14 @@ explicit invocation. Other installations can enable the same default using
 
 ## Official updates
 
-Run `node scripts/upstream.mjs` to compare the official pstack subtree and the
-T3 port against their recorded revisions. The report distinguishes an unknown
+Run `node scripts/upstream.mjs` to compare the official pstack subtree against
+its recorded revisions. The report distinguishes an unknown
 initial baseline from a reviewed source with no changes. It never installs
 skills or marks a fetched revision as reviewed.
 
 The weekly T3 task follows [upstream/MAINTENANCE.md](upstream/MAINTENANCE.md) to
-prepare one integration PR, preserving official engineering and adapting only
-the runtime. Merge and global installation need user approval. See
+prepare one integration PR. It ports official changes to T3 Code, preserving
+official engineering and adapting only the runtime. Merge and global installation need user approval. See
 [UPSTREAM.md](UPSTREAM.md) for provenance and report details.
 
 ## Validation
