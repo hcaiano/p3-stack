@@ -7,14 +7,6 @@
       "path": "pstack",
       "observedCommit": "77526ffa67f8dafc698d14b5356e6d4fc78c3127",
       "reviewedCommit": null
-    },
-    {
-      "id": "t3-port",
-      "url": "https://github.com/uzairansaruzi/p3-stack.git",
-      "branch": "main",
-      "path": "",
-      "observedCommit": "09909ebb5c0125e27fad3e57d96b81e832696d69",
-      "reviewedCommit": "09909ebb5c0125e27fad3e57d96b81e832696d69"
     }
   ]
 }
