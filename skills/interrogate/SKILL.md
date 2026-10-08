@@ -52,6 +52,8 @@ Read `references/reviewer-prompt.md` and fill in the template with:
 
 The same filled template goes to all reviewers, so every model applies the code-quality lens. Drain results with `task_status`.
 
+Watch for _stalled_ reviewers as T3 execution describes. Synthesize once every reviewer has returned or stalled. With two or more returned, cancel a stalled reviewer without restaffing and list it as stalled under Reviewers; with fewer than two, restaff it.
+
 ## Step 4, Synthesize
 
 As results come back, build a unified picture:
