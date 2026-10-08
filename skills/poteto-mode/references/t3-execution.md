@@ -56,13 +56,15 @@ than silently changing a parallel workflow. Shell `cd` does not rebind T3 thread
 Browser, device, PR-watch and scheduling calls follow their live T3 tool contracts.
 
 A child is _stalled_ when its run still reads `running` and its thread has had no
-new activity for 30 minutes: a provider can send its final answer and leave the
+new activity for 60 minutes: a provider can send its final answer and leave the
 run open, so the completion notification never arrives. When a wave of async
-children starts, create a `schedule_task` interval of 1800000 ms bound to the
+children starts, create one `schedule_task` interval of 3600000 ms bound to the
 current thread, keep its ID, and end the turn; delete it with
-`delete_scheduled_task` once no child is running. On each run, read every running
+`delete_scheduled_task` once no child is running. Each run re-reads this whole
+thread, so keep one such wake per thread and never schedule one to wait on a
+pull request: `watch_pull_request` covers that. On each run, read every running
 child with `t3_thread_read` in `view: "activity"`, paging to the newest item; any
-item in the last 30 minutes means it is healthy. For a stalled child, take its
+item in the last 60 minutes means it is healthy. For a stalled child, take its
 final assistant message, recovered in full, as the result when it answers the
 brief, then `task_cancel` it. Without one, cancel it, confirm with `task_status`
 that it is terminal, inspect its writes, and restaff under the retry rules above.
