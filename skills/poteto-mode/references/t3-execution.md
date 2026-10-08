@@ -57,13 +57,15 @@ Browser, device, PR-watch and scheduling calls follow their live T3 tool contrac
 
 A child is _stalled_ when its run still reads `running` and its thread has had no
 new activity for 30 minutes: a provider can send its final answer and leave the
-run open, so the completion notification never arrives. While children run, arm a
-30-minute timer the harness wakes you from (a background `sleep 1800`, a
-scheduled wake-up, or `t3_thread_wait` with that timeout). When it fires, read
-each running child with `t3_thread_read`; recent activity means re-arm. For a
-stalled child, take its final assistant message as the result when it answers
-the brief, then `task_cancel` it; without one, inspect its writes, cancel it and
-restaff under the retry rules above.
+run open, so the completion notification never arrives. When a wave of async
+children starts, create a `schedule_task` interval of 1800000 ms bound to the
+current thread, keep its ID, and end the turn; delete it with
+`delete_scheduled_task` once no child is running. On each run, read every running
+child with `t3_thread_read` in `view: "activity"`, paging to the newest item; any
+item in the last 30 minutes means it is healthy. For a stalled child, take its
+final assistant message, recovered in full, as the result when it answers the
+brief, then `task_cancel` it. Without one, cancel it, confirm with `task_status`
+that it is terminal, inspect its writes, and restaff under the retry rules above.
 
 User authorization and project instructions retain their normal precedence.
 This adapter does not grant merge, deployment or communication permissions and
