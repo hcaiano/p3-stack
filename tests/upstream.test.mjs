@@ -73,3 +73,32 @@ test('a removed official subtree is reported as a source error', () => {
   const { process, report } = f.run(); assert.equal(process.status, 1);
   assert.equal(report.sources[0].status, 'error');
 });
+
+test('the auditor uses the current worktree report rather than a stale main-checkout report', () => {
+  const f = fixture();
+  const checkout = join(f.dir, 'checkout');
+  mkdirSync(join(checkout, 'scripts'), { recursive: true });
+  writeFileSync(join(checkout, 'scripts/audit-upstream.mjs'), readFileSync(resolve('scripts/audit-upstream.mjs')));
+  git(checkout, 'init', '-b', 'main');
+  git(checkout, 'add', '.'); git(checkout, 'commit', '-m', 'audit fixture');
+  const worktree = join(f.dir, 'worktree');
+  git(checkout, 'worktree', 'add', '-b', 'inspect', worktree);
+  const mainOutput = join(checkout, '.git/p3-upstream');
+  const worktreeOutput = join(git(worktree, 'rev-parse', '--absolute-git-dir'), 'p3-upstream');
+  const source = { id: 'official', url: 'https://github.com/cursor/plugins.git', path: 'pstack',
+    cache: join(f.repo, '.git'), latestCommit: f.sha, reviewedCommit: null };
+  mkdirSync(mainOutput, { recursive: true });
+  writeFileSync(join(mainOutput, 'report.json'), JSON.stringify({ complete: true,
+    fingerprint: 'stale-main-report', sources: [source] }));
+  writeFileSync(join(f.repo, 'pstack/skills/latest.md'), 'current worktree source\n');
+  git(f.repo, 'add', '.'); git(f.repo, 'commit', '-m', 'current source');
+  mkdirSync(worktreeOutput, { recursive: true });
+  writeFileSync(join(worktreeOutput, 'report.json'), JSON.stringify({ complete: true,
+    fingerprint: 'current-worktree-report', sources: [{ ...source, latestCommit: git(f.repo, 'rev-parse', 'HEAD') }] }));
+
+  const result = spawnSync('node', [join(worktree, 'scripts/audit-upstream.mjs')], { cwd: worktree, encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr);
+  const inventory = JSON.parse(readFileSync(join(worktreeOutput, 'audit/inventory.json'), 'utf8'));
+  assert.equal(inventory.fingerprint, 'current-worktree-report');
+  assert.deepEqual(inventory.files.map(file => file.source), ['skills/change.md', 'skills/latest.md', 'skills/remove.md']);
+});

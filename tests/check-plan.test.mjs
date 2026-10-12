@@ -1,4 +1,4 @@
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, rmSync, writeFileSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -52,10 +52,10 @@ Close.
 Recorded.
 `;
 
-const runPlan = (example, expectedExit) => {
+const runPlan = (example, expectedExit, plan = validPlan) => {
 	const directory = mkdtempSync(join(tmpdir(), "check-plan-test-"));
 	const file = join(directory, "plan.md");
-	writeFileSync(file, validPlan + example);
+	writeFileSync(file, plan + example);
 	try {
 		const result = spawnSync("node", [checker, file], { encoding: "utf8" });
 		assert.equal(result.status, expectedExit, result.stderr);
@@ -64,6 +64,29 @@ const runPlan = (example, expectedExit) => {
 		rmSync(directory, { recursive: true, force: true });
 	}
 };
+
+const publishedPlan = () => {
+	const playbook = readFileSync(new URL("../skills/poteto-mode/playbooks/multi-phase-plan.md", import.meta.url), "utf8");
+	return playbook.split("````markdown\n")[1].split("\n````")[0]
+		.replace("<Program>", "Demo")
+		.replaceAll("<execution playbook>", "autopilot-stack")
+		.replace("<resolved swarm workers model>", "model-from-live-catalog")
+		.replaceAll("<PR id>", "PR 1")
+		.replace("<Task as a verb phrase>", "Implement the flow")
+		.replace(/^- \[ \] Lanes 2 to 10\..*$/m, Array.from({ length: 9 }, (_, i) =>
+			`- [ ] Lane ${i + 2}. Drive the flow. Save \`lane-${i + 2}.png\`. Pass when the result is visible.`).join("\n"))
+		.replace(/<[^>]+>/g, "Recorded.");
+};
+
+test("accepts a completed plan from the published T3 playbook", () => {
+	const result = runPlan("", 0, publishedPlan());
+	assert.ok(result.stdout.includes("1 PR sections, 0 problems"));
+});
+
+test("requires all ten live lanes in a completed published plan", () => {
+	const result = runPlan("", 1, publishedPlan().replace(/^- \[ \] Lane 10\..*\n?/m, ""));
+	assert.ok(result.stderr.includes("expected 1 to 10"));
+});
 
 test("accepts ordinary, indented, and longer closing fences", () => {
 	for (const indent of ["", " ", "  ", "   "])
