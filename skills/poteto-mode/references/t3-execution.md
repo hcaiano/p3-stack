@@ -85,9 +85,9 @@ desktop, assign one verifier to control its input. If the human takes control,
 stop input immediately, checkpoint the relevant case and release the desktop.
 Resume only when the user returns control. Do not reactivate focus, reorder
 windows or poll to reclaim control. In the collaborative T3 browser, inspect a
-human-owned tab through `preview_snapshot` or open your own. Navigation,
-evaluation, resize, close and input require control permitted by the live tool
-contract.
+human-owned tab with `preview_snapshot` or `preview_wait_for`, or open your own.
+Use other preview operations only on a tab the live tool contract permits you
+to control. Accepting a tab ID does not grant control.
 
 ## Verification retries and evidence
 
