@@ -1,12 +1,12 @@
 ---
 name: figure-it-out
-description: "Design an auditable playbook when no narrower one fits: a large migration, an ambitious multi-part change, or work a human reviews after stepping away. Scales rigor to the task, runs a hypothesis loop, and logs decisions via show-me-your-work. Use for /figure-it-out, 'figure it out', a large migration, or when no narrower playbook applies."
+description: "Design an auditable playbook when no narrower one fits: a large migration, an ambitious multi-part change, or work a human reviews after stepping away. Scales rigor to the task, runs a hypothesis loop, and logs decisions. Use for /figure-it-out or 'figure it out'."
 disable-model-invocation: true
 ---
 
 # Figure it out
 
-Before resolving models or delegating, read [T3 execution](../poteto-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints. Its top-level conversation requirement applies to every launch below; use supported child isolation or report the runtime limitation otherwise.
+Read the installed poteto-mode reference `../poteto-mode/references/t3-execution.md` before selecting models or delegating. It owns named-role resolution, catalog option keys, accounts and automatic authorized missing-usage fallback.
 
 When the task matches no playbook, design one. The deliverable before any code is the workflow itself: a sequence of phases that scales rigor to the task, runs the scientific method, and leaves a decision trail a human can audit after stepping away.
 
@@ -30,20 +30,17 @@ Decompose into atomic, independently-landable units. Sequence riskiest-unknown-f
 
 - Build the verification harness before the work, with the baseline captured from the pre-change state, so the check reads as "old value vs new value".
 - For one-way-door design decisions, run the **architect** skill (it runs **arena**). Skip it for mechanical work whose shape is already concrete. A second arena over a settled design is over-engineering (the **laziness-protocol** principle skill).
-- Decide what fans out. Parallelize only across seams, and give each writer its own worktree via `t3_thread_launch` with a `workspaceStrategy`, one writer per worktree (the **separate-before-serializing-shared-state** principle skill). Don't over-fan.
-- Every `delegate_task` brief stands alone: the child gets only the brief, never your context. Read-only workers get a brief that says read-only, inspect only, no writes. Resolve models from named roles in `pstack-models.md` via `orchestrator_capabilities`; never hardcode a slug.
+- Decide what fans out. Parallelize only across seams, and give each worker its own worktree or branch (the **separate-before-serializing-shared-state** principle skill). Use supported child isolation with a self-contained `delegate_task` brief. `t3_thread_launch` is only for an explicitly requested separate top-level conversation. If the child runtime cannot provide the required isolation, report the factual limitation. Don't over-fan.
 - Write the designed phase list down. That list is what the human reviews.
 
-Then execute the design. Add its steps to the todolist as concrete items, after the Phase C entry and before Phase D. Run each under the Phase C loop discipline, and weave the Phase D log through them, a row as each step lands, rather than saving the whole trail for the end.
+Then execute the design. Add its steps to the todolist as concrete items between the Phase C and Phase D entries. Run each under the Phase C loop discipline, and weave the Phase D log through them, a row as each step lands, rather than saving the whole trail for the end.
 
 ## Phase C: Run the loop
 
-Each unit is an experiment. State the hypothesis, make the smallest change, measure against the predicate on the real artifact, keep it if it advanced, revert it if it didn't.
-Apply the **sequence-verifiable-units** principle skill, verifying each unit before starting the next instead of batching checks at the end.
+Each unit is an experiment. State the hypothesis, make the smallest change, measure against the predicate on the real artifact, keep it if it advanced, revert it if it didn't. Apply the **sequence-verifiable-units** principle skill, verifying each unit before starting the next instead of batching checks at the end.
 
 - Verify by inspecting the artifact, never a self-report. When something passes too easily, suspect the observation method before the system.
 - Pair delegated work with a judge. If a worker games the gate, reset and harden the contract. If the gate itself is wrong, fix the gate in its own change rather than routing around it.
-- Drain background work with `task_status`. For a PR in flight, arm `watch_pull_request`, end the turn, and triage on wake; use `schedule_task` for recurring checks.
 - A verdict is VERIFIED, NOT VERIFIED, or INCONCLUSIVE. Inconclusive is not a pass. Don't hide a negative.
 
 ## Phase D: Keep the audit trail

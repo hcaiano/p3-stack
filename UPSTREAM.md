@@ -50,6 +50,20 @@ official updates.
   `skills/poteto-mode/playbooks/multi-phase-plan.md`.
 - **Installer dependencies.** The installer requires only `t3-capacity` from
   `hcaiano/skills`. `pair` moved to that repo's `deprecated/` folder.
+- **Cleanup command.** The user's AGENTS.md requires `trash`, replacing the
+  recursive removal command in `skills/poteto-mode/playbooks/worktree-cleanup.md`.
+- **Automatic account fallback.** On 2026-10-12 the user required authorized
+  fallbacks to proceed without permission when usage is missing. The T3 account
+  adapter also treats configured models and singleton pools as preferences unless
+  the user explicitly prohibits alternatives. Exhausted preferences fall back
+  automatically through the selected configuration and all declared fallback tiers.
+  Where the approved automatic fallback policy permits it, qualifying live
+  alternatives follow those tiers. Preferences stay in the configuration, with
+  no fixed priority list in skills. It preserves measured
+  selection, distinguishes missing usage from missing
+  billing mappings and bounds retries without changing engineering requirements.
+  Files: `skills/poteto-mode/references/t3-execution.md`, `model-selection.md`,
+  `skills/poteto-mode/scripts/resolve-capacity.mjs` and their skill callers.
 - **Verification ownership and retries.** Approved on 2026-10-12 after the
   workflow retro: one verifier owns a shared desktop, releases it on human
   preemption, and retries a failed case only after a relevant input changes.

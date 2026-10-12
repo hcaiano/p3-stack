@@ -73,3 +73,99 @@ test('a removed official subtree is reported as a source error', () => {
   const { process, report } = f.run(); assert.equal(process.status, 1);
   assert.equal(report.sources[0].status, 'error');
 });
+
+test('the auditor uses the current worktree report rather than a stale main-checkout report', () => {
+  const f = fixture();
+  const checkout = join(f.dir, 'checkout');
+  mkdirSync(join(checkout, 'scripts'), { recursive: true });
+  writeFileSync(join(checkout, 'scripts/audit-upstream.mjs'), readFileSync(resolve('scripts/audit-upstream.mjs')));
+  git(checkout, 'init', '-b', 'main');
+  git(checkout, 'add', '.'); git(checkout, 'commit', '-m', 'audit fixture');
+  const worktree = join(f.dir, 'worktree');
+  git(checkout, 'worktree', 'add', '-b', 'inspect', worktree);
+  const mainOutput = join(checkout, '.git/p3-upstream');
+  const worktreeOutput = join(git(worktree, 'rev-parse', '--absolute-git-dir'), 'p3-upstream');
+  const source = { id: 'official', url: 'https://github.com/cursor/plugins.git', path: 'pstack',
+    cache: join(f.repo, '.git'), latestCommit: f.sha, reviewedCommit: null };
+  mkdirSync(mainOutput, { recursive: true });
+  writeFileSync(join(mainOutput, 'report.json'), JSON.stringify({ complete: true,
+    fingerprint: 'stale-main-report', sources: [source] }));
+  writeFileSync(join(f.repo, 'pstack/skills/latest.md'), 'current worktree source\n');
+  git(f.repo, 'add', '.'); git(f.repo, 'commit', '-m', 'current source');
+  mkdirSync(worktreeOutput, { recursive: true });
+  writeFileSync(join(worktreeOutput, 'report.json'), JSON.stringify({ complete: true,
+    fingerprint: 'current-worktree-report', sources: [{ ...source, latestCommit: git(f.repo, 'rev-parse', 'HEAD') }] }));
+
+  const result = spawnSync('node', [join(worktree, 'scripts/audit-upstream.mjs')], { cwd: worktree, encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr);
+  const inventory = JSON.parse(readFileSync(join(worktreeOutput, 'audit/inventory.json'), 'utf8'));
+  assert.equal(inventory.fingerprint, 'current-worktree-report');
+  assert.deepEqual(inventory.files.map(file => file.source), ['skills/change.md', 'skills/latest.md', 'skills/remove.md']);
+});
+
+function guideAuditFixture() {
+  const f = fixture();
+  const guide = '## Verify\nRun the real user flow.\n\n[mode](../../skills/poteto-mode/SKILL.md)\n';
+  mkdirSync(join(f.repo, 'pstack/docs/guide'), { recursive: true });
+  writeFileSync(join(f.repo, 'pstack/docs/guide/verify.md'), guide);
+  git(f.repo, 'add', '.'); git(f.repo, 'commit', '-m', 'guide source');
+  const checkout = join(f.dir, 'checkout');
+  mkdirSync(join(checkout, 'scripts'), { recursive: true });
+  writeFileSync(join(checkout, 'scripts/audit-upstream.mjs'), readFileSync(resolve('scripts/audit-upstream.mjs')));
+  git(checkout, 'init', '-b', 'main');
+  const reportPath = join(checkout, '.git/p3-upstream/report.json');
+  mkdirSync(join(checkout, '.git/p3-upstream'), { recursive: true });
+  writeFileSync(reportPath, JSON.stringify({ complete: true, fingerprint: 'guide-fixture', sources: [{
+    id: 'official', url: 'https://github.com/cursor/plugins.git', path: 'pstack', cache: join(f.repo, '.git'),
+    latestCommit: git(f.repo, 'rev-parse', 'HEAD'), reviewedCommit: null,
+  }] }));
+  mkdirSync(join(checkout, 'docs/guide'), { recursive: true });
+  writeFileSync(join(checkout, 'docs/guide/verify.md'), guide);
+  const bundled = join(checkout, 'skills/poteto-help/references/guide/verify.md');
+  mkdirSync(join(checkout, 'skills/poteto-help/references/guide'), { recursive: true });
+  writeFileSync(bundled, '## Verify\nRun the real user flow.\n\n[mode](../../../poteto-mode/SKILL.md)\n');
+  return { checkout, bundled, repo: f.repo, run: () => spawnSync('node', [join(checkout, 'scripts/audit-upstream.mjs')], {
+    cwd: checkout, encoding: 'utf8',
+  }) };
+}
+
+test('the official guide is audited as engineering content and its installed resource preserves the text', () => {
+  const f = guideAuditFixture();
+  const result = f.run();
+  assert.equal(result.status, 0, result.stderr);
+  const inventory = JSON.parse(readFileSync(join(f.checkout, '.git/p3-upstream/audit/inventory.json'), 'utf8'));
+  const guide = inventory.files.find(file => file.source === 'docs/guide/verify.md');
+  assert.equal(guide.disposition, 'compare');
+  assert.equal(guide.present, true);
+});
+
+test('the auditor rejects a bundled guide that drops its verification instruction or is missing', () => {
+  const f = guideAuditFixture();
+  writeFileSync(f.bundled, '## Verify\n\n[mode](../../../poteto-mode/SKILL.md)\n');
+  const shortened = f.run();
+  assert.equal(shortened.status, 1);
+  assert.match(shortened.stderr, /Bundled guide must preserve docs\/guide\/verify.md/);
+  unlinkSync(f.bundled);
+  const missing = f.run();
+  assert.equal(missing.status, 1);
+  assert.match(missing.stderr, /Bundled guide must preserve docs\/guide\/verify.md/);
+});
+
+test('an excluded packaging target keeps a null JSON digest and a whitespace-clean TSV', () => {
+  const f = guideAuditFixture();
+  writeFileSync(join(f.repo, 'pstack/plugin.json'), '{}\n');
+  git(f.repo, 'add', '.'); git(f.repo, 'commit', '-m', 'excluded package');
+  const reportPath = join(f.checkout, '.git/p3-upstream/report.json');
+  const report = JSON.parse(readFileSync(reportPath, 'utf8'));
+  report.sources[0].latestCommit = git(f.repo, 'rev-parse', 'HEAD');
+  writeFileSync(reportPath, JSON.stringify(report));
+  const result = f.run();
+  assert.equal(result.status, 0, result.stderr);
+  const output = join(f.checkout, '.git/p3-upstream/audit');
+  const inventory = JSON.parse(readFileSync(join(output, 'inventory.json'), 'utf8'));
+  assert.equal(inventory.files.find(file => file.source === 'plugin.json').sha256, null);
+  writeFileSync(join(f.checkout, 'inventory.tsv'), readFileSync(join(output, 'inventory.tsv')));
+  git(f.checkout, 'add', 'inventory.tsv');
+  const check = spawnSync('git', ['diff', '--cached', '--check'], { cwd: f.checkout, encoding: 'utf8' });
+  assert.equal(check.status, 0, check.stdout + check.stderr);
+});

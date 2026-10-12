@@ -29,7 +29,11 @@ const lock = existsSync(lockPath) ? JSON.parse(readFileSync(lockPath, 'utf8')).s
 const skills = [];
 const preserved = [];
 for (const name of readdirSync(join(root, 'skills')).sort()) {
-  if (!existsSync(join(root, 'skills', name, 'SKILL.md'))) continue;
+  const sourceSkill = join(root, 'skills', name, 'SKILL.md');
+  if (!existsSync(sourceSkill)) continue;
+  const frontmatter = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/.exec(readFileSync(sourceSkill, 'utf8'))?.[1];
+  const declaredName = /^name:\s*(.*?)\s*$/m.exec(frontmatter ?? '')?.[1];
+  if (declaredName !== name) throw new Error(`Skill name must match its installation identifier: ${name}`);
   const destinations = ['.agents/skills', '.claude/skills', '.grok/skills']
     .map(dir => join(scope, dir, name));
   const present = destinations.filter(destination => {

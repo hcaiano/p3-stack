@@ -1,39 +1,56 @@
 ---
 name: poteto-help
-description: Guides users through p3-stack setup, /poteto-mode, and picking the skill, playbook, or principle for a task. Use for /poteto-help, or when the user asks how to install, set up, or use p3-stack, or which p3-stack skill fits. Not for requests to do work, even ones that name p3-stack.
+description: Guides users through pstack setup, /poteto-mode, and picking the skill, playbook, or principle for a task. Type /poteto-help with a question.
+disable-model-invocation: true
 ---
 
 # Poteto help
 
-Before resolving models or delegating, read [T3 execution](../poteto-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
+Answer the user's question about pstack, hand them a prompt they can send, and link the file the answer came from. For a help question, don't start the work. The user asked how, and a pstack run spends real tokens, so let them send the prompt.
 
-Answer the user's question about p3-stack, hand them a prompt they can send, and link the file the answer came from. For a help question, don't start the work. The user asked how, and a p3-stack run spends real tokens, so let them send the prompt.
+A message that asks for work, such as "use pstack to fix this bug", is not a help question. Read [`poteto-mode`](../poteto-mode/SKILL.md), do the work under it, and mention once that the user's global instructions keep it on.
 
-A message that asks for work, such as "use p3-stack to fix this bug", is not a help question. Read [`poteto-mode`](../poteto-mode/SKILL.md), do the work under it, and mention once that invoking `/poteto-mode` keeps the work in this style.
-
-This file maps questions to the skills and playbooks that hold the answers. Those files own the details. Read the file you route to before you quote it, and trust it when it disagrees with this map. Resolve these links against the installed file and link that absolute path. For public links use `hcaiano/p3-stack` at the reviewed revision, with the normalized `skills/...` path; never guess the installed revision.
+This file maps questions to the skills and guide pages that hold the answers. Those files own the details. Read the file you route to before you quote it, and trust it when it disagrees with this map. The links here point into the installed skills, which the user may not be able to open, so give the user the file's public copy: `https://github.com/hcaiano/p3-stack/blob/main/` followed by its path.
 
 ## Find out what they need
 
-Infer the need from the message and the conversation. A named situation, such as "which skill reviews a PR?", goes straight to its section. If the need is still unclear, ask one multiple-choice question with these options, then answer only the section they pick: get set up, start a task with `/poteto-mode`, pick a skill for a situation, fix a run that went wrong, or make p3-stack my own.
+Infer the need from the message and the conversation. A named situation, such as "which skill reviews a PR?", goes straight to its section. If the need is still unclear, ask one multiple-choice question with these options, then answer only the section they pick:
 
-Check the state that changes the answer, and mention it only when it does. Without a project or global `pstack-models.md`, the bundled capacity defaults apply. No `verify-*` skill or other app harness in the project means agents have no scripted way to drive the app; mention `/create-verification-skill` when the question is about proving a change works.
+- Get set up
+- Start a task with `/poteto-mode`
+- Pick a skill for a situation
+- Fix a run that went wrong
+- Make pstack my own
+
+Check the state that changes the answer, and mention it only when it does:
+
+- No `~/.agents/pstack-models.md` means `/setup-pstack` hasn't run for this user, so every role uses its default model.
+- No `verify-*` skill or other app harness in the project means agents have no scripted way to drive the app. Mention `/create-verification-skill` when the question is about proving a change works.
+
+When the model rule is missing and it matters, ask whether the user wants to pick a model for each role and a reasoning budget now. It matters when the user is new, the question is about setup or cost, or the answer depends on which models run. Ask at most once per chat. If the need is also unclear, ask both questions together. Offer two choices:
+
+- Now: give them `/setup-pstack` to type, and answer their question too.
+- Later: answer their question, and add one line saying every role keeps its default model until they run `/setup-pstack`.
 
 ## Get set up
 
-1. Install by cloning the repo and running `./install.sh`. It uses the Skills CLI to install into `~/.agents/skills/`, preserving an existing unslop; `./install.sh --project /path/to/repo` targets a project's `.agents/skills/` instead.
-2. Optionally run [`/setup-pstack`](../setup-pstack/SKILL.md) to choose automatic selection, candidate pools or fixed models per role. It writes `pstack-models.md`; reasoning overrides are optional. The adapter reads changes before the next delegation wave.
+1. Install with the approved revision through the Skills CLI, as described in the [README](https://github.com/hcaiano/p3-stack/blob/main/README.md#install).
+2. Run [`/setup-pstack`](../setup-pstack/SKILL.md). It asks for a reasoning budget, maps a model to each role, and writes a rule. The rule applies to new chats.
 3. Start a real task with `/poteto-mode`, a goal, and a check that can pass or fail.
 
-The personal global instructions enable `poteto-mode` by default. Installation alone does not enable it on other setups. The [fork README](https://github.com/hcaiano/p3-stack) has installation details. Offer to word their first prompt with them.
+The user's global instructions enable `/poteto-mode`; `/setup-pstack` resolves model and account preferences. The [README](https://github.com/hcaiano/p3-stack/blob/main/README.md) and [guide page 1](references/guide/01-setup.md) have the details. Offer to word their first prompt with them, per [`references/prompting.md`](references/prompting.md).
 
-If cost is the worry, say where the tokens go and how to spend fewer. p3-stack spends extra tokens on subagents and review panels. Rerun `/setup-pstack` and pick a smaller budget or cheaper models. A role set to `auto` or `inherit-parent` runs on the parent thread's model, which saves tokens when that model is cheaper. A shorter panel list runs fewer subagents, one for each entry. Save `/poteto-mode` for work that needs rigor.
+If cost is the worry, say where the tokens go and how to spend fewer. pstack spends extra tokens on subagents and review panels. Rerun `/setup-pstack` and pick a smaller budget or cheaper models. A role set to `auto` or `inherit-parent` runs on the chat's model, which saves tokens when the chat runs on Auto or a cheaper model. A shorter panel list runs fewer subagents, one for each entry. Save `/poteto-mode` for work that needs rigor.
+
+p3-stack ports pstack to T3 Code. Its skills use the Agent Skills format. Delegation uses `delegate_task`, named roles resolve through `orchestrator_capabilities`, recurring wakes use `schedule_task`, and PR events use `watch_pull_request`.
 
 ## Start a task with `/poteto-mode`
 
-`/poteto-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep.
+`/poteto-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](references/guide/02-poteto-mode.md) has examples.
 
-With the personal global default enabled, describe each task normally; `/poteto-mode` remains available explicitly. Mid-chat, "new task" makes the mode match a fresh playbook. `/poteto-mode` already uses the poteto-mode skill's `references/poteto-agent.md` for the delegates its playbook steps spawn. To get the same style from a delegate of your own, open its brief with the poteto-mode skill's `references/poteto-agent.md`.
+The user's global instructions keep `/poteto-mode` on every turn. `/poteto-mode` is also available explicitly. See [Default mode](https://github.com/hcaiano/p3-stack/blob/main/docs/default-mode.md) for T3 Code setup.
+
+Mid-chat, "new task" makes the mode match a fresh playbook. `/poteto-mode` already uses the bundled `poteto-agent` brief for the subagents its playbook steps spawn. To get the same style from a subagent of your own, use `delegate_task` with a self-contained brief pointing at poteto-mode's `references/poteto-agent.md`.
 
 ## Pick a skill
 
@@ -46,17 +63,17 @@ The default answer is `/poteto-mode`, which runs most of the others when its ste
 | Know why code is shaped this way, or where a number came from | [`/why`](../why/SKILL.md) |
 | Understand a change or subsystem, explained plainly | [`/teach`](../teach/SKILL.md) |
 | Catch up on their own recent work on a topic | [`/recall`](../recall/SKILL.md) |
+| Catch up on everything in this chat since their last message, with enough context to decide each action item | [`/ketchup`](../ketchup/SKILL.md) |
 | Know what a small diff could break outside itself | [`/blast-radius`](../blast-radius/SKILL.md) |
 | Settle types and module shape before code that crosses a function boundary | [`/architect`](../architect/SKILL.md) |
 | Get several attempts at one brief, merged into the best one | [`/arena`](../arena/SKILL.md) |
-| Run parallel checks over slices, or race workers, as delegated child tasks | [`/swarm`](../swarm/SKILL.md) |
-| Have several models review a diff and try to break it | [`/interrogate`](../interrogate/SKILL.md) |
+| Run parallel checks over slices, or race delegated child tasks | [`/swarm`](../swarm/SKILL.md) |
+| Have different models review a diff and try to break it | [`/interrogate`](../interrogate/SKILL.md) |
 | Fix a bug test-first when a cheap local test exists | [`/tdd`](../tdd/SKILL.md) |
 | Apply TypeScript rules to `.ts` or `.tsx` work | [`/typescript-best-practices`](../typescript-best-practices/SKILL.md) |
 | Strip comments before review, using a reviewer that didn't write them | [`/no-comments`](../no-comments/SKILL.md) |
 | Clean AI tells out of prose | [`/unslop`](../unslop/SKILL.md) |
-| Write docs, an RFC, a README, or a commit message to a standard | [`/technical-writing`](../technical-writing/SKILL.md) |
-| Write a PR title and description | `/write-pr` (from hcaiano/skills) |
+| Write docs, an RFC, a README, a PR description, or a commit message to a standard | [`/technical-writing`](../technical-writing/SKILL.md) |
 | Hear the last reply again in plain words | [`/bro`](../bro/SKILL.md) |
 | Give agents a scripted way to drive the app and prove behavior | [`/create-verification-skill`](../create-verification-skill/SKILL.md) |
 | Bring a verification skill and its feature map back in line with the app | [`/maintain-verification-skill`](../maintain-verification-skill/SKILL.md) |
@@ -67,8 +84,8 @@ The default answer is `/poteto-mode`, which runs most of the others when its ste
 | Turn their own working habits into a personal mode skill | [`/automate-me`](../automate-me/SKILL.md) |
 | Turn what a finished task taught into skill edits | [`/reflect`](../reflect/SKILL.md) |
 | Stop agents from repeating the same mistakes in this repo | [`/correct`](../correct/SKILL.md) |
-| Build a page whose buttons wake a bot over a webhook | [`/make-bot-ui`](../make-bot-ui/SKILL.md) |
-| Find their way around p3-stack | `/poteto-help` |
+| Build a page whose buttons wake a Grok Bot over a webhook | [`/make-bot-ui`](../make-bot-ui/SKILL.md) |
+| Find their way around pstack | `/poteto-help` |
 
 If a skill directory next to this one is missing from the table, read its frontmatter and route by its description. The `principle-*` directories are covered under principles below.
 
@@ -78,41 +95,57 @@ Close calls:
 - `/arena` gives every worker the same brief and merges the best parts. `/swarm` splits work into slices or a race and returns one report.
 - `/architect` implements right after it settles the design. Add "with checkpoint" to review the design before it writes code.
 - `/interrogate` reviews the diff. `/blast-radius` looks for breakage outside the diff and proves the one fact that makes the change safe.
-- `/recall` rebuilds context across recent threads. Resuming one specific thread, delegated task, or branch is the Session pickup playbook.
+- `/recall` rebuilds context across recent chats. `/ketchup` covers only this chat since the user's last message. Resuming one specific chat or branch is the Session pickup playbook.
 - `/figure-it-out` designs one rigorous run. The Orchestrate playbook runs a program that spans days and many PRs. The Autonomous run playbook drives one task to a finish condition.
 
-**Not in p3-stack:** p3-stack has no `/orchestrate` skill. Orchestrate is a `/poteto-mode` playbook.
+Native T3 mechanisms and supporting skills:
+
+- Use `preview_*` and `device_*` for browser and simulator control.
+- Use `schedule_task` for recurring wakes and `watch_pull_request` for PR events.
+- The authoring playbook uses `skill-creator`. Run `review-it` before opening or updating PRs and write their titles and bodies with `write-pr`, as required by the approved fork exception.
+- pstack has no `/orchestrate` skill. Orchestrate is a `/poteto-mode` playbook. If the slash menu shows `/orchestrate`, another plugin provides it.
 
 ## Playbooks and principles
 
-Playbooks are step lists inside `/poteto-mode`, not skills, so they aren't invoked by name. Inside `/poteto-mode`, describing the task picks one, and these phrases name one directly; the Playbooks section of [`poteto-mode`](../poteto-mode/SKILL.md) lists every playbook and when it applies:
+Playbooks are step lists inside `/poteto-mode`, not skills, so they have no slash command. Inside `/poteto-mode`, describing the task picks one, and these phrases name one directly:
 
 - "babysit this pr" or "check on pr 123" runs Babysit. It drives the PR to merge-ready and stops there. It doesn't merge unless the user asks to merge, land, or ship.
-- "land the stack" runs Shipping. "take over this branch" runs Session pickup. "pause safely" runs Pause safely. "run the eval playbook" runs Eval.
+- "land the stack" runs Shipping.
+- "take over this branch" runs Session pickup.
+- "pause safely" runs Pause safely.
 - "full autopilot on this queue" runs Autopilot-full. "stack them, don't ship" runs Autopilot-stack.
+- "run the eval playbook" runs Eval.
 
-p3-stack has no planning skill. For work that spans phases or stacked PRs, asking `/poteto-mode` for a plan runs the [Multi-phase plan playbook](../poteto-mode/playbooks/multi-phase-plan.md), which writes the plan and doesn't implement it. For a design question, the Prototype playbook or `/architect` settles it in code first.
+Without `/poteto-mode`, a phrase such as "babysit this pr" can start another installed skill for the same job instead. The Playbooks section of [`poteto-mode`](../poteto-mode/SKILL.md) lists every playbook and when it applies. [Guide page 6](references/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.
 
-Principles are one-rule skills that `/poteto-mode` reads and cites in its replies. The user rarely invokes one. They steer with the names instead, as in "apply prove it works. show me the real output." Typing `/principle-<name>` still loads one on demand.
+pstack has no planning skill. T3 Code's planning mode works alongside it. For work that spans phases or stacked PRs, asking `/poteto-mode` for a plan runs the [Multi-phase plan playbook](../poteto-mode/playbooks/multi-phase-plan.md), which writes the plan and doesn't implement it. For a design question, the Prototype playbook or `/architect` settles it in code first.
+
+Principles are one-rule skills that `/poteto-mode` reads and cites in its replies. The user rarely invokes one. They steer with the names instead, as in "apply prove it works. show me the real output." Typing `/principle-<name>` still loads one on demand. [Guide page 8](references/guide/08-principles.md) lists them.
 
 ## Fix a run that went wrong
 
 | Symptom | Fix |
 |---|---|
-| The mode stopped applying after a few turns | Check that the global instructions load `poteto-mode`; invoke it explicitly in an older session. |
+| The mode stopped applying after a few turns | Enable it in the user's global instructions, or start each task with `/poteto-mode`. |
 | A question got treated as the next step of the last task | Say "new task", or say the turn doesn't need the mode. |
-| A new model choice had no effect | Check for a project override. The next delegation wave reads the file; running children keep their original selection. |
+| A new model choice had no effect | The rule from `/setup-pstack` applies to new chats. Start one. |
 | Runs cost more than expected | See the cost paragraph under Get set up. |
-| A skill didn't load on its own | The global instructions load `poteto-mode`, which selects the needed skills. Explicit skill names remain available; the mode does not run every skill. |
-| Parallel agents overwrote each other | Use supported child-workspace isolation; report unavailable isolation. Top-level threads require an explicit user request. |
-| An overnight run moved but finished nothing | It needs a check that can pass or fail, not a duration. |
+| A skill didn't load on its own | The global instructions load `/poteto-mode`, which selects the needed skills. Explicit skill names remain available, and the mode doesn't run every skill. |
+| Parallel agents overwrote each other | Use supported child isolation, or explicitly request separate T3 threads with owned worktrees. Report unavailable isolation. |
+| An overnight run moved but finished nothing | `schedule_task` needs a check that can pass or fail, not a duration. See [guide page 7](references/guide/07-overnight.md). |
 | The reply claims success from a green build | Ask for the real command, flow, stored value, or profile. That's the prove-it-works principle. |
 
-## Make p3-stack my own
+For a run that drifts, [`references/prompting.md`](references/prompting.md) has one-line steers. [Guide page 10](references/guide/10-recipes-and-pitfalls.md) has more pitfalls and the recipes worth copying.
 
-- [`/automate-me`](../automate-me/SKILL.md) drafts a personal mode skill from the user's own history, to use alongside `/poteto-mode`. [`/reflect`](../reflect/SKILL.md) after a session turns its lessons into skill edits the user approves. `/poteto-mode write a skill for <workflow>` runs the authoring playbook, and the eval playbook tests a skill change blind.
+## Make pstack my own
+
+- [`/automate-me`](../automate-me/SKILL.md) drafts a personal mode skill from the user's own history, to use alongside `/poteto-mode`.
+- [`/reflect`](../reflect/SKILL.md) after a session turns its lessons into skill edits the user approves.
+- `/poteto-mode write a skill for <workflow>` runs the authoring playbook. The eval playbook tests a skill change blind.
 - Fix a misbehaving skill in its own PR, not inside the feature work where it went wrong.
+
+[Guide page 9](references/guide/09-make-it-yours.md) covers each of these.
 
 ## Reply
 
-Lead with the answer. Give at most one example prompt in a code block, then the link to that file. Keep it short unless the user asked for the whole map.
+Lead with the answer. Give at most one example prompt in a code block, adapted from [`references/recipes.md`](references/recipes.md) when one fits, then the link to that file. Keep it short unless the user asked for the whole map.

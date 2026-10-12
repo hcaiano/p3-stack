@@ -1,65 +1,63 @@
 ---
 name: reflect
-description: Delegate three parallel reviewers over the active thread, surface learnings, and route each to a concrete edit on an existing skill. Use when the user says reflect.
+description: Spawn three parallel review subagents over the active transcript, surface learnings, and route each to a concrete edit on an existing skill. Use when the user says reflect.
 disable-model-invocation: true
 ---
 
 # Reflect
 
-Before resolving models or delegating, read [T3 execution](../poteto-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
+Read the installed poteto-mode reference `../poteto-mode/references/t3-execution.md` before selecting models or delegating. It owns named-role resolution, catalog option keys, accounts and automatic authorized missing-usage fallback.
 
 Mine the current conversation for durable learnings, then route them into skill edits.
 
-## When to invoke
-
 Invoke when the user says "reflect" or "/reflect". Skip when the conversation is trivial, off-topic, or already covered by an existing skill the parent followed correctly. One-offs are not learnings.
 
-## Process
+## 1. Locate the active transcript
 
-### 1. Locate the active transcript
+Before fanning out, find this conversation's thread in the active project with `t3_thread_list` and read it with `t3_thread_read`. Do not search across unrelated projects. That crosses workspace boundaries and reads private chats from unrelated projects.
 
-The transcript is the current T3 thread. Read it with `t3_thread_read`; use `t3_thread_search` to pull exact passages. Do not search across other threads. That crosses workspace boundaries and reads private chats from unrelated projects.
+Use the current thread ID from `t3_thread_list` and match its opening user prompt through `t3_thread_read`. Page the activity and recover truncated item text until the full conversation is available.
 
-Reviewers get only their brief, never the parent's context. Pass the thread id and tell them to read it with `t3_thread_read`, or write a tight digest of the session and pass that instead.
+If the active thread is unavailable or unreadable, pass a tight digest of the session instead.
 
-### 2. Delegate three reviewers in parallel
+## 2. Spawn three reviewers in parallel
 
-One turn, three `delegate_task` calls with `mode: "async"`. Reviewers need tool access for context lookups (tickets, chat threads, observability traces referenced in the transcript), so do not restrict their tools.
+One message, three `delegate_task` calls with `mode: "async"` and self-contained briefs. Reviewers need MCP access to look up the tickets, chat threads, and observability traces the thread references. Keep that access while constraining edits in each brief.
 
-Resolve each model from the role line in `pstack-models.md` via `orchestrator_capabilities`. Never hardcode a slug.
+Each reviewer and the synthesizer name a role line in `pstack-models.md` and a bundled default. Resolve the target from that line, or from the default if the file or line is missing. Default reasoning is `xhigh` through live catalog option keys unless the user chooses a budget. Resolve `auto` or `inherit-parent` to the parent target. Handle rejected entries through the execution adapter's authorized fallback preserving effort and required diversity and say so.
 
-| Lens | Role line | Prompt template |
-|---|---|---|
-| Judgment | `reflect judgment, divergent, synthesizer` | `references/judgment-reviewer.md` |
-| Tooling | `reflect tooling` | `references/tooling-reviewer.md` |
-| Divergent | `reflect judgment, divergent, synthesizer` | `references/divergent-reviewer.md` |
+| Lens | Role line | Default `model` | Prompt template |
+|---|---|---|---|
+| Judgment | `reflect judgment, divergent, synthesizer` | `reflect judgment, divergent, synthesizer` bundled default, `xhigh` | `references/judgment-reviewer.md` |
+| Tooling | `reflect tooling` | `reflect tooling` bundled default, `xhigh` | `references/tooling-reviewer.md` |
+| Divergent | `reflect judgment, divergent, synthesizer` | `reflect judgment, divergent, synthesizer` bundled default, `xhigh` | `references/divergent-reviewer.md` |
 
-Pass each template verbatim as the brief, substituting the thread id or digest where marked. Drain with `task_status`; reviewers return findings in their task result.
+Pass each template verbatim, substituting the readable active thread ID or, only when it is unavailable or unreadable, the session digest where marked. Reviewers return findings through `task_status`. Retain task IDs and stop with `task_cancel`. T3 child agents get only the brief, never the parent's context.
 
-### 3. Synthesize
+## 3. Synthesize
 
-One `delegate_task` call, model from the `reflect judgment, divergent, synthesizer` line. The synthesizer's quality check includes spot-verifying citations, which can require tool access. Use `references/synthesizer.md` verbatim as the brief, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
+One `delegate_task` call with `mode: "async"`, a self-contained brief, and the model from the `reflect judgment, divergent, synthesizer` line, default its bundled value at `xhigh` reasoning unless the user chooses a budget. It spot-verifies citations through MCP. Preserve that access. Pass `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. It returns an Accepted / Rejected / Backlog list.
 
-### 4. Structural enforcement check
+## 4. Structural enforcement check
 
-Sanity-check the synthesizer's Accepted list. For any item that would be enforced more reliably by a lint rule, script, metadata flag, or runtime check, move it from Accepted to Backlog. See the **encode-lessons-in-structure** principle skill.
+Move any Accepted item that a lint rule, script, metadata flag, or runtime check would enforce more reliably to Backlog. See the **encode-lessons-in-structure** principle skill.
 
-### 5. Apply
+## 5. Apply
 
-Before applying any Accepted edit, present the synthesizer's full Accepted/Rejected/Backlog output to the user and wait for explicit approval. The user picks which subset to apply and may redirect routings. Skill changes affect every future agent in the org. Do not auto-apply.
+Present the synthesizer's full Accepted / Rejected / Backlog output and wait for explicit approval before applying any Accepted edit. The user picks the subset and may redirect routings. Skill changes affect every future agent in the org. Do not auto-apply.
 
-Backlog items file to whatever devex / backlog tracker your team uses automatically. Only the Accepted list waits for approval.
+File each Backlog item to your team's devex or backlog tracker without waiting. Only the Accepted list waits for approval.
 
-For each approved Accepted item, follow the Routing field exactly:
+Follow each approved row's Routing exactly:
 
-- Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): parent does directly.
-- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): follow the authoring-a-skill playbook and run its draft / test / iterate loop.
-- `tune description: <skill path>` (the skill exists but didn't trigger when it should have): follow the authoring-a-skill playbook and run its description-optimization loop.
-- `new skill via authoring-a-skill: <kebab-name>`: hand creation to the authoring-a-skill playbook. Do not invent the shape ad hoc.
+- Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): the parent does it directly.
+- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): hand to the supported `skill-creator` skill skill and run its draft / test / iterate loop.
+- `tune description: <skill path>` (the skill exists but didn't trigger when it should have): hand to `skill-creator` and run its description-optimization loop.
+- `new skill via skill-creator: <kebab-name>`: hand creation to `skill-creator`. Do not invent the shape ad hoc.
 
-If your environment ships a SKILL.md validator, run it on every touched skill before declaring done. Skip this step if it doesn't.
+If your environment ships a SKILL.md validator, run it on every touched skill before declaring done.
 
-### 6. Summarize for the user
+## 6. Summarize for the user
 
 Short list, no preamble:
 
