@@ -1,10 +1,19 @@
 # T3 execution adapter
 
-This file adapts transport, account selection and installation only. The invoking
+This file adapts transport, account selection, installation, shared desktop
+ownership, verification retries and required instruction delivery. The invoking
 pstack skill owns the engineering method: steps, roles, review criteria, sample
 counts, diversity, verification and completion gates. Preserve those requirements.
 If the available runtime or accounts cannot satisfy them, report the limitation;
 never substitute a reduced workflow.
+
+## Required instruction reads
+
+Give batched reads enough outer aggregate output budget to deliver every required
+file, or deliver complete reads separately. Inspect the delivered output for
+clipping and recover every omitted range before marking a read complete. A
+successful inner shell command does not prove that its output reached the agent
+in full.
 
 ## Configuration and accounts
 
@@ -68,6 +77,22 @@ item in the last 60 minutes means it is healthy. For a stalled child, take its
 final assistant message, recovered in full, as the result when it answers the
 brief, then `task_cancel` it. Without one, cancel it, confirm with `task_status`
 that it is terminal, inspect its writes, and restaff under the retry rules above.
+
+## Desktop ownership and verification
+
+Prefer isolated automation sessions or windows. When verification needs a shared
+desktop, assign one verifier to control its input. If the human takes control,
+stop input immediately, checkpoint the relevant case and release the desktop.
+Resume only when the user returns control. Do not reactivate focus, reorder
+windows or poll to reclaim control. In the collaborative T3 browser, obey tab
+ownership; read a human-owned tab or open your own, and send input only to a tab
+the live tool contract permits you to control.
+
+Retry a failed verification case only after code, the driver, a fixture or a
+prerequisite changes in a way relevant to that failure. Preserve passed evidence
+while its inputs remain valid; rerun affected cases when those inputs change.
+Record the runtime exercised. Static checks or adapter checks do not prove
+native execution.
 
 User authorization and project instructions retain their normal precedence.
 This adapter does not grant merge, deployment or communication permissions and

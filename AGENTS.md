@@ -71,7 +71,7 @@ Keep these names exactly.
 
 ## Personal fork integration
 
-Preserve upstream playbooks. The shared `skills/poteto-mode/references/t3-execution.md` owns account selection and live T3 transport constraints. `capacity` is a dynamic role value. Use `npx skills@latest` for installation; preserve unrelated installed skills. Run `node --test tests/*.test.mjs` for installer changes. See UPSTREAM.md for provenance.
+Preserve upstream playbooks. The shared `skills/poteto-mode/references/t3-execution.md` owns account selection, live T3 transport constraints and the approved runtime safeguards in UPSTREAM.md. `capacity` is a dynamic role value. Use `npx skills@latest` for installation; preserve unrelated installed skills. Run `node --test tests/*.test.mjs` for installer changes. See UPSTREAM.md for provenance.
 
 The fork is an orchestration port, not a new engineering method. Keep pstack's
 engineering instructions, principles, playbook steps, rubrics and verification
