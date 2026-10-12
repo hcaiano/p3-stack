@@ -50,6 +50,8 @@ official updates.
   `skills/poteto-mode/playbooks/multi-phase-plan.md`.
 - **Installer dependencies.** The installer requires only `t3-capacity` from
   `hcaiano/skills`. `pair` moved to that repo's `deprecated/` folder.
+- **Cleanup command.** The user's AGENTS.md requires `trash`, replacing the
+  recursive removal command in `skills/poteto-mode/playbooks/worktree-cleanup.md`.
 
 ## Checking for updates
 

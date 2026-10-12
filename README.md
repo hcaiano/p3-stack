@@ -102,7 +102,7 @@ node --test tests/*.test.mjs
 
 ## Skills
 
-architect, arena, automate-me, benchmark-checklist, blast-radius, bro, correct, create-verification-skill, figure-it-out, how, interrogate, maintain-verification-skill, make-bot-ui, no-comments, poteto-help, recall, reflect, setup-pstack, show-me-your-work, swarm, tdd, teach, technical-writing, typescript-best-practices, unslop, why.
+architect, arena, automate-me, benchmark-checklist, blast-radius, bro, correct, create-verification-skill, figure-it-out, how, interrogate, ketchup, maintain-verification-skill, make-bot-ui, no-comments, poteto-help, recall, reflect, setup-pstack, show-me-your-work, swarm, tdd, teach, technical-writing, typescript-best-practices, unslop, why.
 
 ## Principles
 

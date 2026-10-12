@@ -13,8 +13,8 @@ why investigators: capacity
 why synthesizer: capacity
 reflect tooling: capacity
 reflect judgment, divergent, synthesizer: capacity
-arena runners: capacity, capacity, capacity
-arena cross-judge pool: capacity, capacity, capacity
+arena runners: capacity, capacity
+arena cross-judge pool: capacity, capacity
 swarm workers: capacity
-architect runners: capacity, capacity, capacity
-interrogate reviewers: capacity, capacity, capacity
+architect runners: capacity, capacity
+interrogate reviewers: capacity, capacity

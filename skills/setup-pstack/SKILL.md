@@ -42,7 +42,7 @@ unless the user chooses an override. When they ask to change reasoning, explain
 that this controls effort, not subscription spending. Show the current setting
 and the existing options:
 
-- `unlimited — keep max`
+- `unlimited — max reasoning`
 - `large — xhigh reasoning`
 - `medium — high reasoning`
 - `small — medium reasoning`

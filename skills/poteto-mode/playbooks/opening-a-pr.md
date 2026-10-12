@@ -4,7 +4,7 @@ Invoked at the end of every other playbook.
 
 **Worktree.** Work from a git worktree off main. Delegated workers inherit it. Parallel workers on the same branch each get their own worktree with `t3_thread_launch` and a `workspaceStrategy`, one writer per worktree, or `git fetch && git reset --hard origin/<branch>` between them. Dirty branch with unrelated work: patch out, fresh worktree, apply. Snarled worktree: reset from main, redo minimally.
 
-**Commits.** Commit liberally. Rebase into small, ordered commits before opening PRs. Each commit is a future PR: landable, ordered to tell the story. Amend when the fix belongs in a just-made commit. New commit when separable.
+**Commits.** Commit liberally. Rebase into small, ordered commits before opening PRs. Each commit is a future PR: landable, ordered to tell the story. Amend when the fix belongs in a just-made commit. New commit when separable. Commit bodies don't restate the subject.
 
 **PRs.** Run the **unslop** skill over the diff before commit. Run the **no-comments** skill before review. Before you open or update a PR, run the **review-it** skill and fix its findings. Write every PR title and PR description with the **write-pr** skill, then apply the **unslop** skill. Write every commit body with the **technical-writing** skill. Apply every technical-writing layer except Diátaxis. Use one word for each action, keep articles, and avoid `-ing` when a plain verb works. A commit body does not restate its subject.
 

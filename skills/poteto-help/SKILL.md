@@ -19,19 +19,24 @@ Infer the need from the message and the conversation. A named situation, such as
 
 Check the state that changes the answer, and mention it only when it does. Without a project or global `pstack-models.md`, the bundled capacity defaults apply. No `verify-*` skill or other app harness in the project means agents have no scripted way to drive the app; mention `/create-verification-skill` when the question is about proving a change works.
 
+When the model rule is missing and it matters, ask whether the user wants to pick a model for each role and a reasoning budget now. It matters when the user is new, the question is about setup or cost, or the answer depends on which models run. Ask at most once per chat. If the need is also unclear, ask both questions together. Offer two choices:
+
+- Now: give them `/setup-pstack` to type, and answer their question too.
+- Later: answer their question, and add one line saying every role keeps its default model until they run `/setup-pstack`.
+
 ## Get set up
 
 1. Install by cloning the repo and running `./install.sh`. It uses the Skills CLI to install into `~/.agents/skills/`, preserving an existing unslop; `./install.sh --project /path/to/repo` targets a project's `.agents/skills/` instead.
 2. Optionally run [`/setup-pstack`](../setup-pstack/SKILL.md) to choose automatic selection, candidate pools or fixed models per role. It writes `pstack-models.md`; reasoning overrides are optional. The adapter reads changes before the next delegation wave.
 3. Start a real task with `/poteto-mode`, a goal, and a check that can pass or fail.
 
-The personal global instructions enable `poteto-mode` by default. Installation alone does not enable it on other setups. The [fork README](https://github.com/hcaiano/p3-stack) has installation details. Offer to word their first prompt with them.
+The personal global instructions enable `poteto-mode` by default. Installation alone does not enable it on other setups. The [fork README](https://github.com/hcaiano/p3-stack) has installation details. Offer to word their first prompt with them, per [`references/prompting.md`](references/prompting.md).
 
 If cost is the worry, say where the tokens go and how to spend fewer. p3-stack spends extra tokens on subagents and review panels. Rerun `/setup-pstack` and pick a smaller budget or cheaper models. A role set to `auto` or `inherit-parent` runs on the parent thread's model, which saves tokens when that model is cheaper. A shorter panel list runs fewer subagents, one for each entry. Save `/poteto-mode` for work that needs rigor.
 
 ## Start a task with `/poteto-mode`
 
-`/poteto-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep.
+`/poteto-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one.
 
 With the personal global default enabled, describe each task normally; `/poteto-mode` remains available explicitly. Mid-chat, "new task" makes the mode match a fresh playbook. `/poteto-mode` already uses the poteto-mode skill's `references/poteto-agent.md` for the delegates its playbook steps spawn. To get the same style from a delegate of your own, open its brief with the poteto-mode skill's `references/poteto-agent.md`.
 
@@ -46,11 +51,12 @@ The default answer is `/poteto-mode`, which runs most of the others when its ste
 | Know why code is shaped this way, or where a number came from | [`/why`](../why/SKILL.md) |
 | Understand a change or subsystem, explained plainly | [`/teach`](../teach/SKILL.md) |
 | Catch up on their own recent work on a topic | [`/recall`](../recall/SKILL.md) |
+| Catch up on everything in this chat since their last message, with enough context to decide each action item | [`/ketchup`](../ketchup/SKILL.md) |
 | Know what a small diff could break outside itself | [`/blast-radius`](../blast-radius/SKILL.md) |
 | Settle types and module shape before code that crosses a function boundary | [`/architect`](../architect/SKILL.md) |
 | Get several attempts at one brief, merged into the best one | [`/arena`](../arena/SKILL.md) |
 | Run parallel checks over slices, or race workers, as delegated child tasks | [`/swarm`](../swarm/SKILL.md) |
-| Have several models review a diff and try to break it | [`/interrogate`](../interrogate/SKILL.md) |
+| Have different models review a diff and try to break it | [`/interrogate`](../interrogate/SKILL.md) |
 | Fix a bug test-first when a cheap local test exists | [`/tdd`](../tdd/SKILL.md) |
 | Apply TypeScript rules to `.ts` or `.tsx` work | [`/typescript-best-practices`](../typescript-best-practices/SKILL.md) |
 | Strip comments before review, using a reviewer that didn't write them | [`/no-comments`](../no-comments/SKILL.md) |
@@ -78,7 +84,7 @@ Close calls:
 - `/arena` gives every worker the same brief and merges the best parts. `/swarm` splits work into slices or a race and returns one report.
 - `/architect` implements right after it settles the design. Add "with checkpoint" to review the design before it writes code.
 - `/interrogate` reviews the diff. `/blast-radius` looks for breakage outside the diff and proves the one fact that makes the change safe.
-- `/recall` rebuilds context across recent threads. Resuming one specific thread, delegated task, or branch is the Session pickup playbook.
+- `/recall` rebuilds context across recent threads. `/ketchup` covers only this thread since the user's last message. Resuming one specific thread or branch is the Session pickup playbook.
 - `/figure-it-out` designs one rigorous run. The Orchestrate playbook runs a program that spans days and many PRs. The Autonomous run playbook drives one task to a finish condition.
 
 **Not in p3-stack:** p3-stack has no `/orchestrate` skill. Orchestrate is a `/poteto-mode` playbook.
