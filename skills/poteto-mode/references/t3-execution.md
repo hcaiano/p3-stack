@@ -19,7 +19,8 @@ delegation wave; a running child retains its original selection.
 
 Before a delegation wave, call `orchestrator_capabilities` and the installed
 `t3-capacity` skill using that server's settings and confirmed account mappings.
-Missing readings or mappings mean unknown capacity. Refresh after usage limits.
+Missing usage is unknown capacity; a missing billing mapping is an unresolved
+account identity. Refresh after usage limits.
 
 `capacity` chooses among models satisfying the invoking skill's role requirements,
 then among their accounts using headroom, pace and resets. Ordered pools keep
@@ -27,19 +28,47 @@ the user's preference tiers; `t3-capacity --candidate` computes the choice.
 All enabled accounts are eligible, including both Codex accounts, Claude, Grok
 and Cursor. Do not impose
 an additional model ranking or reasoning-effort cap. Keep explicit model/account
-choices and the existing `inherit-parent`/`auto` semantics; ask before replacing
-an explicit choice. Use current catalog IDs and supported option keys.
+choices and the existing `inherit-parent`/`auto` semantics. Pool candidates and
+already-authorized fallback chains are not hard pins. Use current catalog IDs
+and supported option keys.
 
 Resolve each panel seat without changing the skill's count or diversity rules.
 Two providers or accounts serving the same model do not add model diversity.
-Unknown quota is not confirmed headroom. Skip exhausted automatic choices; if no
-qualifying option remains, report the capacity blocker. A protected reading is
-a pacing signal, not an additional approval requirement.
+Unknown quota is not confirmed headroom. Follow the automatic fallback below.
+A protected reading is a pacing signal, not an additional approval requirement.
+
+## Automatic fallback
+
+Never ask permission to use a fallback already allowed by the role policy or the
+user. Missing usage permits an attempt on a confirmed account mapping. Skip
+known-unavailable targets and unconfirmed mappings automatically. Ask only to
+change an actual pin or expand the authorized policy; report factual blockers
+when no eligible target remains. Preserve quality, effort, panel count and
+diversity throughout.
+
+Run the bundled `scripts/resolve-capacity.mjs` relative to poteto-mode's installed
+directory. Feed JSON on stdin: `{report: {choice, candidates}, exclude: []}`,
+using the actual `t3-capacity` report. Supply only role-, catalog- and
+policy-qualified candidates. A hard pin is a singleton unless the user has
+authorized its fallback. Exclusions are `{instance, model}` or `{pool}` for a
+confirmed shared quota pool; never guess billing relationships.
+
+The resolver preserves the measured choice exactly. Otherwise, it attempts a
+mapped unknown candidate by tier, then report order, labeled `unknown-usage`.
+It preserves the unknown state and metrics. `pool: null` means an unconfirmed
+mapping, not missing usage. Selection exits 0; `blocked` or `refresh` exits 1;
+invalid input exits 2. Inspect the JSON result. On `refresh`, rerun `t3-capacity`
+with excluded candidates removed, retaining exclusions. Do not reproduce its
+measured ranking. Invalid reports require correction, not another target.
 
 After a failed automatic choice, inspect task status and any writes before
-retrying on another qualifying account. Keep a checkpoint and fresh task ID;
-never duplicate an active writer. Distinguish quota errors from transport or
-application failures, bound retries, and report the selected account briefly.
+retrying automatically on another authorized target. Confirm the old run is
+terminal, inspect writes and keep a checkpoint and fresh task ID; reconcile
+uncertain outcomes before launching another writer. Try each authorized target
+at most once per resolution and retain exclusions across report refreshes.
+A confirmed quota failure excludes its proven shared pool. Transport or
+application failures do not prove quota exhaustion. Report the selected account
+and unknown usage briefly; no extra approval is required.
 
 ## T3 transport and packaging
 

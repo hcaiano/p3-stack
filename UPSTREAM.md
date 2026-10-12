@@ -52,6 +52,12 @@ official updates.
   `hcaiano/skills`. `pair` moved to that repo's `deprecated/` folder.
 - **Cleanup command.** The user's AGENTS.md requires `trash`, replacing the
   recursive removal command in `skills/poteto-mode/playbooks/worktree-cleanup.md`.
+- **Automatic account fallback.** On 2026-10-12 the user required authorized
+  fallbacks to proceed without permission when usage is missing. The T3 account
+  adapter preserves measured selection, distinguishes missing usage from missing
+  billing mappings and bounds retries without changing engineering requirements.
+  Files: `skills/poteto-mode/references/t3-execution.md`, `model-selection.md`,
+  `skills/poteto-mode/scripts/resolve-capacity.mjs` and their skill callers.
 
 ## Checking for updates
 

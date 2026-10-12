@@ -40,7 +40,7 @@ skills/architect/SKILL.md	skills/architect/SKILL.md	compare	true	88e23ca105b89e6
 skills/architect/references/design-red-flags.md	skills/architect/references/design-red-flags.md	compare	true	f8503c9595b289c607ff5088f82b21197edf94ec	d0e639e4cc588ec865f930d3a4111faad60987ae36925917e319d7ceca7c69ce
 skills/architect/references/rationale-template.md	skills/architect/references/rationale-template.md	compare	true	a10f77f59510c532cd909faaf3bfeee5ffbfd588	0cedfccdc7b47fc881febd5a8293eecbc542c20f8df825639904a8102d2eb5d3
 skills/architect/references/runner-prompt.md	skills/architect/references/runner-prompt.md	compare	true	b1ad21aef22e80d718c361787190b599eb359d6c	21dd5314aab778c5007228027a4591d97693fbec6ab86524037772b63f40948e
-skills/arena/SKILL.md	skills/arena/SKILL.md	compare	true	58ae9d9a3f8812429091515f2a7ce2f91cf14ef9	dff2b707811ca842323fc384adfa41aac860ceb0950e9817e8bcf2262901cb70
+skills/arena/SKILL.md	skills/arena/SKILL.md	compare	true	58ae9d9a3f8812429091515f2a7ce2f91cf14ef9	7b1ae15bbe7358eec69bf7b14c55974e7aa2e9275521c5e714b97fac60ebd648
 skills/automate-me/SKILL.md	skills/automate-me/SKILL.md	compare	true	cd3636e9a53c7c782cf15254204dccfc854086b5	f5f5c6dc6c4e8c3afb7585bfbb5a545ff420213bae06c11900388b2c99f3a4bf
 skills/benchmark-checklist/SKILL.md	skills/benchmark-checklist/SKILL.md	compare	true	e901d1fdbc9ffce53e94d6514be7d9a22e771a1a	4a40ae96a09446107e6309d6663825c21d20718f4b066fedbb3a977d5499ac1d
 skills/blast-radius/SKILL.md	skills/blast-radius/SKILL.md	compare	true	b296cce0d746260a53c16e3671cb05bacfe82daf	18d846754c1edfb2426fd36b87df60b412bc82ac239f9c11cc31d2c6effe98a7
@@ -54,7 +54,7 @@ skills/figure-it-out/SKILL.md	skills/figure-it-out/SKILL.md	compare	true	195f50b
 skills/how/SKILL.md	skills/how/SKILL.md	compare	true	775d292f8d5d369200502eabe3136d8f56666239	80d95e2dae3f6da31470cf223e876ab1578e747b709db339a1922f6fd06591c5
 skills/how/references/explainer-prompt.md	skills/how/references/explainer-prompt.md	compare	true	3a36fb6736c5b74ac2774350841e332a019dec94	ddb89cebefc24e2b54517a331aedfe045b6971e101f45c71b8cef4cccff45bff
 skills/how/references/explorer-prompt.md	skills/how/references/explorer-prompt.md	compare	true	724bacfc7df759865c0c29705bfee641e4c1aeca	6300128385ee940fd42ecb84b0e623435440a2dc283eae54ee4a52ba56947ba1
-skills/interrogate/SKILL.md	skills/interrogate/SKILL.md	compare	true	9e3b99a19bf22623220b42412bbabd1d67d02f05	81d49e63f3fe8a538c4b67874703a0a319d7674da4dea9e68c47d06569a613af
+skills/interrogate/SKILL.md	skills/interrogate/SKILL.md	compare	true	9e3b99a19bf22623220b42412bbabd1d67d02f05	266ea1c7cbb7f28629c0162204848a2395b634c449f0675c09f4e8142f483242
 skills/interrogate/references/code-quality-review.md	skills/interrogate/references/code-quality-review.md	compare	true	16581250d81044c7e80fe234c4970a3f7b7fc98a	79162fda183eafd40d51661fbb5e151c7ba250f89e506ba17f5bd135dcbd50a8
 skills/interrogate/references/lead-judgment.md	skills/interrogate/references/lead-judgment.md	compare	true	5ce526097fdd3dfeaf4cd3b126a3f486c3ee36ae	6e5bdf5670eb34017692e9b6c546f36ac7552e6bb9f3f2f3429164fcc46a9361
 skills/interrogate/references/reviewer-prompt.md	skills/interrogate/references/reviewer-prompt.md	compare	true	ef7bff3d77c35a0af2a9947187ccee15465657f4	f6005cc2b535006fca97a96c5bfda49df57312eedf1ffd8d1aaaf3eb33817c25
@@ -77,7 +77,7 @@ skills/poteto-mode/playbooks/eval.md	skills/poteto-mode/playbooks/eval.md	compar
 skills/poteto-mode/playbooks/feature.md	skills/poteto-mode/playbooks/feature.md	compare	true	79a6bbbe0ce61c3b5ef9af1ee8e3ccdb0557edc6	e6b8f83550fa6615eef6d896b0615783411f67b04a76f3abdd65e872f8108b8c
 skills/poteto-mode/playbooks/hillclimb.md	skills/poteto-mode/playbooks/hillclimb.md	compare	true	c6441b92d30a71489d88eae5bfa8dc457da55cb1	2783258ac0943c8746ba2f5362544f1136c5d7dda09e12f92529c495178d27f2
 skills/poteto-mode/playbooks/investigation.md	skills/poteto-mode/playbooks/investigation.md	compare	true	cd119f04f23e0b7acb3f8cc5ba13ce4ab7aa6c7d	dc66bcf6af3a074fc7f67aa5e12b93ef571a4fb4d8e17f2f1af5ae5359f42e46
-skills/poteto-mode/playbooks/multi-phase-plan.md	skills/poteto-mode/playbooks/multi-phase-plan.md	compare	true	f8ed78a6533cc5d738d3a3ec106bf2577d3f98ca	d9856c1016140243e5b87718693e3f543bc8e8fb2cee8443878254dcdafc8445
+skills/poteto-mode/playbooks/multi-phase-plan.md	skills/poteto-mode/playbooks/multi-phase-plan.md	compare	true	f8ed78a6533cc5d738d3a3ec106bf2577d3f98ca	38d2fd6041d33fd2828f79f57e27f8d8cc1fbe9ac43d871d3c61efa79483a433
 skills/poteto-mode/playbooks/opening-a-pr.md	skills/poteto-mode/playbooks/opening-a-pr.md	compare	true	fcd00527c6b9fb592aecfc3b1512e3b838146de3	c524805d25020b502d1cf05917ce88028f19459f659254651c444b9c12bc96e7
 skills/poteto-mode/playbooks/orchestrate.md	skills/poteto-mode/playbooks/orchestrate.md	compare	true	d5b6d008026ff0177f52e22a6fb4b2edae5c87e2	3e0317f0d8c21ca8da5ea8148aed009957a3d619712a254283e218b99b716ad4
 skills/poteto-mode/playbooks/pause-safely.md	skills/poteto-mode/playbooks/pause-safely.md	compare	true	9d1c5f8303976fff40de099f7f28185909430c11	63b213adcf2e5439c8e0c97098968e654c0ea733611e979011a23a30a0d84119
@@ -94,7 +94,7 @@ skills/poteto-mode/references/bugbot-triage.md	skills/poteto-mode/references/bug
 skills/poteto-mode/scripts/bootstrap.ts	skills/poteto-mode/scripts/bootstrap.ts	native-t3-transport	false	d9c63e2007449a80000abe75ecaf7f2a0bd5826b	
 skills/poteto-mode/scripts/bun.lock	skills/poteto-mode/scripts/bun.lock	native-t3-transport	false	65f0c662f300a0f72b319ca93ea18f56219c2581	
 skills/poteto-mode/scripts/check-plan.mjs	skills/poteto-mode/scripts/check-plan.mjs	compare	true	c8626766cee4cc4a2736fe438a1aea5c1f1b28ce	f273ef96740b6abc0a9ded689be5d32f19e144ee07d77ce5baaa0fede178ae27
-skills/poteto-mode/scripts/check-plan.test.ts	tests/check-plan.test.mjs	compare	true	fd966c2b5fb6e99c12070c553906765c7bd900d8	0b167c78ded610260e26f982daedb0fdd4d1663699bc0b3b8102a0101a66d38b
+skills/poteto-mode/scripts/check-plan.test.ts	tests/check-plan.test.mjs	compare	true	fd966c2b5fb6e99c12070c553906765c7bd900d8	4d802b4e07bb2a07e6bd53b069d61e37d405ad628f7f084e81fca9b283209b57
 skills/poteto-mode/scripts/orch/orch.test.ts	skills/poteto-mode/scripts/orch/orch.test.ts	native-t3-transport	false	538775e37f3ac6fd2dd128883b7f7fe51c1316d5	
 skills/poteto-mode/scripts/orch/orch.ts	skills/poteto-mode/scripts/orch/orch.ts	native-t3-transport	false	219ac17bd8805b45140eca7c429834be9ded1b7d	
 skills/poteto-mode/scripts/orch/store.ts	skills/poteto-mode/scripts/orch/store.ts	native-t3-transport	false	5e6c602fb670a6b5598977f5bf85d717cf797ef7	
@@ -142,7 +142,7 @@ skills/reflect/references/divergent-reviewer.md	skills/reflect/references/diverg
 skills/reflect/references/judgment-reviewer.md	skills/reflect/references/judgment-reviewer.md	compare	true	61d15d76fff852eb573b551bc1317d79ed5a2e5f	dbfbeebe8df185230320d918d3d5d9d300146329af302c58e85d768c5cd24e71
 skills/reflect/references/synthesizer.md	skills/reflect/references/synthesizer.md	compare	true	1a090d86134987719ddb418023020c2ef58a6dae	2513a441bbea68024f7cbc94c6dc52e3c0c576099ed57638b952b82ec253dc89
 skills/reflect/references/tooling-reviewer.md	skills/reflect/references/tooling-reviewer.md	compare	true	a839db4318798c51539c319cb90387ce02557225	165fc6434ed60e02e15e83487da639ced038b4d0bedb5b0015438fb8b22ad64c
-skills/setup-pstack/SKILL.md	skills/setup-pstack/SKILL.md	compare	true	90a9e575397fb59f4d9a47e6157c2106f4b4a5e2	df783e9ffa179b3868e82fc6b2a7c4d5e868e993a3b0c4d76c9adfaa6085a781
+skills/setup-pstack/SKILL.md	skills/setup-pstack/SKILL.md	compare	true	90a9e575397fb59f4d9a47e6157c2106f4b4a5e2	d8981e2a6ce3b331e00d12f0478728c903fdc23ce2ea52c884b31cab8149804a
 skills/show-me-your-work/SKILL.md	skills/show-me-your-work/SKILL.md	compare	true	d350a150c36ca16382b4aa6d4196b39e67454ad1	3d62217dd3941151045a98033c06c0f03ba87b8744fdbb71493538c417e2b698
 skills/show-me-your-work/references/decision-log-template.tsv	skills/show-me-your-work/references/decision-log-template.tsv	compare	true	db220376ecb8c582a6a4f6575a8f26469603a38d	6779378006a2f5225e8c06deb84f1d913fb532041ebbb6e50d94600bfe3f4b76
 skills/show-me-your-work/scripts/log.sh	skills/show-me-your-work/scripts/log.sh	compare	true	052e53b7e1090579eaec1d3d59f7a1cd2f2e452a	a65a4bc5fb7cdeadbdb7b7ff1ca4682f4d9c42420942b2977cd17b46c4ac338e

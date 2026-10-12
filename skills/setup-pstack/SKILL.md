@@ -61,9 +61,9 @@ the preference when resolving each capacity seat; keep policy entries dynamic.
 explicit pools and pins, reasoning overrides and unresolved choices. One
 `delegate_task` runs per panel seat, not per pool candidate. `arena cross-judge
 pool` retains Arena's own selection rules. `swarm workers` is the default for
-each worker unless its workflow assigns another choice. Ask before replacing
-an unavailable explicit choice; do not ask again to apply preferences already
-given by the user.
+each worker unless its workflow assigns another choice. Use authorized fallbacks automatically, including when usage is unknown. Ask
+only to change a hard pin without an authorized fallback or expand the authorized
+pool; do not ask again to apply preferences already given by the user.
 
 ### 4. Validate
 

@@ -22,9 +22,12 @@ required model diversity.
 
 Resolve a pool with `t3-capacity`: pass each tier as one `--candidate` flag
 listing `<providerInstanceId>/<model>` for every account exposing each model,
-and delegate to its `choice`. It takes the first tier with an available or
+and retain its measured `choice`. It takes the first tier with an available or
 protected account, preferring available, then lowest pace, within that tier.
-A null `choice` means no candidate in the pool can take work.
+A null `choice` can also mean missing usage readings. Pass the report to the
+[execution adapter's resolver](t3-execution.md#automatic-fallback), then delegate
+to the selected target. Unknown usage permits an automatic attempt; it never
+becomes a claim of measured headroom.
 
 An unqualified model ID allows all enabled accounts exposing that exact ID.
 For example, both Codex accounts can serve one GPT model without requiring two
@@ -36,9 +39,10 @@ whole panel so it satisfies the invoking skill's diversity rules. If no valid
 assignment exists, report the blocker; neither pool size nor quota reduces the
 required panel. Arena's cross-judge pool retains Arena's own selection semantics.
 
-An unavailable pinned choice requires user input. For a restricted pool, skip
-unavailable candidates within the pool; ask before going outside it. For open
-`capacity`, use another qualifying live candidate. Inspect task status and writes
+Use authorized fallbacks automatically, including when usage is unknown. For a
+restricted pool, stay inside it; for open `capacity`, use another qualifying live
+candidate. A hard pin without an authorized fallback stays pinned. Ask only when
+changing that pin or expanding the authorized pool. Inspect task status and writes
 before retrying, as described in the execution adapter.
 
 ## Catalog and reasoning

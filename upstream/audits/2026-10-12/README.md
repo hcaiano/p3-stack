@@ -28,6 +28,11 @@ updates; it does not claim the initial whole-source reconciliation is complete.
   review-thread page before declaring merge-ready.
 - Carry PR-target-aware worktree auditing into the native worktree workflow.
   The user's cleanup command is `trash`.
+- Apply the user's automatic account-fallback requirement in the shared T3
+  adapter. The bundled JSON resolver preserves measured choices and attempts
+  authorized, mapped targets with unknown usage without asking permission.
+  Three Sol designs and a Sol cross-judge selected this small resolver over
+  prose-only policy or a gateway duplicating quota ranking and delegation.
 
 ## File mapping and permitted transport differences
 
@@ -60,11 +65,18 @@ checker report describes another source revision and needs its own comparison.
 
 ## Validation
 
-- `node --test tests/*.test.mjs` passes all 19 tests through `agent-run heavy`.
+- `node --test tests/*.test.mjs` passes all 29 tests through `agent-run heavy`.
+  Sol review found and reproduced two regressions: the published plan template
+  failed its own checker, and the auditor read a stale main-checkout report in a
+  worktree. Their failing tests precede the fixes in the commit history.
+  Seven resolver tests cover unknown usage, measured pacing choices, exact
+  target and shared-pool exclusions, refreshed rankings, missing mappings,
+  pins and invalid reports through the real CLI.
 - `git diff --check` passes. Skill frontmatter and local references were checked.
 - A disposable project installation through `npx skills@latest` and the existing
   installer succeeds. The installed ketchup, help references and plan checker
-  match the source bytes. Global installations were not changed.
+  match the source bytes. A second installation verifies the fallback resolver
+  and updated execution references. Global installations were not changed.
 - Live `orchestrator_capabilities` exposes child tasks, native PR watches,
   schedules and thread tools. `t3-capacity` resolved representative live roles.
   Delegated work used that live selection. This is transport evidence, not a

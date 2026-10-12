@@ -35,7 +35,7 @@ For each reviewer:
 - The brief says read-only: inspect only, no writes, no git commands that change state.
 - For an `auto` or `inherit-parent` entry, omit the model so that reviewer runs on the parent model.
 
-If a capacity-selected reviewer is unavailable, resolve another suitable account/model through the execution reference. Report a fixed or user-selected model failure and ask before replacing it.
+If a reviewer is unavailable or usage is unknown, resolve an authorized alternative automatically through the execution reference. Ask only to change a hard pin without an authorized fallback or expand the authorized pool.
 
 Read `references/reviewer-prompt.md` and fill in the template with:
 1. The stated intent
