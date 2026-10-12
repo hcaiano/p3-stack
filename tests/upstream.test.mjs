@@ -102,3 +102,51 @@ test('the auditor uses the current worktree report rather than a stale main-chec
   assert.equal(inventory.fingerprint, 'current-worktree-report');
   assert.deepEqual(inventory.files.map(file => file.source), ['skills/change.md', 'skills/latest.md', 'skills/remove.md']);
 });
+
+function guideAuditFixture() {
+  const f = fixture();
+  const guide = '## Verify\nRun the real user flow.\n\n[mode](../../skills/poteto-mode/SKILL.md)\n';
+  mkdirSync(join(f.repo, 'pstack/docs/guide'), { recursive: true });
+  writeFileSync(join(f.repo, 'pstack/docs/guide/verify.md'), guide);
+  git(f.repo, 'add', '.'); git(f.repo, 'commit', '-m', 'guide source');
+  const checkout = join(f.dir, 'checkout');
+  mkdirSync(join(checkout, 'scripts'), { recursive: true });
+  writeFileSync(join(checkout, 'scripts/audit-upstream.mjs'), readFileSync(resolve('scripts/audit-upstream.mjs')));
+  git(checkout, 'init', '-b', 'main');
+  const reportPath = join(checkout, '.git/p3-upstream/report.json');
+  mkdirSync(join(checkout, '.git/p3-upstream'), { recursive: true });
+  writeFileSync(reportPath, JSON.stringify({ complete: true, fingerprint: 'guide-fixture', sources: [{
+    id: 'official', url: 'https://github.com/cursor/plugins.git', path: 'pstack', cache: join(f.repo, '.git'),
+    latestCommit: git(f.repo, 'rev-parse', 'HEAD'), reviewedCommit: null,
+  }] }));
+  mkdirSync(join(checkout, 'docs/guide'), { recursive: true });
+  writeFileSync(join(checkout, 'docs/guide/verify.md'), guide);
+  const bundled = join(checkout, 'skills/poteto-help/references/guide/verify.md');
+  mkdirSync(join(checkout, 'skills/poteto-help/references/guide'), { recursive: true });
+  writeFileSync(bundled, '## Verify\nRun the real user flow.\n\n[mode](../../../poteto-mode/SKILL.md)\n');
+  return { checkout, bundled, run: () => spawnSync('node', [join(checkout, 'scripts/audit-upstream.mjs')], {
+    cwd: checkout, encoding: 'utf8',
+  }) };
+}
+
+test('the official guide is audited as engineering content and its installed resource preserves the text', () => {
+  const f = guideAuditFixture();
+  const result = f.run();
+  assert.equal(result.status, 0, result.stderr);
+  const inventory = JSON.parse(readFileSync(join(f.checkout, '.git/p3-upstream/audit/inventory.json'), 'utf8'));
+  const guide = inventory.files.find(file => file.source === 'docs/guide/verify.md');
+  assert.equal(guide.disposition, 'compare');
+  assert.equal(guide.present, true);
+});
+
+test('the auditor rejects a bundled guide that drops its verification instruction or is missing', () => {
+  const f = guideAuditFixture();
+  writeFileSync(f.bundled, '## Verify\n\n[mode](../../../poteto-mode/SKILL.md)\n');
+  const shortened = f.run();
+  assert.equal(shortened.status, 1);
+  assert.match(shortened.stderr, /Bundled guide must preserve docs\/guide\/verify.md/);
+  unlinkSync(f.bundled);
+  const missing = f.run();
+  assert.equal(missing.status, 1);
+  assert.match(missing.stderr, /Bundled guide must preserve docs\/guide\/verify.md/);
+});
