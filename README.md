@@ -33,9 +33,12 @@ cd p3-stack
 ./install.sh
 ```
 
-During review, check out `main` and pass
+After installation approval, check out the approved full 40-character commit
+and run its installer from that checkout. Pass
 `--source https://github.com/hcaiano/p3-stack/tree/<full-40-character-commit>`
-using `git rev-parse HEAD` for the reviewed commit. This pins the installation;
+using `git rev-parse HEAD` for that same commit. The installer discovers skill
+names locally, so its checkout must match the source revision to include new
+skills. This pins the installation;
 the Skills CLI misparses branch names containing a slash. Global is the default; `--project /path/to/repo` selects a
 project installation. Existing unrelated skills cause a stop before any writes.
 
