@@ -78,19 +78,24 @@ final assistant message, recovered in full, as the result when it answers the
 brief, then `task_cancel` it. Without one, cancel it, confirm with `task_status`
 that it is terminal, inspect its writes, and restaff under the retry rules above.
 
-## Desktop ownership and verification
+## Desktop ownership
 
 Prefer isolated automation sessions or windows. When verification needs a shared
 desktop, assign one verifier to control its input. If the human takes control,
 stop input immediately, checkpoint the relevant case and release the desktop.
 Resume only when the user returns control. Do not reactivate focus, reorder
-windows or poll to reclaim control. In the collaborative T3 browser, obey tab
-ownership; read a human-owned tab or open your own, and send input only to a tab
-the live tool contract permits you to control.
+windows or poll to reclaim control. In the collaborative T3 browser, inspect a
+human-owned tab through `preview_snapshot` or open your own. Navigation,
+evaluation, resize, close and input require control permitted by the live tool
+contract.
+
+## Verification retries and evidence
 
 Retry a failed verification case only after code, the driver, a fixture or a
 prerequisite changes in a way relevant to that failure. Preserve passed evidence
 while its inputs remain valid; rerun affected cases when those inputs change.
+Retained evidence must meet the invoking skill's proof standard and does not
+waive a required fresh pass.
 Record the runtime exercised. Static checks or adapter checks do not prove
 native execution.
 
