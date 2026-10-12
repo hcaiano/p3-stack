@@ -94,3 +94,18 @@ test('t3-capacity is the only hcaiano/skills dependency', () => {
   const r = f.run(); assert.notEqual(r.status, 0);
   assert.match(r.stderr, /dependency t3-capacity/);
 });
+
+
+test('the installer rejects a presentation name that Skills CLI would silently skip', () => {
+  const f = fixture();
+  const source = join(f.home, 'source');
+  mkdirSync(join(source, 'scripts'), { recursive: true });
+  mkdirSync(join(source, 'skills/poteto-mode'), { recursive: true });
+  writeFileSync(join(source, 'scripts/install.mjs'), readFileSync(installer));
+  writeFileSync(join(source, 'skills/poteto-mode/SKILL.md'), '---\nname: Poteto Mode\ndescription: mode\n---\n');
+  const result = spawnSync(process.execPath, [join(source, 'scripts/install.mjs'), '--dry-run'], {
+    env: { ...process.env, HOME: f.home }, encoding: 'utf8',
+  });
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /Skill name must match its installation identifier: poteto-mode/);
+});
