@@ -10,9 +10,8 @@ const git = (...args) => {
   if (result.status !== 0) throw new Error(result.stderr || 'Git audit failed');
   return result.stdout;
 };
-const common = resolve(root, git('rev-parse', '--git-common-dir').trim());
-const reportPath = resolve(process.argv[2] ?? join(common, 'p3-upstream', 'report.json'));
 const checkoutGit = resolve(root, git('rev-parse', '--git-dir').trim());
+const reportPath = resolve(process.argv[2] ?? join(checkoutGit, 'p3-upstream', 'report.json'));
 const output = resolve(process.argv[3] ?? join(checkoutGit, 'p3-upstream', 'audit'));
 const report = JSON.parse(readFileSync(reportPath, 'utf8'));
 const source = report.sources.find(item => item.id === 'official');

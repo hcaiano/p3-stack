@@ -77,7 +77,7 @@ Each live lane is a delegated worker at the PR head. Use `t3_thread_launch` with
 **Verify, unit.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked.
 - [ ] <Test file and the case it gains.> Run `<command>`.
 
-**Verify, live.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked. Ten lanes on the `swarm workers` role in `pstack-models.md` at the PR head, per the boot recipe.
+**Verify, live.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked. Ten lanes on `<resolved swarm workers model>` at the PR head, per the boot recipe. Resolve `swarm workers` from `pstack-models.md` through `orchestrator_capabilities` before filling the model.
 - [ ] Lane 1. Regression lane against trunk. Run <the same load-bearing scenario> at trunk and head. If trunk lacks the feature, record that and gate <the behavior the diff adds plus the end state the user waits for>. Save `<slug>.png`. Pass when <predicate>.
 - [ ] Lanes 2 to 10. Expand each into its own box in this shape. <Scenario.> Save `<slug>.png`. Pass when <predicate>.
 
