@@ -10,12 +10,12 @@ Every serious project needs a scripted way to drive the real app and prove behav
 
 ## 1. Interview the repo, not the user
 
-Answer these from the codebase and only ask the user, plainly in the thread, what you cannot observe:
+Answer these from the codebase and only ask the user what you cannot observe:
 
 - **Surface:** what does a user actually touch? A web UI, a CLI/TUI, a desktop app, an API, a mobile app, a library? A repo can have several; pick the primary one and note the rest.
 - **Run:** how does the app start locally? Prefer the repo's own documented dev command (package scripts, Makefile, README quickstart). Note ports, env vars, seed data, auth.
-- **Drive:** how can an agent interact with it programmatically? Existing harnesses first — Playwright/Cypress specs, expect scripts, PTY helpers, curl-able endpoints, a debug port. Only then pick a generic recipe: `preview_open`, `preview_navigate`, `preview_snapshot`, `preview_click`, and `preview_type` for web UIs; `device_open`, `device_screenshot`, and the agent-device CLI for simulators; a tmux/PTY harness for CLI/TUI; plain HTTP for services.
-- **Observe:** what evidence can be captured? Screenshots, `preview_recording_start`/`preview_recording_stop` recordings, terminal transcripts, response bodies, logs, exit codes, DB state.
+- **Drive:** how can an agent interact with it programmatically? Existing harnesses first — Playwright/Cypress specs, expect scripts, PTY helpers, curl-able endpoints, a debug port. Only then pick a generic recipe: browser/CDP for web and Electron, a tmux/PTY harness for CLI/TUI, plain HTTP for services. Web UIs use `preview_status`, `preview_open` and `preview_*`. Electron requires an actual attached CDP/control adapter to the running Electron process, including CDP eval where needed; a browser preview is not that adapter. CLI/TUI uses a real foreground terminal or PTY driver. If the matching adapter is unavailable, report the factual blocker.
+- **Observe:** what evidence can be captured? Screenshots, terminal transcripts, response bodies, logs, exit codes, DB state.
 - **Isolate:** can two instances run side by side (ports, data dirs, profiles)? If not, say so in the generated skill: refusing to double-drive a shared instance beats corrupting the user's session.
 
 If the checkout doesn't build or start as-is, fix that first (or report it precisely) before generating; a skill written against a broken base teaches wrong steps. When an irrelevant missing asset blocks startup (a static dir the API never serves, a sample config), the generated skill may create it, clearly marked as verification scaffolding, and remove it in cleanup.
@@ -41,4 +41,4 @@ Run its own instructions end to end once: launch, doctor, drive ONE mapped featu
 
 ## 5. Offer the maintenance loop
 
-Point the user at `/maintain-verification-skill` for keeping the map honest as the app changes. Suggest a cadence only if they ask; if they do, run it with `schedule_task`.
+Point the user at `/maintain-verification-skill` for keeping the map honest as the app changes. Suggest a cadence only if they ask.

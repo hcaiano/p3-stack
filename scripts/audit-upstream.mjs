@@ -28,19 +28,28 @@ for (const line of inventory.trim().split('\n')) {
   const blob = entry.split(' ')[2];
   let target = path.startsWith('agents/') ? `skills/poteto-mode/references/${path.slice(7)}` : path;
   let disposition = 'compare';
-  if (path === 'skills/poteto-mode/scripts/check-plan.test.ts') target = 'tests/check-plan.test.mjs';
-  else if (path.startsWith('skills/unslop/')) disposition = 'separate-skills-cli-update';
+  if (path.startsWith('skills/unslop/')) disposition = 'separate-skills-cli-update';
   else if (path.startsWith('automations/benny/')) disposition = 'unresolved-automation-port';
-  else if (path.startsWith('skills/poteto-mode/scripts/') && !path.endsWith('/check-plan.mjs')) {
-    disposition = 'native-t3-transport';
-  } else if (path.startsWith('docs/guide/') || path.startsWith('assets/') || path.endsWith('plugin.json')) {
+  else if (path.startsWith('assets/') || path.endsWith('plugin.json')) {
     disposition = 'vendor-packaging';
   }
   const local = join(root, target);
   const present = existsSync(local);
+  if (present && path.startsWith('docs/guide/')) {
+    const bundled = join(root, 'skills/poteto-help/references/guide', path.slice('docs/guide/'.length));
+    const content = readFileSync(local);
+    const expected = path.endsWith('.md') ? Buffer.from(content.toString('utf8')
+      .replaceAll('../../skills/', '../../../')
+      .replaceAll('../../automations/', 'https://github.com/hcaiano/p3-stack/blob/main/automations/')
+      .replaceAll('../../README.md', 'https://github.com/hcaiano/p3-stack/blob/main/README.md')
+      .replaceAll('../default-mode.md', 'https://github.com/hcaiano/p3-stack/blob/main/docs/default-mode.md')) : content;
+    if (!existsSync(bundled) || !readFileSync(bundled).equals(expected)) {
+      throw new Error(`Bundled guide must preserve ${path}`);
+    }
+  }
   const hash = present ? createHash('sha256').update(readFileSync(local)).digest('hex') : null;
   let diffPath = null;
-  if (present && (path.endsWith('.md') || path.endsWith('.mjs') || path.endsWith('.ts'))) {
+  if (present && (path.endsWith('.md') || path.endsWith('.mjs') || path.endsWith('.ts') || path.endsWith('.sh'))) {
     const official = join(output, 'official', path);
     mkdirSync(dirname(official), { recursive: true });
     writeFileSync(official, readSource(path));

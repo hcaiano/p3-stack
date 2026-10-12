@@ -6,11 +6,9 @@ disable-model-invocation: true
 
 # Interrogate
 
-Before resolving models or delegating, read [T3 execution](../poteto-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
+Read the installed poteto-mode reference `../poteto-mode/references/t3-execution.md` before selecting models or delegating. It owns named-role resolution, catalog option keys, accounts and automatic authorized missing-usage fallback.
 
-Spawn one reviewer per configured model to adversarially review code changes. Each model gets the same prompt and rubric. The adversarial signal comes from model diversity, not assigned personas.
-
-The deliverable is a synthesized verdict. Do NOT auto-apply changes.
+Spawn one reviewer per configured model to adversarially review code changes. The adversarial signal comes from model diversity, not assigned personas. The deliverable is a synthesized verdict. Do NOT auto-apply changes.
 
 ## Step 1, Scope
 
@@ -28,24 +26,18 @@ Before spawning reviewers, state the intent in one clear paragraph from the user
 
 ## Step 3, Spawn Reviewers
 
-Launch all reviewers in a single turn, one `delegate_task` per reviewer with `mode: "async"`. Use the `interrogate reviewers` line in `pstack-models.md`, one reviewer per entry, labeled Reviewer A, B, C, and so on for the configured entry count. Resolve each entry's provider and model through `orchestrator_capabilities`. If the line is missing, use the bundled default for that role.
+Launch all reviewers in a single message with `delegate_task` and `mode: "async"`, one per entry on the `interrogate reviewers` line in `pstack-models.md`, labeled Reviewer A, B, and so on to match the entry count. If the file or that line is missing, use the table defaults.
 
-For each reviewer:
-- The brief is self-contained. A delegated reviewer gets only the brief, never your context.
-- The brief says read-only: inspect only, no writes, no git commands that change state.
-- For an `auto` or `inherit-parent` entry, omit the model so that reviewer runs on the parent model.
+| Subagent | Default model |
+|----------|---------------|
+| Reviewer A | `interrogate reviewers` bundled default seat 1, `xhigh` |
+| Reviewer B | `interrogate reviewers` bundled default seat 2, distinct model, `xhigh` |
 
-If a reviewer is unavailable or usage is unknown, resolve an authorized alternative automatically through the execution reference. Ask only to change a hard pin without an authorized fallback or expand the authorized pool.
+Each reviewer gets a read-only, self-contained brief and the target resolved from its configured entry, or its table default when there is no configured line. Resolve `auto` or `inherit-parent` to the parent model. Default reasoning is `xhigh` through live catalog option keys unless the user chooses a budget. T3 child agents get only the brief, never the parent's context. Retain task IDs, drain with `task_status`, and stop with `task_cancel`.
 
-Read `references/reviewer-prompt.md` and fill in the template with:
-1. The stated intent
-2. The diff or file contents
-3. The review rubric from `references/rubric.md`
-4. The code-quality lens from `references/code-quality-review.md`
+If `delegate_task` rejects a configured entry, run that reviewer on its family's bundled default through the execution adapter's authorized fallback and say so. Resolve families and supported option keys from `orchestrator_capabilities`. With no family match, use Reviewer A's default only when the role policy authorizes it. If a table default is unavailable, use its closest authorized equivalent from the live catalog, prefer the same family and reasoning tier, and open a separate PR to update the default table. Do not block the review on a stale catalog entry when an authorized equivalent exists. Never treat an alias entry as a rejected model or apply either fallback to it. Inspect task status and writes before retrying, retain the seat count and model diversity, and report a factual blocker when no eligible assignment remains.
 
-The same filled template goes to all reviewers, so every model applies the code-quality lens. Drain results with `task_status`.
-
-Watch for _stalled_ reviewers as T3 execution describes. Recover a substantive verdict or restaff the seat. Synthesize only once every configured seat has returned a verdict.
+Read `references/reviewer-prompt.md` and fill in the same template for every reviewer with the stated intent, the diff or file contents, the rubric from `references/rubric.md`, and the code-quality lens from `references/code-quality-review.md`.
 
 ## Step 4, Synthesize
 

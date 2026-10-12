@@ -54,7 +54,13 @@ official updates.
   recursive removal command in `skills/poteto-mode/playbooks/worktree-cleanup.md`.
 - **Automatic account fallback.** On 2026-10-12 the user required authorized
   fallbacks to proceed without permission when usage is missing. The T3 account
-  adapter preserves measured selection, distinguishes missing usage from missing
+  adapter also treats configured models and singleton pools as preferences unless
+  the user explicitly prohibits alternatives. Exhausted preferences fall back
+  automatically through the selected configuration and all declared fallback tiers.
+  Where the approved automatic fallback policy permits it, qualifying live
+  alternatives follow those tiers. Preferences stay in the configuration, with
+  no fixed priority list in skills. It preserves measured
+  selection, distinguishes missing usage from missing
   billing mappings and bounds retries without changing engineering requirements.
   Files: `skills/poteto-mode/references/t3-execution.md`, `model-selection.md`,
   `skills/poteto-mode/scripts/resolve-capacity.mjs` and their skill callers.

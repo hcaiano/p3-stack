@@ -1,22 +1,22 @@
 ---
 name: automate-me
-description: "Use for \"automate me\", \"create/update/refresh my -mode skill\", \"turn/capture my preferences or working style into a skill\", or wanting agents to follow how the user works. Drafts or revises a personal -mode skill via the authoring-a-skill playbook + unslop, optionally pulling fresh evidence from recent threads."
+description: "Use for \"automate me\", \"create/update/refresh my -mode skill\", \"turn/capture my preferences or working style into a skill\", or wanting agents to follow how the user works. Drafts or revises a personal -mode skill via skill-creator + unslop, optionally pulling fresh evidence from recent transcripts."
 disable-model-invocation: true
 ---
 
 # Automate me
 
-Before resolving models or delegating, read [T3 execution](../poteto-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
+Read the installed poteto-mode reference `../poteto-mode/references/t3-execution.md` before selecting models or delegating. It owns named-role resolution, catalog option keys, accounts and automatic authorized missing-usage fallback.
 
 A guided flow for turning the user's working conventions into a skill agents will follow. The output is one `-mode` skill tailored to them (e.g. `jay-mode`, `priya-mode`).
 
-This skill orchestrates three others: an inline mining pass (see step 1), the `authoring-a-skill` playbook (authoring), and the **unslop** skill (prose discipline). It sequences them. It doesn't replace them.
+This skill orchestrates three others: an inline mining pass (see step 1), the supported `skill-creator` skill (authoring), and the **unslop** skill (prose discipline). It sequences them. It doesn't replace them.
 
 ## Flow
 
 ### 0. Check for an existing skill
 
-Look recursively for `.agents/skills/**/*-mode/SKILL.md` and `~/.agents/skills/*-mode/SKILL.md` matching the user's handle. Mode skills can live in a personal category directory (`.agents/skills/<handle>/`), not only at the top level. If one exists, confirm intent by asking in the thread (unless they already said "update my skill" or similar):
+Look recursively for `.agents/skills/**/*-mode/SKILL.md` and `~/.agents/skills/*-mode/SKILL.md` matching the user's handle. Mode skills can live in a personal category directory (`.agents/skills/<handle>/`), not only at the top level. If one exists, confirm intent by asking plainly in the thread (unless they already said "update my skill" or similar):
 
 - Update the existing skill (default for repeat runs)
 - Start fresh (rare, ask why before doing it)
@@ -28,9 +28,9 @@ Update mode changes the rest of the flow:
 
 ### 1. Mine their history
 
-Scope the mining to the current project before fanning out. Use `t3_thread_search` and `t3_thread_read` on this project's threads only. Don't read threads from other projects. That crosses project boundaries and reads private chats from unrelated work.
+Locate the active workspace's threads before fanning out with `t3_thread_list`. Use only that project's threads and read them with `t3_thread_read` and `t3_thread_search`. Don't search across unrelated projects. That crosses workspace boundaries and reads private chats from unrelated projects.
 
-Survey recent threads within that scope for recurring patterns. Run multiple parallel `delegate_task` briefs (`mode: "async"`) across slices of history (e.g. last 2-4 weeks, split into 3 slices so each has enough material). Every brief stands alone: child agents get only the brief, never the parent's context. Each brief names the project, its slice, and the signals below; says read-only, inspect only, no writes; and asks for a short structured list of patterns seen with thread pointers. Drain with `task_status`. Default signals worth hunting:
+Survey recent agent conversations within that scope for recurring patterns. Run multiple parallel `delegate_task` subagents with `mode: "async"` and self-contained briefs across slices of history (e.g. last 2-4 weeks, split into 3 slices so each has enough material). Each slice mining subagent reads threads from the workspace-scoped project and thread IDs the parent provides, looks for the signals below, and returns a short structured list of patterns it saw with evidence pointers. Default signals worth hunting:
 
 - Response preferences (length, tone, format, "dumb it down" corrections)
 - Delegation habits (subagents, models, specialized workflows, parallelism)
@@ -39,13 +39,15 @@ Survey recent threads within that scope for recurring patterns. Run multiple par
 - Process conventions (worktrees, commits, PRs, review/merge tooling)
 - Meta preferences (fixing skills mid-task, proposing new ones)
 
+Retain task IDs, drain with `task_status`, and stop with `task_cancel`. T3 child agents get only the brief, never the parent's context.
+
 Cross-check across slices before elevating a signal. Patterns seen in 2+ slices are high-confidence. Lone signals are weak and usually get dropped.
 
 ### 2. Ask the user directly
 
-Mining misses intent that hasn't come up yet. Ask in the thread with short multi-choice questions rather than asking the user to type from scratch.
+Mining misses intent that hasn't come up yet. Ask plainly in the thread with numbered choices rather than asking the user to type from scratch.
 
-Shape: one or two questions with 4-6 options each, multi-select for category questions. Start broad ("Which areas matter most?"), then follow up on selected areas with specific options. After the structured rounds, one free-form question catches anything the options missed.
+Shape: one or two questions with 4-6 options each, allow multiple selections for category questions. Start broad ("Which areas matter most?"), then follow up on selected areas with specific options. After the structured rounds, one free-form chat question catches anything the options missed.
 
 Don't dump 20 questions.
 
@@ -66,16 +68,17 @@ The **poteto-mode** skill shows the shape. Read it for granularity. Don't copy i
 
 ### 4. Draft the skill
 
-Use the `authoring-a-skill` playbook to author the skill. Placement:
+Use the supported `skill-creator` skill skill to author the skill. Placement:
 
 - Path: preserve an existing mode skill's category. For a new mode, use `.agents/skills/<handle>/<handle>-mode/SKILL.md` when the repo has an established personal category for that handle. Otherwise default to `.agents/skills/<handle>-mode/SKILL.md` in the project (or `~/.agents/skills/<handle>-mode/` if the user prefers a personal skill).
 - Handle: the user's first name or chosen identifier.
 - Frontmatter `description`: trigger on their name + `/<handle>-mode` + "work in their style", not on generic keywords like "write code" or "review PR".
+- Frontmatter formatting: follow `skill-creator`'s YAML rules. Keep `description` as one YAML scalar. Quote it or use `description: >-` with indented continuation lines when punctuation or wrapping requires it.
 - Frontmatter `disable-model-invocation: true` by default. Opt out only if the user explicitly wants their mode to apply on every turn.
 
 ### 5. Iterate on prose
 
-Apply the **unslop** skill and the playbook's writing guidelines to every line.
+Apply the **unslop** skill and `skill-creator`'s writing guidelines to every line.
 
 Show the draft to the user and take feedback. Expect multiple iterations. Cut ruthlessly. A mode skill is not a manual.
 
@@ -94,9 +97,11 @@ Work in a worktree off main. Commit and open a PR. Don't push to main directly.
 
 ## Evaluation
 
-A `-mode` skill is subjective output. A test/iterate benchmark loop isn't useful here. Vibe-check with the user: does it read like them? Did it miss anything? Then ship. Optimize the description only if trigger accuracy turns out to be a problem in practice.
+A `-mode` skill is subjective output. A `skill-creator`-style test/iterate benchmark loop isn't useful here. Vibe-check with the user: does it read like them? Did it miss anything? Then ship.
+
+Run a description-optimization loop only if the skill's trigger accuracy turns out to be a problem in practice.
 
 ## When not to use
 
-- User wants a task-specific skill (not working conventions): the `authoring-a-skill` playbook alone, no mining required.
+- User wants a task-specific skill (not working conventions): `skill-creator` alone, no mining required.
 - User wants to capture one narrow workflow (e.g. "how I write commit messages"). That's a regular skill, not a mode skill.

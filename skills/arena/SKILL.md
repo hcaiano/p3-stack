@@ -6,41 +6,28 @@ disable-model-invocation: true
 
 # Arena
 
-Before resolving models or delegating, read [T3 execution](../poteto-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints. Its top-level conversation requirement applies to every launch below; use supported child isolation or report the runtime limitation otherwise.
+Read the installed poteto-mode reference `../poteto-mode/references/t3-execution.md` before selecting models or delegating. It owns named-role resolution, catalog option keys, accounts and automatic authorized missing-usage fallback.
 
-Fan out N parallel attempts at the same task. Read every candidate end to end. Pick the strongest as the base. Graft the best ideas from the others into it. Verify the synthesized result.
-
-## Start
-
-Open a todolist with one entry per phase before launching anything.
-
-1. Frame
-2. Fan out
-3. Cross-judge
-4. Pick
-5. Graft
-6. Verify
+Open a todolist with one entry per phase (Frame, Fan out, Cross-judge, Pick, Graft, Verify) before launching anything.
 
 ## Phase A: Frame
 
 Every candidate gets the same prompt, so the prompt is the contract.
 
 1. State the artifact each candidate is producing.
-2. Derive the rubric. State what success looks like for *this* task, then turn it into 3-6 concrete gradeable criteria. The rubric is the picker's tool in Phase D. Candidates only see the task.
-3. Pick the runners. Use the `arena runners` line in `pstack-models.md`, resolved against `orchestrator_capabilities`. If the file or role is missing, use the bundled default for that role. An `auto` or `inherit-parent` entry in this line or the cross-judge line means the parent model, so omit `model` for it. If a seat is unavailable or usage is unknown, resolve an authorized alternative automatically through the execution reference. Ask only to change a hard pin without an authorized fallback or expand the authorized pool. Spawn more when the arena covers multiple design directions. Same model N times when the work is generation-bound rather than judgment-sensitive.
-4. Assign output paths. Each candidate writes to its own location (a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/`), per the **separate-before-serializing-shared-state** principle skill. A candidate that needs its own worktree gets one through `t3_thread_launch` with a `workspaceStrategy`. One writer per worktree.
+2. Derive the rubric, 3-6 concrete gradeable criteria for what success looks like on *this* task. It is the picker's tool in Phase D. Candidates only see the task.
+3. Pick the runners. Use the `arena runners` line in `pstack-models.md`. If the file or that line is missing, default to one each on its two distinct-model bundled defaults at `xhigh` reasoning through live catalog option keys unless the user chooses a budget. An `auto` or `inherit-parent` entry in this line or the cross-judge line means the parent model, so resolve its actual target from `orchestrator_capabilities`. If `delegate_task` rejects a configured entry, follow the execution adapter's authorized fallback preserving the reasoning tier and required diversity and say so. Resolve family and valid candidates from the live catalog, never a guessed slug. Inspect task status and writes before retrying on a fresh task ID. Spawn more runners when the arena covers multiple design directions. Use the same model N times when the work is generation-bound rather than judgment-sensitive.
+4. Give each candidate its own output location (a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/`), per the **separate-before-serializing-shared-state** principle skill. Use supported child isolation; `t3_thread_launch` is only for explicitly requested separate top-level conversations. If the required isolation is unavailable, report the factual limitation.
 
 ## Phase B: Fan out
 
-Spawn all N candidates in one turn with `delegate_task`, one per runner entry, each with `mode: "async"`. T3 child agents get only the brief, never the parent's context, so every brief stands alone: the task, the path to the shared grounding, its own output path, and instructions to produce both the artifact and a short rationale.
+Spawn all N subagents in one message with `delegate_task` and `mode: "async"`, each with the task, the path to the shared grounding, its own output path, and instructions to produce the artifact and a short rationale naming the alternatives it considered and what it rejected. Retain each task ID and drain with `task_status`; stop with `task_cancel`. Every brief stands alone. T3 child agents get only the brief, never the parent's context.
 
-Each rationale names the alternatives the candidate considered and what it rejected.
-
-Drain the candidates with `task_status`. If a candidate fails to produce output, proceed with N-1 and note the dropout in the synthesis record.
+If a candidate produces no output, proceed with N-1 and note the dropout.
 
 ## Phase C: Cross-judge
 
-After all Phase B candidates complete, choose one model from the `arena cross-judge pool` line in `pstack-models.md`. If the file or role is missing, use the bundled default for `arena cross-judge pool`. Prefer a different model family from the parent's. Spawn one judge with `delegate_task` on that model. The brief says read-only: inspect only, no writes. It sees the rubric and the candidates by path label, scores each criterion, and recommends a base with rationale. It runs in parallel with the parent's reading in Phase D, not with the candidates themselves. Don't spawn the judge while candidates are still writing.
+After all Phase B candidates complete, choose one model from the `arena cross-judge pool` line in `pstack-models.md`. If the file or that line is missing, choose from its two distinct-model bundled defaults at `xhigh` reasoning through live catalog option keys unless the user chooses a budget. Prefer a different model family from the parent's. Spawn one readonly judge subagent on that model with a self-contained `delegate_task` brief and `mode: "async"`. It sees the rubric and the candidates by path label, scores each criterion, and recommends a base with rationale. It runs in parallel with your reading in Phase D. Don't spawn it while candidates are still writing.
 
 ## Phase D: Pick a base
 

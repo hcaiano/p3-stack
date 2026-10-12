@@ -1,10 +1,9 @@
 ---
 name: setup-pstack
-description: Configure pstack model and account selection in T3, with automatic choices, candidate pools or fixed selections per role. Use for /setup-pstack or changing global or project model preferences.
-disable-model-invocation: true
+description: Configure which models pstack uses per role and at what reasoning budget. Detects your available T3 models and writes pstack-models.md to override the skill defaults. Use for /setup-pstack, "configure pstack models", "pstack budget", or changing pstack's model choices.
 ---
 
-# Setup pstack for T3
+# Setup pstack
 
 Before resolving models or delegating, read [T3 execution](../poteto-mode/references/t3-execution.md). It defines global configuration, capacity selection, and transport constraints.
 
@@ -14,7 +13,8 @@ project override. Read [model selection](../poteto-mode/references/model-selecti
 for candidate-pool syntax, update behavior and Fleet persistence. Preserve existing
 choices. For this user's automatic setup, use open `capacity` and retain the
 skill's reasoning requirements; do not make them choose a fixed roster to start.
-This initial default does not replace existing pins or pools unless requested.
+Keep existing preferences. Ordinary fallback can use qualifying alternatives
+without rewriting them; honor actual strict prohibitions.
 
 ## Steps
 
@@ -25,14 +25,15 @@ Call `orchestrator_capabilities`. It lists the providers and models you can pass
 ### 2. Load current state
 
 The roles are the labels shown in step 5. Read the existing file and its optional
-`# budget` line. Otherwise start from the bundled defaults. Identify obsolete
-roles for review rather than dropping unrecognized user settings silently.
+`# budget` line. Otherwise start from the bundled defaults. A known retired
+pstack role, such as `how critics`, is from a retired role. Drop it. Keep unrelated
+user settings intact and list each retired line removed when showing the roles.
 
 ### 3. Budget, map, and confirm
 
-Offer open automatic selection (`capacity`), a restricted pool
+Offer open automatic selection (`capacity`), a preferred pool
 (`capacity[model-id-a | model-id-b]`), an ordered pool that falls back by tier
-(`capacity[model-id-a > model-id-b]`), or a pinned account/model. A pool selects
+(`capacity[model-id-a > model-id-b]`), or a preferred account/model with an optional explicit strict restriction. A pool selects
 one alternative for each seat; a panel's top-level list still controls its seat
 count. Preserve the invoking skill's required count and diversity. Existing
 user choices are authorization to keep them; ask only for unresolved preferences.
@@ -40,7 +41,9 @@ user choices are authorization to keep them; ask only for unresolved preferences
 **(a) Reasoning preference.** Keep the skill's requirements by omitting `# budget`
 unless the user chooses an override. When they ask to change reasoning, explain
 that this controls effort, not subscription spending. Show the current setting
-and the existing options:
+and the existing options. With no configuration, say that `large` matches the
+skill defaults. The official default is `xhigh`, resolved through each model's
+live reasoning options; `large` keeps those defaults.
 
 - `unlimited — max reasoning`
 - `large — xhigh reasoning`
@@ -58,22 +61,24 @@ catalog-specific option keys and distinguish effort from workflow modes. Apply
 the preference when resolving each capacity seat; keep policy entries dynamic.
 
 **(c) Show the resulting selection.** Show roles grouped by identical policy,
-explicit pools and pins, reasoning overrides and unresolved choices. One
+preference pools, explicit strict restrictions, reasoning overrides and unresolved choices. One
 `delegate_task` runs per panel seat, not per pool candidate. `arena cross-judge
 pool` retains Arena's own selection rules. `swarm workers` is the default for
-each worker unless its workflow assigns another choice. Use authorized fallbacks automatically, including when usage is unknown. Ask
-only to change a hard pin without an authorized fallback or expand the authorized
-pool; do not ask again to apply preferences already given by the user.
+each worker unless its workflow assigns another choice. Use automatic fallback when usage is unknown or a preferred target is unavailable.
+Try configured alternatives, then suitable enabled catalog models, preserving
+quality, effort, seat count and diversity. Do not ask permission for routine
+capacity fallback. A strict restriction requires an explicit user instruction,
+not merely a model name or singleton pool. Carry the policy into child briefs.
 
 ### 4. Validate
 
 Validate every new pin and pool candidate against the live catalog. Unqualified
-pool IDs may resolve through several accounts. Preserve existing unavailable
-pins as unresolved until the user decides. Validate panel seat count and whether
+pool IDs may resolve through several accounts. Preserve stored preferences while automatically using suitable available
+alternatives. Keep an unavailable strict restriction as a factual limitation. Validate panel seat count and whether
 its candidates can meet the invoking skill's diversity rules. Report quota or
-host limitations without silently broadening a restricted pool.
+host limitations without silently broadening a preferred pool.
 If a candidate cannot meet a requested effort, try another eligible candidate
-within the same policy; report a blocker when none qualifies. Never silently
+through the automatic fallback policy; report a blocker when none qualifies. Never silently
 lower the invoking skill's required effort.
 
 ### 5. Write the file
@@ -115,8 +120,8 @@ interrogate reviewers: <entry>, <entry>
 
 Report the path, scope and actual host delivery. The adapter reads it before
 each delegation wave; running children keep their existing selection. Open
-`capacity` considers newly exposed T3 models without a setup rerun. Explicit
-pools and pins change only when requested. For Fleet globals, update the MBP
+`capacity` considers newly exposed T3 models without a setup rerun. Stored preference pools change only when requested; automatic fallback can use
+qualifying alternatives without editing them. For Fleet globals, update the MBP
 source and verify destination contents; a configured sync is not delivery proof.
 
 ### 7. Offer a verification skill (optional)
@@ -125,3 +130,5 @@ When setup is for an application project, check whether it has a way to drive
 the real app for proof (a `verify-*` skill or existing harness). If missing, offer
 `/create-verification-skill` once. Skip this step for global configuration without
 an application project.
+On yes, invoke `/create-verification-skill` (resolves wherever pstack is installed:
+workspace or user). On no, move on without pushing.

@@ -14,7 +14,7 @@ Read the project's `pstack-models.md`, otherwise `~/.agents/pstack-models.md`, o
 travel with the skills; resolve provider IDs on the machine executing the task.
 
 Read [model selection](model-selection.md) when configuring roles or resolving
-a restricted candidate pool. Re-read the selected configuration before each
+a preferred candidate pool or an explicit strict restriction. Re-read the selected configuration before each
 delegation wave; a running child retains its original selection.
 
 Before a delegation wave, call `orchestrator_capabilities` and the installed
@@ -28,29 +28,47 @@ the user's preference tiers; `t3-capacity --candidate` computes the choice.
 All enabled accounts are eligible, including both Codex accounts, Claude, Grok
 and Cursor. Do not impose
 an additional model ranking or reasoning-effort cap. Keep explicit model/account
-choices and the existing `inherit-parent`/`auto` semantics. Pool candidates and
-already-authorized fallback chains are not hard pins. Use current catalog IDs
+choices and the existing `inherit-parent`/`auto` semantics. Configured pools, singleton seats and named targets are preferences unless the
+user explicitly prohibits alternatives. Use current catalog IDs
 and supported option keys.
 
 Resolve each panel seat without changing the skill's count or diversity rules.
+Retain the official default `xhigh` reasoning unless an authorized user budget
+overrides it; resolve the actual option key and supported value from the catalog.
+If no eligible target can meet the required effort, report the limitation.
 Two providers or accounts serving the same model do not add model diversity.
 Unknown quota is not confirmed headroom. Follow the automatic fallback below.
 A protected reading is a pacing signal, not an additional approval requirement.
 
 ## Automatic fallback
 
-Never ask permission to use a fallback already allowed by the role policy or the
-user. Missing usage permits an attempt on a confirmed account mapping. Skip
-known-unavailable targets and unconfirmed mappings automatically. Ask only to
-change an actual pin or expand the authorized policy; report factual blockers
-when no eligible target remains. Preserve quality, effort, panel count and
-diversity throughout.
+Manage ordinary capacity fallback automatically. Never ask permission because
+usage is missing, quota is exhausted, a preferred account/model is unavailable,
+or a preferred pool cannot staff the required panel. Try its configured tiers,
+then eligible live alternatives as later tiers under the model-selection policy.
+Re-read the selected configuration before every wave. Build every entry's
+complete declared tier list using the model-selection reference before capacity
+selection. Model preferences come from that file. Never derive a priority list
+from another role or embed one in the skills. Preserve the method's
+quality constraints, effort, count and diversity. A temporary fallback does not
+rewrite preferences or expand a real explicit prohibition.
+
+Missing usage permits an attempt on a confirmed billing mapping. Skip known
+unavailable targets and unconfirmed mappings automatically. A named target or
+singleton pool alone is not a hard restriction. Honor explicit strict restrictions
+and already-authorized exceptions. If no qualifying target exists, report a
+factual limitation and continue independent work rather than asking for routine
+fallback approval. Carry the selected configuration path, applicable complete role value, automatic
+fallback policy and explicit prohibitions in child briefs. A child starting
+another wave re-reads that file and follows the same policy without asking the
+operator for ordinary capacity fallback.
 
 Run the bundled `scripts/resolve-capacity.mjs` relative to poteto-mode's installed
 directory. Feed JSON on stdin: `{report: {choice, candidates}, exclude: []}`,
 using the actual `t3-capacity` report. Supply only role-, catalog- and
-policy-qualified candidates. A hard pin is a singleton unless the user has
-authorized its fallback. Exclusions are `{instance, model}` or `{pool}` for a
+policy-qualified candidates. An explicit strict pin is a singleton unless the user has
+authorized its fallback; ordinary preference pools include qualifying fallback
+tiers before running capacity selection. Exclusions are `{instance, model}` or `{pool}` for a
 confirmed shared quota pool; never guess billing relationships.
 
 The resolver preserves the measured choice exactly. Otherwise, it attempts a
@@ -71,6 +89,10 @@ application failures do not prove quota exhaustion. Report the selected account
 and unknown usage briefly; no extra approval is required.
 
 ## T3 transport and packaging
+
+Read [portable tool inputs](t3-tools.md) when using the bundled orchestration,
+PR readiness or worktree audit scripts. Their source policies remain intact;
+this reference defines only the T3 boundary exports and continuations.
 
 Use `delegate_task` for child work, with a complete brief and retained task ID.
 Each review/fix round uses a new delegation carrying prior findings and the current

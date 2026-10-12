@@ -6,11 +6,13 @@ disable-model-invocation: true
 
 # Why
 
+Read the installed poteto-mode reference `../poteto-mode/references/t3-execution.md` before selecting models or delegating. It owns named-role resolution, catalog option keys, accounts and automatic authorized missing-usage fallback.
+
 Investigate the motivation and intent behind code. The companion `how` skill answers what the code does and how it works. `why` answers what forces led to its shape.
 
-Resolve each delegation role from `pstack-models.md` through `orchestrator_capabilities` and [T3 execution](../poteto-mode/references/t3-execution.md). Use `delegate_task` with `mode: "async"`, a self-contained brief, and retained task ID. Drain with `task_status`. Never hardcode a model. If the file or role is missing, use the bundled default for that role.
+Each spawn below names a role line in `pstack-models.md` and a bundled default. Resolve the target from that line, or from its default if the file or line is missing. Defaults require `xhigh` reasoning through live catalog option keys unless the user chooses a budget. Resolve `auto` or `inherit-parent` to the parent target. Handle rejected entries through the execution adapter's authorized fallback preserving effort and required diversity and say so.
 
-Every brief says read-only: inspect only, no file edits, no git mutations, no writes through any MCP. Keep MCP access available for investigators and citation spot-checks.
+Every spawn is a `delegate_task` child with `mode: "async"` and a self-contained brief. Preserve MCP access for the investigators and the synthesizer's citation spot-checks. Investigators still shouldn't write anything. T3 child agents get only the brief, never the parent's context. Retain task IDs, drain with `task_status`, and stop with `task_cancel`.
 
 ## Operating Posture
 
@@ -20,7 +22,7 @@ Operate as a **careful, cautious, and precise investigator**. Be honest about wh
 
 The **target** is usually a chunk of code, a pattern, a feature, or a named design decision. The **question** is usually a design rationale, a tradeoff, a motivating edge case, an external constraint, dead code, or a broad history sweep.
 
-If the target is vague ("why do we do it this way?" with no clear referent), make your best guess from conversation context (open files, recent edits, selection, what was just discussed). State your interpretation briefly so the user can redirect if you're off, then proceed.
+If the target is vague ("why do we do it this way?" with no clear referent), make your best guess from conversation context (open files, recent edits, cursor location, what was just discussed). State your interpretation briefly so the user can redirect if you're off, then proceed.
 
 ## Step 2. Establish the Code Anchor
 
@@ -32,7 +34,7 @@ Before spawning investigators, build the seed context inline: file paths and lin
 
 ### Discovery
 
-Before spawning investigators, inventory MCP servers from the available-tools map. Read tool names and descriptions and group them by server prefix.
+Before spawning investigators, list the available MCPs from the T3 environment. Use the available-tools map and tool discovery when present. Otherwise use `orchestrator_capabilities` and available MCP resource descriptors.
 
 Map each available MCP to one evidence category:
 
@@ -46,7 +48,7 @@ Map each available MCP to one evidence category:
 
 Source control is always available through git and `gh`. For the other six, classify using the MCP name, server instructions, tool names, and resource descriptors. If an MCP could fit more than one category, choose the one matching its primary evidence. Record ambiguous cases in the coverage map.
 
-Spawn one investigator per category that has a matching MCP, all in a single message so they run concurrently, each owning exactly one tool or MCP. Don't ask one agent to cover multiple MCPs. Provider and model: the `why investigators` line.
+Spawn one investigator per category that has a matching MCP, all in a single message so they run concurrently, each owning exactly one tool or MCP. Don't ask one agent to cover multiple MCPs. `model`: the `why investigators` line, default its bundled named-role value at `xhigh` reasoning unless the user chooses a budget.
 
 Each investigator's prompt is `references/investigator-prompt.md` filled in, plus:
 - the category playbook `references/sources/<source>.md` for the selected MCP, adapted from the examples in `references/source-playbook.md`
@@ -76,7 +78,7 @@ If your scope assessment suggests a single-commit trivial target where the PR de
 
 ## Step 4. Synthesize
 
-Spawn one synthesizer with `delegate_task`, using the `why synthesizer` role. Its read-only brief keeps MCP access. It gets:
+Spawn one synthesizer. `model`: the `why synthesizer` line, default its bundled named-role value at `xhigh` reasoning unless the user chooses a budget. It gets:
 1. The investigator findings, including any null results and any categories skipped with justification
 2. The code anchor
 3. The user's original question

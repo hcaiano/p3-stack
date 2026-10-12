@@ -6,9 +6,11 @@ disable-model-invocation: true
 
 # How
 
+Read the installed poteto-mode reference `../poteto-mode/references/t3-execution.md` before selecting models or delegating. It owns named-role resolution, catalog option keys, accounts and automatic authorized missing-usage fallback.
+
 Explore the codebase to answer "how does X work?" questions. Produce architectural explanations at the level of a senior engineer onboarding onto a subsystem, enough to build a working mental model, not so much that it reads like annotated source code.
 
-Every spawn is a `delegate_task` with `mode: "async"` and a self-contained read-only brief. The child gets only the brief, never this conversation. Explorers use `how explorer`; explainers use `how explainer`. Resolve the role in `pstack-models.md` through `orchestrator_capabilities` and [T3 execution](../poteto-mode/references/t3-execution.md), including alias and capacity rules. If the file or role is missing, use the bundled default for that role. Drain with `task_status`.
+Every spawn is a read-only `delegate_task` child with `mode: "async"` and a self-contained brief. Explorers use the `how explorer` line in `pstack-models.md`, and every explainer uses the `how explainer` line. Resolve a missing line from that role's bundled default at `xhigh` reasoning through live catalog option keys unless the user chooses a budget. For `auto` or `inherit-parent`, resolve the parent target. Handle rejected entries through the execution adapter's authorized fallback preserving effort and required diversity and say so. Retain task IDs, drain with `task_status`, and stop with `task_cancel`. T3 child agents get only the brief, never the parent's context.
 
 ## 1. Assess complexity
 
