@@ -1,8 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, symlinkSync, rmSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, symlinkSync, rmSync, cpSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { resolve, join } from 'node:path';
+import { resolve, join, dirname, sep } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 const installer = resolve('scripts/install.mjs');
@@ -108,4 +108,18 @@ test('the installer rejects a presentation name that Skills CLI would silently s
   });
   assert.equal(result.status, 1);
   assert.match(result.stderr, /Skill name must match its installation identifier: poteto-mode/);
+});
+
+test('installed help routes resolve inside the skill bundle or to public documentation', () => {
+  const project = mkdtempSync(join(tmpdir(), 'p3-help-routes-'));
+  const installed = join(project, '.agents/skills');
+  cpSync(resolve('skills'), installed, { recursive: true, filter: path => !path.split(sep).includes('node_modules') });
+  const help = join(installed, 'poteto-help/SKILL.md');
+  for (const match of readFileSync(help, 'utf8').matchAll(/\[[^\]]*\]\(([^)]+)\)/g)) {
+    const target = match[1].split('#')[0];
+    if (!target || /^[a-z]+:/i.test(target)) continue;
+    const routed = resolve(dirname(help), target);
+    assert.ok(routed.startsWith(installed + sep), `Help route escapes installed skills: ${target}`);
+    assert.ok(existsSync(routed), `Installed help route is missing: ${target}`);
+  }
 });

@@ -65,6 +65,6 @@ const audit = { officialCommit: source.latestCommit, fingerprint: report.fingerp
   reviewedCommit: source.reviewedCommit, files: rows };
 writeFileSync(join(output, 'inventory.json'), `${JSON.stringify(audit, null, 2)}\n`);
 writeFileSync(join(output, 'inventory.tsv'), 'source\ttarget\tdisposition\tpresent\tblob\tsha256\n' +
-  rows.map(row => [row.source, row.target, row.disposition, row.present, row.blob, row.sha256 ?? ''].join('\t')).join('\n') + '\n');
+  rows.map(row => [row.source, row.target, row.disposition, row.present, row.blob, row.sha256 ?? '-'].join('\t')).join('\n') + '\n');
 console.log(JSON.stringify({ output, files: rows.length,
   unresolved: rows.filter(row => row.disposition === 'unresolved-automation-port').map(row => row.source) }, null, 2));

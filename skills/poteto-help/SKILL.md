@@ -34,11 +34,11 @@ When the model rule is missing and it matters, ask whether the user wants to pic
 
 ## Get set up
 
-1. Install with the approved revision through the Skills CLI, as described in the [README](../../README.md#install).
+1. Install with the approved revision through the Skills CLI, as described in the [README](https://github.com/hcaiano/p3-stack/blob/main/README.md#install).
 2. Run [`/setup-pstack`](../setup-pstack/SKILL.md). It asks for a reasoning budget, maps a model to each role, and writes a rule. The rule applies to new chats.
 3. Start a real task with `/poteto-mode`, a goal, and a check that can pass or fail.
 
-The user's global instructions enable `/poteto-mode`; `/setup-pstack` resolves model and account preferences. The [README](../../README.md) and [guide page 1](references/guide/01-setup.md) have the details. Offer to word their first prompt with them, per [`references/prompting.md`](references/prompting.md).
+The user's global instructions enable `/poteto-mode`; `/setup-pstack` resolves model and account preferences. The [README](https://github.com/hcaiano/p3-stack/blob/main/README.md) and [guide page 1](references/guide/01-setup.md) have the details. Offer to word their first prompt with them, per [`references/prompting.md`](references/prompting.md).
 
 If cost is the worry, say where the tokens go and how to spend fewer. pstack spends extra tokens on subagents and review panels. Rerun `/setup-pstack` and pick a smaller budget or cheaper models. A role set to `auto` or `inherit-parent` runs on the chat's model, which saves tokens when the chat runs on Auto or a cheaper model. A shorter panel list runs fewer subagents, one for each entry. Save `/poteto-mode` for work that needs rigor.
 
@@ -48,7 +48,7 @@ p3-stack ports pstack to T3 Code. Its skills use the Agent Skills format. Delega
 
 `/poteto-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](references/guide/02-poteto-mode.md) has examples.
 
-The user's global instructions keep `/poteto-mode` on every turn. `/poteto-mode` is also available explicitly. See [Default mode](../../docs/default-mode.md) for T3 Code setup.
+The user's global instructions keep `/poteto-mode` on every turn. `/poteto-mode` is also available explicitly. See [Default mode](https://github.com/hcaiano/p3-stack/blob/main/docs/default-mode.md) for T3 Code setup.
 
 Mid-chat, "new task" makes the mode match a fresh playbook. `/poteto-mode` already uses the bundled `poteto-agent` brief for the subagents its playbook steps spawn. To get the same style from a subagent of your own, use `delegate_task` with a self-contained brief pointing at poteto-mode's `references/poteto-agent.md`.
 

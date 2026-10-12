@@ -124,7 +124,7 @@ function guideAuditFixture() {
   const bundled = join(checkout, 'skills/poteto-help/references/guide/verify.md');
   mkdirSync(join(checkout, 'skills/poteto-help/references/guide'), { recursive: true });
   writeFileSync(bundled, '## Verify\nRun the real user flow.\n\n[mode](../../../poteto-mode/SKILL.md)\n');
-  return { checkout, bundled, run: () => spawnSync('node', [join(checkout, 'scripts/audit-upstream.mjs')], {
+  return { checkout, bundled, repo: f.repo, run: () => spawnSync('node', [join(checkout, 'scripts/audit-upstream.mjs')], {
     cwd: checkout, encoding: 'utf8',
   }) };
 }
@@ -149,4 +149,23 @@ test('the auditor rejects a bundled guide that drops its verification instructio
   const missing = f.run();
   assert.equal(missing.status, 1);
   assert.match(missing.stderr, /Bundled guide must preserve docs\/guide\/verify.md/);
+});
+
+test('an excluded packaging target keeps a null JSON digest and a whitespace-clean TSV', () => {
+  const f = guideAuditFixture();
+  writeFileSync(join(f.repo, 'pstack/plugin.json'), '{}\n');
+  git(f.repo, 'add', '.'); git(f.repo, 'commit', '-m', 'excluded package');
+  const reportPath = join(f.checkout, '.git/p3-upstream/report.json');
+  const report = JSON.parse(readFileSync(reportPath, 'utf8'));
+  report.sources[0].latestCommit = git(f.repo, 'rev-parse', 'HEAD');
+  writeFileSync(reportPath, JSON.stringify(report));
+  const result = f.run();
+  assert.equal(result.status, 0, result.stderr);
+  const output = join(f.checkout, '.git/p3-upstream/audit');
+  const inventory = JSON.parse(readFileSync(join(output, 'inventory.json'), 'utf8'));
+  assert.equal(inventory.files.find(file => file.source === 'plugin.json').sha256, null);
+  writeFileSync(join(f.checkout, 'inventory.tsv'), readFileSync(join(output, 'inventory.tsv')));
+  git(f.checkout, 'add', 'inventory.tsv');
+  const check = spawnSync('git', ['diff', '--cached', '--check'], { cwd: f.checkout, encoding: 'utf8' });
+  assert.equal(check.status, 0, check.stdout + check.stderr);
 });

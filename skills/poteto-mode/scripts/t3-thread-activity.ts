@@ -201,7 +201,7 @@ function mentionsPath(text: string, path: string): boolean {
     const index = text.indexOf(path, start);
     if (index < 0) return false;
     const after = text.charAt(index + path.length);
-    if (after === "/" || after === '"' || after === "'") return true;
+    if (after === "" || /[\s/"'<>]/.test(after)) return true;
     start = index + path.length;
   }
   return false;

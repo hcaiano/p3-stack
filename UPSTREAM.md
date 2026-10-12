@@ -64,6 +64,16 @@ official updates.
   billing mappings and bounds retries without changing engineering requirements.
   Files: `skills/poteto-mode/references/t3-execution.md`, `model-selection.md`,
   `skills/poteto-mode/scripts/resolve-capacity.mjs` and their skill callers.
+- **Verification ownership and retries.** Approved on 2026-10-12 after the
+  workflow retro: one verifier owns a shared desktop, releases it on human
+  preemption, and retries a failed case only after a relevant input changes.
+  Passed evidence remains valid while its inputs do. Files:
+  `skills/poteto-mode/references/t3-execution.md` and
+  `skills/create-verification-skill/SKILL.md`.
+- **Complete instruction delivery.** Approved on 2026-10-12 after the workflow
+  retro: required reads must reach the agent in full, with enough aggregate
+  output budget or separate delivery; clipped ranges must be recovered before
+  the read is complete. File: `skills/poteto-mode/references/t3-execution.md`.
 
 ## Checking for updates
 
