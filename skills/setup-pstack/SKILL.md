@@ -104,11 +104,11 @@ why investigators: <providerInstanceId>/<model> (<effort>)
 why synthesizer: <providerInstanceId>/<model> (<effort>)
 reflect tooling: <providerInstanceId>/<model> (<effort>)
 reflect judgment, divergent, synthesizer: <providerInstanceId>/<model> (<effort>)
-arena runners: <entry>, <entry>, <entry>
-arena cross-judge pool: <entry>, <entry>, <entry>
+arena runners: <entry>, <entry>
+arena cross-judge pool: <entry>, <entry>
 swarm workers: <providerInstanceId>/<model> (<effort>)
-architect runners: <entry>, <entry>, <entry>
-interrogate reviewers: <entry>, <entry>, <entry>
+architect runners: <entry>, <entry>
+interrogate reviewers: <entry>, <entry>
 ```
 
 ### 6. Confirm

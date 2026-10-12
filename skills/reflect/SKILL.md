@@ -22,7 +22,7 @@ Reviewers get only their brief, never the parent's context. Pass the thread id a
 
 One turn, three `delegate_task` calls with `mode: "async"`. Reviewers need tool access for context lookups (tickets, chat threads, observability traces referenced in the transcript), so do not restrict their tools.
 
-Resolve each model from the role line in `pstack-models.md` via `orchestrator_capabilities`. Never hardcode a slug.
+Resolve each model from the role line in `pstack-models.md` via `orchestrator_capabilities`. Never hardcode a slug. If the file or role is missing, use the bundled default for that role.
 
 | Lens | Role line | Prompt template |
 |---|---|---|

@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Investigate the motivation and intent behind code. The companion `how` skill answers what the code does and how it works. `why` answers what forces led to its shape.
 
-Resolve each delegation role from `pstack-models.md` through `orchestrator_capabilities` and [T3 execution](../poteto-mode/references/t3-execution.md). Use `delegate_task` with `mode: "async"`, a self-contained brief, and retained task ID. Drain with `task_status`. Never hardcode a model.
+Resolve each delegation role from `pstack-models.md` through `orchestrator_capabilities` and [T3 execution](../poteto-mode/references/t3-execution.md). Use `delegate_task` with `mode: "async"`, a self-contained brief, and retained task ID. Drain with `task_status`. Never hardcode a model. If the file or role is missing, use the bundled default for that role.
 
 Every brief says read-only: inspect only, no file edits, no git mutations, no writes through any MCP. Keep MCP access available for investigators and citation spot-checks.
 
