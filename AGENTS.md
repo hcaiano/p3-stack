@@ -45,51 +45,17 @@ Keep these names exactly.
 - Delegation briefs are self-contained. T3 child agents get only the brief, never the parent's context. Say this where pstack says "every brief stands alone".
 - Never bullet a Cursor tool into a skill, even as a fallback.
 
-## Layout
-
-- `skills/<name>/SKILL.md` is a skill. `skills/principle-*/SKILL.md` are the short principles.
-- `skills/poteto-mode/SKILL.md` is the mode router; its playbooks live in `skills/poteto-mode/playbooks/`.
-- `skills/poteto-mode/references/` bundles delegated-role briefs so the Skills CLI installs them.
-
-## T3 tool quick reference
-
-- Delegation: `delegate_task`, `task_status`, `task_cancel`, `orchestrator_capabilities`
-- Threads: `t3_thread_launch`, `create_threads`, `t3_thread_list`, `t3_thread_read`, `t3_thread_search`, `t3_thread_send`, `t3_thread_wait`, `t3_thread_fork`, `t3_thread_merge_back`, `t3_thread_interrupt`, `t3_thread_organize`, `t3_thread_update`, `t3_thread_configure`
-- Worktrees: `t3_worktree_status`, `t3_worktree_list`, `t3_worktree_handoff`
-- Pull requests: `link_pull_request`, `list_thread_pull_requests`, `watch_pull_request`, `unwatch_pull_request`, `unlink_pull_request`
-- Schedules: `schedule_task`, `list_scheduled_tasks`, `update_scheduled_task`, `delete_scheduled_task`, `run_scheduled_task_now`
-- Queue: `t3_queue_list`, `t3_queue_read`, `t3_queue_edit`, `t3_queue_reorder`, `t3_queue_cancel`, `t3_queue_promote_to_steer`
-- Preview: `preview_open`, `preview_navigate`, `preview_snapshot`, `preview_click`, `preview_type`, `preview_press`, `preview_scroll`, `preview_wait_for`, `preview_status`, `preview_resize`, `preview_set_appearance`, `preview_recording_start`, `preview_recording_stop`, `t3_preview_list`, `t3_preview_close`
-- Devices: `device_list`, `device_open`, `device_screenshot`, `device_close`
-- Pending requests: `t3_pending_request_list`, `t3_pending_request_read`, `t3_pending_request_respond`
-
 ## Definition of done for a skill
 
 1. Every step names a T3 mechanism or a vendor-neutral habit. Grep for `Cursor`, `Task tool`, `subagent_type`, `cloud agent`, `.cursor`, `agent-transcripts`, `AskQuestion`, `icon:`, `claude-`, `grok-`, `gpt-`, `/loop`. None may remain.
 2. It is shorter than the pstack source unless the T3 rewrite genuinely needs the lines.
 3. Frontmatter matches the rules above, and references to other skills resolve to files in this repo.
 
-## Personal fork integration
+## Fork rules
 
-Preserve upstream playbooks. The shared `skills/poteto-mode/references/t3-execution.md` owns account selection, live T3 transport constraints and the approved runtime safeguards in UPSTREAM.md. `capacity` is a dynamic role value. Use `npx skills@latest` for installation; preserve unrelated installed skills. Run `node --test tests/*.test.mjs` for installer changes. See UPSTREAM.md for provenance.
-
-The fork is an orchestration port, not a new engineering method. Keep pstack's
-engineering instructions, principles, playbook steps, rubrics and verification
-requirements unchanged. Changes here may translate T3 tools, resolve accounts,
-repair installation paths, document usage, or carry an approved delta listed
-in UPSTREAM.md. Capacity never lowers the method's
-bar. Any proposed change to upstream engineering belongs in a separate proposal
-and is outside this fork's authorized scope.
-
-Official pstack is the only upstream. The T3 port is ours: port official
-changes with the map above, and never fetch, diff or copy from another T3 port,
-including uzairansaruzi/p3-stack. Port every official change. A difference from
-official is allowed only for T3 transport (a Cursor mechanism with no T3
-equivalent as written, mapped through the table above) or for an approved delta
-listed in UPSTREAM.md. "The fork already has its own version" is not a reason to
-skip an official change: when official removes the reason for a T3 adapter, drop
-the adapter and take official. For official updates, follow
-`upstream/MAINTENANCE.md`. `upstream/sources.json` records observed and
-reviewed revisions separately. Detection must never advance
-the reviewed baseline or install changes; those happen through a reviewed PR
-and the user's merge/install approval.
+The fork is an orchestration port, not a new engineering method: keep pstack's
+engineering instructions, principles, playbooks, rubrics and verification
+unchanged. A difference from official is allowed only for T3 transport (the map
+above) or an approved delta in UPSTREAM.md, which also owns provenance and the
+porting rules; follow `upstream/MAINTENANCE.md` for official updates. Run
+`node --test tests/*.test.mjs` for installer changes.
