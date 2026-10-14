@@ -2,43 +2,21 @@
 
 Resolve `<installed-poteto-mode>` from the skill's installation. The bundled
 Bun scripts retain the official store and readiness policy. Native T3 tools
-supply their external inputs and wakes. Run commands through the host's required
-foreground launcher.
+supply the readiness and activity inputs and the wakes. Run commands through the
+host's required foreground launcher.
 
 ## Frontier
 
-Read `orch frontier show` for the current generation. Call
-`list_thread_pull_requests` for the owning thread after each topology change.
-Wrap its complete structured result in this parent export:
-
-```json
-{
-  "schemaVersion": 1,
-  "source": "list_thread_pull_requests",
-  "threadId": "<owning-thread-id>",
-  "repoDirectory": "<absolute-stacker-worktree-root>",
-  "host": "github.com",
-  "repository": "<owner/repo>",
-  "afterGeneration": 0,
-  "capturedAt": "<actual-UTC-ISO-capture-time>",
-  "data": {"chains": [], "pullRequests": []}
-}
-```
-
-The empty arrays above are placeholders, not a claim that the stack is empty.
-Copy both arrays in full from the tool result. Never invent PR order or omit
-linked rows. Use the generation you read and the actual capture time.
+The frontier uses official `orch` unchanged. Run it in the stacker's clone with
+a branch of the stack checked out:
 
 ```sh
-bun <installed-poteto-mode>/scripts/orch/orch.ts --store <store> --json frontier set --repo <repo> --thread <thread-id> --snapshot <export.json> --anchor <pr>
+bun <installed-poteto-mode>/scripts/orch/orch.ts --store <store> --json frontier set --repo <repo> [--forge origin]
 ```
 
-Omit `--anchor` only for a sole chain or a proven empty inventory. `--prs` is an
-optional order pin, never a discovery input. Without `--snapshot`, the command
-requires the supported ACP bridge supplied by the runtime. Both inputs use the
-same parser. Current GitHub facts and local branch SHAs must agree before the
-existing atomic write advances the generation. An error leaves the prior
-frontier unchanged. Keep the original single topology writer.
+It walks the PR base chain with `gh`, or with `origin` when the program resolved
+the forge to Origin. `link_pull_request` still registers every PR with the
+thread, but the thread's PR list is not a frontier input.
 
 ## PR readiness
 

@@ -83,8 +83,12 @@ restrictions exclude other qualifying catalog entries. Setup edits the stored
 preferences when the user requests a configuration change.
 
 No `# budget` line means retain the invoking skill's effort requirements. The
-official default is `xhigh`; translating model slugs to catalog IDs must retain
-that effort through the model's actual reasoning option. A
+official default starting level is `xhigh`; poteto-mode's Subagents section then
+adjusts it per job, and verification keeps the `swarm workers` effort.
+Translating model slugs to catalog IDs must retain the resulting effort through
+the model's actual reasoning option. Per-job adjustments from poteto-mode's
+Subagents section are part of the skill's requirement. For an adjusted level,
+use the model's nearest supported value and keep the model. A
 user-selected budget is an effort preference, not a spending limit. Resolve
 option keys and supported values from each model's live catalog; do not copy a
 Codex option name to Claude, Cursor or Grok. Workflow options such as multi-agent

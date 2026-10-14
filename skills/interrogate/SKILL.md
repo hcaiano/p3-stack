@@ -37,7 +37,7 @@ Each reviewer gets a read-only, self-contained brief and the target resolved fro
 
 If `delegate_task` rejects a configured entry, follow that seat's remaining declared tiers and then authorized live alternatives through the execution adapter. Do not jump to another seat's preferences or a different role's defaults. Resolve supported option keys from `orchestrator_capabilities`. Do not block on a stale catalog entry when an authorized equivalent exists. Resolve aliases before attempting a target. Inspect task status and writes before retrying, retain effort, seat count and model diversity, and report a factual blocker when no eligible assignment remains.
 
-Read `references/reviewer-prompt.md` and fill in the same template for every reviewer with the stated intent, the diff or file contents, the rubric from `references/rubric.md`, and the code-quality lens from `references/code-quality-review.md`.
+Read `references/reviewer-prompt.md` and fill in the same template for every reviewer with the stated intent, the diff or file contents, the rubric from `references/rubric.md`, and the code-quality lens from `references/code-quality-review.md`. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 
 ## Step 4, Synthesize
 
