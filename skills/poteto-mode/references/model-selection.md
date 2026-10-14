@@ -74,8 +74,9 @@ status and writes before a fresh retry, as the execution adapter requires.
 
 ## Catalog and reasoning
 
-Refresh `orchestrator_capabilities` and capacity before each delegation wave and
-after a usage limit. A model must be exposed by the running T3 provider first;
+Read `orchestrator_capabilities` once per thread and again after a rejected
+target or a provider change. Refresh capacity once per delegation wave (every
+child started in one turn) and after a usage limit. A model must be exposed by the running T3 provider first;
 a vendor announcement alone does not make it usable. A new catalog entry is
 eligible, not automatically preferred or proof of suitability for every role.
 Open `capacity` needs no setup rerun to consider it. Preference pools stay unchanged during automatic fallback. Only explicit strict

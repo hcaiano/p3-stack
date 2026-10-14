@@ -1,6 +1,6 @@
 ### Bug fix
 
-Resolve named roles and child transport through the installed `../references/t3-execution.md`. Use self-contained `delegate_task` briefs, `mode: "async"`, retained task IDs and `task_status` to drain; stop with `task_cancel`. T3 child agents get only the brief, never the parent's context. Required worker isolation uses supported child worktrees or branches. `t3_thread_launch` is only for explicitly requested separate top-level conversations. Report a factual limitation if the child runtime cannot provide required isolation.
+Resolve named roles and child transport through the installed `../references/t3-execution.md`. Use self-contained `delegate_task` briefs, `mode: "async"`, retained task IDs; end the turn until their completion notifications wake you, then read each result with `task_status`, and stop with `task_cancel`. T3 child agents get only the brief, never the parent's context. Required worker isolation uses supported child worktrees or branches. `t3_thread_launch` is only for explicitly requested separate top-level conversations. Report a factual limitation if the child runtime cannot provide required isolation.
 
 **You own this task. Plan, review, verify.** Delegate investigation and the fix to subagents, stay in the lead. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section.
 
