@@ -1,6 +1,6 @@
 ### Hillclimb
 
-Resolve named roles and child transport through the installed `../references/t3-execution.md`. Use self-contained `delegate_task` briefs, `mode: "async"`, retained task IDs; end the turn until their completion notifications wake you, then read each result with `task_status`, and stop with `task_cancel`. T3 child agents get only the brief, never the parent's context. Required worker isolation uses supported child worktrees or branches. `t3_thread_launch` is only for explicitly requested separate top-level conversations. Report a factual limitation if the child runtime cannot provide required isolation.
+Resolve named roles and child transport through the installed `../references/t3-execution.md`. Use self-contained `delegate_task` briefs, `mode: "async"`, retained task IDs; once nothing independent is left, end the turn until their completion notifications wake you, then read each result with `task_status`, and stop with `task_cancel`. T3 child agents get only the brief, never the parent's context. Required worker isolation uses supported child worktrees or branches. `t3_thread_launch` is only for explicitly requested separate top-level conversations. Report a factual limitation if the child runtime cannot provide required isolation.
 
 **You own the metric and the experiment's integrity. Supervise and review. Delegate the attempts.** For sustained, iterative improvement of one measurable thing against a target. A one-off fix is Bug fix or Perf issue. This is the loop.
 

@@ -12,7 +12,7 @@ If you are a delegated worker, your brief names exactly one file. Write only tha
 
 | pstack | p3-stack |
 |---|---|
-| `Task` tool, `subagent_type`, `run_in_background` | `delegate_task` with a self-contained brief; `mode: "async"` for background work; end the turn until the completion notification wakes you, then read the result with `task_status`; `task_cancel` to stop |
+| `Task` tool, `subagent_type`, `run_in_background` | `delegate_task` with a self-contained brief; `mode: "async"` for background work; once nothing independent is left, end the turn until the completion notification wakes you, then read the result with `task_status`; `task_cancel` to stop |
 | Model slugs (`claude-opus-5-5-max`, `grok-4.7-xhigh-fast`, `gpt-5.6-sol-max`) | Named roles resolved from `orchestrator_capabilities` by `setup-pstack` (role names below). Never hardcode a slug. |
 | "cloud agent", `environment: "cloud"`, `cloud_base_branch` | A delegated child task. Use `t3_thread_launch` only when the user explicitly requests separate top-level conversations. |
 | "each worker gets its own worktree or branch" | `t3_thread_launch` with `workspaceStrategy`: `{"type":"worktree","baseRef":...,"branch":...}`, `{"type":"existing_worktree","worktreePath":...}`, or `{"type":"root"}`. One writer per worktree. |

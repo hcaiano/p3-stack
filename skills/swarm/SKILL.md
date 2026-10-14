@@ -29,7 +29,7 @@ Open a todolist with one entry per phase before launching anything.
 
 ## Phase B: Fan out
 
-Spawn all N workers in one message with `delegate_task`, `mode: "async"`, and the step 4 model. Resolve `auto` or `inherit-parent` to the parent target. Retain each task ID, end the turn until their completion notifications wake you, then read each result with `task_status`, and stop with `task_cancel`. Use supported child isolation for each worker's workspace. Report a factual limitation if the required isolation is unavailable. `t3_thread_launch` creates a top-level conversation and is allowed only when the user explicitly requests separate conversations.
+Spawn all N workers in one message with `delegate_task`, `mode: "async"`, and the step 4 model. Resolve `auto` or `inherit-parent` to the parent target. Retain each task ID, once nothing independent is left, end the turn until their completion notifications wake you, then read each result with `task_status`, and stop with `task_cancel`. Use supported child isolation for each worker's workspace. Report a factual limitation if the required isolation is unavailable. `t3_thread_launch` creates a top-level conversation and is allowed only when the user explicitly requests separate conversations.
 
 When a worker must start from a non-default pushed branch, carry that exact branch into supported child isolation and the self-contained brief. For an explicitly requested separate top-level conversation, pass that branch as `workspaceStrategy.baseRef` to `t3_thread_launch`. Report a factual limitation when the child runtime cannot provide the required starting branch.
 
