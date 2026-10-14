@@ -3,10 +3,12 @@
 Upstream: official pstack, https://github.com/cursor/plugins/tree/main/pstack.
 This fork tracks no other source.
 
-Official HEAD observed on 2026-10-05:
-`77526ffa67f8dafc698d14b5356e6d4fc78c3127`.
-This is an observation, not an import base: nobody recorded which official
-revision the first T3 adaptation came from. Do not claim a byte-identical import.
+Reviewed official revision: `1e5c90a4b6f249917bd21fe361b3a2a7deb741b8`
+(0.15.24), reconciled on 2026-10-14 against the complete official tree. The
+first T3 adaptation had no recorded import base; the 0.15.20 audit in
+`upstream/audits/2026-10-12/` restored the official content before this
+baseline. Do not claim a byte-identical import: the T3 port and the deltas below
+differ by design.
 
 ## Provenance
 
@@ -74,6 +76,20 @@ official updates.
   retro: required reads must reach the agent in full, with enough aggregate
   output budget or separate delivery; clipped ranges must be recovered before
   the read is complete. File: `skills/poteto-mode/references/t3-execution.md`.
+- **Rebase once.** Approved on 2026-10-14. In a busy monorepo trunk moves about
+  every 10 minutes and CI takes 10 to 23 minutes, so a rule that rebases during
+  CI or review never ends. The owner rebases onto current trunk once, before it
+  opens the PR. CI, review, babysit and fix rounds stay on that base, and there
+  is no merge-prep rebase. Right before the merge, official's trunk test still
+  decides: rebase and wait for CI only when the code that would land was never
+  tested (a conflict, a file both sides changed, a change to which checks run
+  for the PR, or trunk breaking the PR's CI). Official's lockfile and
+  caller-or-dependency rules stay. Stack topology rules are unchanged. Files:
+  `skills/poteto-mode/playbooks/autopilot-full.md`,
+  `skills/poteto-mode/playbooks/autopilot-stack.md`,
+  `skills/poteto-mode/playbooks/multi-phase-plan.md`,
+  `skills/poteto-mode/playbooks/babysit.md` and
+  `skills/poteto-mode/playbooks/opening-a-pr.md`.
 
 ## Checking for updates
 
@@ -98,8 +114,8 @@ produce an incomplete report and a nonzero exit status.
 
 The T3 recurring task follows [upstream/MAINTENANCE.md](upstream/MAINTENANCE.md):
 detect official changes, port them to T3 Code, and prepare or update one
-reviewable PR. The initial official audit remains pending until a full source
-comparison establishes a reviewed baseline.
+reviewable PR. Each run compares official changes since the reviewed revision
+in `upstream/sources.json`.
 
 Merge and global installation require user approval. After approval, use a
 reviewed commit URL through the Skills CLI and verify MBP and PC delivery.

@@ -24,7 +24,7 @@ If the active thread is unavailable or unreadable, pass a tight digest of the se
 
 One message, three `delegate_task` calls with `mode: "async"` and self-contained briefs. Reviewers need MCP access to look up the tickets, chat threads, and observability traces the thread references. Keep that access while constraining edits in each brief.
 
-Each reviewer and the synthesizer name a role line in `pstack-models.md` and a bundled default. Resolve the target from that line, or from the default if the file or line is missing. Default reasoning is `xhigh` through live catalog option keys unless the user chooses a budget. Resolve `auto` or `inherit-parent` to the parent target. Handle rejected entries through the execution adapter's authorized fallback preserving effort and required diversity and say so.
+Each reviewer and the synthesizer name a role line in `pstack-models.md` and a bundled default. Resolve the target from that line, or from the default if the file or line is missing. Default reasoning is `xhigh` through live catalog option keys unless the user chooses a budget. Resolve `auto` or `inherit-parent` to the parent target. Handle rejected entries through the execution adapter's authorized fallback preserving effort and required diversity and say so. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 
 | Lens | Role line | Default `model` | Prompt template |
 |---|---|---|---|
