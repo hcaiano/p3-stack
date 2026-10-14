@@ -43,8 +43,8 @@ official updates.
 
 - **PR workflow.** Agents run `review-it` before they open or update a PR and
   write PR titles and bodies with `write-pr`, both from `hcaiano/skills`.
-  `interrogate` is the two-reviewer round that `review-it` runs, and that round
-  counts as the contested-design `interrogate` run on the same head. Files:
+  `interrogate` is the two-reviewer round that `review-it` runs; a contested
+  design is graded `high`, so that `xhigh` round is its `interrogate` run. Files:
   `skills/poteto-mode/playbooks/opening-a-pr.md` (no PR body template),
   `skills/poteto-mode/playbooks/feature.md`, `skills/poteto-mode/SKILL.md`, `skills/poteto-help/SKILL.md`,
   `skills/technical-writing/SKILL.md` and `skills/benchmark-checklist/SKILL.md`.
