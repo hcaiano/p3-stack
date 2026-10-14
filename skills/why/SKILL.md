@@ -12,7 +12,7 @@ Investigate the motivation and intent behind code. The companion `how` skill ans
 
 Each spawn below names a role line in `pstack-models.md` and a bundled default. Resolve the target from that line, or from its default if the file or line is missing. Defaults start at `xhigh` reasoning through live catalog option keys unless the user chooses a budget. Resolve `auto` or `inherit-parent` to the parent target. Handle rejected entries through the execution adapter's authorized fallback preserving effort and required diversity and say so. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 
-Every spawn is a `delegate_task` child with `mode: "async"` and a self-contained brief. Preserve MCP access for the investigators and the synthesizer's citation spot-checks. Investigators still shouldn't write anything. T3 child agents get only the brief, never the parent's context. Retain task IDs, drain with `task_status`, and stop with `task_cancel`.
+Every spawn is a `delegate_task` child with `mode: "async"` and a self-contained brief. Preserve MCP access for the investigators and the synthesizer's citation spot-checks. Investigators still shouldn't write anything. T3 child agents get only the brief, never the parent's context. Retain task IDs, once nothing independent is left, end the turn until their completion notifications wake you, then read each result with `task_status`, and stop with `task_cancel`.
 
 ## Operating Posture
 

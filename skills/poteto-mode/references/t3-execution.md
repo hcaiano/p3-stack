@@ -26,10 +26,12 @@ Read [model selection](model-selection.md) when configuring roles or resolving
 a preferred candidate pool or an explicit strict restriction. Re-read the selected configuration before each
 delegation wave; a running child retains its original selection.
 
-Before a delegation wave, call `orchestrator_capabilities` and the installed
-`t3-capacity` skill using that server's settings and confirmed account mappings.
-Missing usage is unknown capacity; a missing billing mapping is an unresolved
-account identity. Refresh after usage limits.
+Call `orchestrator_capabilities` once per thread, save the catalog to a file,
+and reuse it; read it again only after a rejected target or a provider change.
+A delegation wave is every child you start in one turn: run the installed
+`t3-capacity` skill once before it, using that server's settings and confirmed
+account mappings, and after a usage limit. Missing usage is unknown capacity; a
+missing billing mapping is an unresolved account identity.
 
 `capacity` chooses among models satisfying the invoking skill's role requirements,
 then among their accounts using headroom, pace and resets. Ordered pools keep

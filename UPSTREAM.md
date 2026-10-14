@@ -56,6 +56,10 @@ official updates.
   `skills/poteto-mode/playbooks/autopilot-stack.md`,
   `skills/poteto-mode/playbooks/opening-a-pr.md` and
   `skills/poteto-mode/playbooks/multi-phase-plan.md`.
+- **Fewer child agents.** `no-comments` applies the comment brief in the
+  calling agent for a scope of 20 changed files or fewer and delegates only
+  larger scopes: in T3 every child is a full thread whose completion wakes a
+  large parent. Files: `skills/no-comments/SKILL.md`.
 - **Installer dependencies.** The installer requires only `t3-capacity` from
   `hcaiano/skills`. `pair` moved to that repo's `deprecated/` folder.
 - **Cleanup command.** The user's AGENTS.md requires `trash`, replacing the
