@@ -43,9 +43,10 @@ official updates.
 
 - **PR workflow.** Agents run `review-it` before they open or update a PR and
   write PR titles and bodies with `write-pr`, both from `hcaiano/skills`.
-  `interrogate` stays as the `dual` panel that `review-it` calls. Files:
+  `interrogate` is the two-reviewer round that `review-it` runs; a contested
+  design is graded `high`, so that `xhigh` round is its `interrogate` run. Files:
   `skills/poteto-mode/playbooks/opening-a-pr.md` (no PR body template),
-  `skills/poteto-mode/SKILL.md`, `skills/poteto-help/SKILL.md`,
+  `skills/poteto-mode/playbooks/feature.md`, `skills/poteto-mode/SKILL.md`, `skills/poteto-help/SKILL.md`,
   `skills/technical-writing/SKILL.md` and `skills/benchmark-checklist/SKILL.md`.
 - **Autopilot PR timing.** An Autopilot-full or Autopilot-stack owner opens
   its PR only when the shipped code is final and self-proof and `review-it`
@@ -60,6 +61,9 @@ official updates.
   calling agent for a scope of 20 changed files or fewer and delegates only
   larger scopes: in T3 every child is a full thread whose completion wakes a
   large parent. Files: `skills/no-comments/SKILL.md`.
+- **One review per change.** `show-me-your-work` skips its cross-model trail
+  review when `review-it` already reviewed the run's changes, because both put
+  a second model on the same work. Files: `skills/show-me-your-work/SKILL.md`.
 - **Installer dependencies.** The installer requires only `t3-capacity` from
   `hcaiano/skills`. `pair` moved to that repo's `deprecated/` folder.
 - **Cleanup command.** The user's AGENTS.md requires `trash`, replacing the
