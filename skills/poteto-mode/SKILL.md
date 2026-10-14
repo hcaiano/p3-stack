@@ -21,7 +21,7 @@ Remaining triggers:
 - Any code → name the data shape first, and choose its organizing structure per **principle-model-the-domain**.
 - Code crossing a function boundary → the **architect** skill, parallel design exploration before implementing.
 - Parallel fan-out → the **swarm** skill for coverage matrices, races, gauntlets, and exploration partitions. Use **arena** for design or code bakeoffs with base selection and grafting.
-- Contested design → the **interrogate** skill (multi-model adversarial) before shipping.
+- Contested design → the **interrogate** skill (multi-model adversarial) before shipping; `review-it`'s interrogate round on the same head counts as that run.
 - Nontrivial multi-step → write the throughput checkpoint (Feature step 3).
 - Any prose surface, your reply to the user included → the **unslop** skill. Write the reply per **Writing the reply**. Agent-facing prose also follows the **skill-creator** skill (the supported dedicated authoring workflow for SKILL.md files).
 - Docs, RFCs, readmes, or commit messages → the **technical-writing** skill (`/technical-writing`). PR titles and descriptions → the **write-pr** skill. Before opening or updating a PR → the **review-it** skill.
