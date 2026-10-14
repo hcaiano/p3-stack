@@ -43,7 +43,8 @@ unless the user chooses an override. When they ask to change reasoning, explain
 that this controls effort, not subscription spending. Show the current setting
 and the existing options. With no configuration, say that `large` matches the
 skill defaults. The official default is `xhigh`, resolved through each model's
-live reasoning options; `large` keeps those defaults.
+live reasoning options; `large` keeps those defaults. The budget sets each
+role's starting level; poteto-mode's Subagents section adjusts it per job.
 
 - `unlimited — max reasoning`
 - `large — xhigh reasoning`
@@ -79,7 +80,9 @@ its candidates can meet the invoking skill's diversity rules. Report quota or
 host limitations without silently broadening a preferred pool.
 If a candidate cannot meet a requested effort, try another eligible candidate
 through the automatic fallback policy; report a blocker when none qualifies. Never silently
-lower the invoking skill's required effort.
+lower the invoking skill's required effort. A per-job adjustment from poteto-mode's
+Subagents section follows the model-selection reference instead: use the
+model's nearest supported value and keep the model.
 
 ### 5. Write the file
 

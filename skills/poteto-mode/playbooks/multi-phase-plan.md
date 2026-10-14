@@ -58,7 +58,7 @@ Tests alone are not sufficient verification. A PR is verified only when its unit
 - [ ] Run the repo's lint and typecheck once before the PR-facing push. Push with hooks on.
 - [ ] Run vendor-neutral code cleanup over the diff, removing narrating comments, unsupported guards, dead compatibility paths, and unrelated edits before each commit and `/no-comments` before review. Code cleanup is separate from `/unslop` for prose.
 - [ ] Triage every Bugbot and security-reviewer comment per `../references/bugbot-triage.md`.
-- [ ] Rebase onto current trunk once, before the PR opens and before the code-ready report. CI, review, babysit, and fix rounds keep that merge base. There is no merge-prep rebase. Rebase again only when the execution playbook's pre-merge test calls for one, as with a conflict, a file both sides changed, a change to which checks run for the PR, or trunk breaking the PR's CI.
+- [ ] Under Autopilot-full, rebase onto current trunk once, before the PR opens and before the code-ready report. Under Autopilot-stack, only the root rebases or retargets a link. CI, review, babysit, and fix rounds keep that merge base. There is no merge-prep rebase. Rebase again only when the execution playbook's pre-merge test calls for one, as with a conflict, a file both sides changed, a change to which checks run for the PR, or trunk breaking the PR's CI.
 
 ### Verdict and merge, for every PR
 
@@ -127,7 +127,7 @@ Each live lane runs in its own isolated child workspace at the PR head. Use supp
 
 - [ ] Root's clean verdict at the exact head SHA.
 - [ ] Bugbot triage done.
-- [ ] Pre-merge trunk test run against current trunk. Rebased only where it called for one, with green CI and patch-id unchanged on the new head.
+- [ ] Pre-merge trunk test run against current trunk. Rebased only where it called for one, with green CI and either patch-id unchanged or a single verifier's pass at the new head.
 - [ ] <The owner squash-merges its own PR, or the root appends it to the base-branch stack and the operator lands it bottom-up.>
 
 ## Close the program

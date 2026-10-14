@@ -22,4 +22,13 @@ the two new skills.
   transport limitation.
 - Plugin manifests change only their version. Skills CLI owns T3 packaging.
 
+## Known upstream inconsistencies
+
+Two guide lines are verbatim official but lag the 0.15.24 playbooks.
+`docs/guide/07-overnight.md` still starts a swarm round at every later push that
+changes the patch, while Autopilot-full now swarm-verifies once.
+`docs/guide/06-verify-and-ship.md` still lists trunk moves as Babysit churn,
+while this fork's rebase-once delta keeps babysit on its base. The guides and
+their bundled copies stay verbatim until official updates them.
+
 No other T3 port was fetched, diffed or copied.
