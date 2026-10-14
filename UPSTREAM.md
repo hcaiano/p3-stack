@@ -18,6 +18,12 @@ decided on 2026-10-07 to stop tracking that repository: nothing is fetched,
 diffed or trusted from it. The T3 port is ours. We adapt official changes to
 T3 Code ourselves.
 
+Port every official change. A difference from official is allowed only for
+the T3 port below (a Cursor mechanism with no T3 equivalent as written) or for an
+approved delta listed below. An existing fork version is not a reason to skip an
+official change; when official removes the reason for a T3 adapter, drop the
+adapter and take official.
+
 Keep official engineering content unchanged. No local engineering improvements,
 model-quality opinions, reduced review panels or reasoning caps. Our changes are
 the T3 port, account resolution, installation packaging, the user guide and the

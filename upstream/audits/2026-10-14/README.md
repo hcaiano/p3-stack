@@ -13,14 +13,25 @@ its fork target, disposition, source blob and target SHA-256. Every `compare`
 file is present. The dispositions are unchanged from the previous audit, plus
 the two new skills.
 
-## Not ported as code
+## Ported after the first review
 
 - `scripts/orch` replaced Graphite with a `gh` or Origin PR base-chain walk.
-  The fork already resolves the frontier from T3's native linked-PR chain
-  (`list_thread_pull_requests`) checked against current GitHub facts, so it keeps
-  that source. Native tracking covers GitHub only; Origin stays a reported
-  transport limitation.
-- Plugin manifests change only their version. Skills CLI owns T3 packaging.
+  The first pass kept the fork's T3 frontier adapter, which read the chain from
+  `list_thread_pull_requests`. That adapter existed only because official used
+  Graphite, which T3 does not have. `gh` and Origin run under T3 as written, so
+  `orch.ts`, `store.ts` and `orch.test.ts` now match official and the adapter
+  is gone. `link_pull_request` still registers every PR with the thread.
+- `worktree-audit.sh` removes its temporary PR list with official's `rm -f`.
+  The fork's `trash` there was neither T3 transport nor an approved delta.
+- `watch-pr/tsconfig.json` no longer typechecks `orch`, and `.gitignore` takes
+  official's order. Their remaining differences are T3 transport: the
+  `t3-thread-activity` script and the one-shot `watch-pr` entry point.
+
+## Not ported
+
+- Plugin manifests (`plugin.json`, `.cursor-plugin/plugin.json`) and the logo
+  are Cursor plugin packaging. T3 installs through the Skills CLI, so the
+  version bump has no T3 target.
 
 ## Known upstream inconsistencies
 

@@ -7,6 +7,7 @@ import {
   openStore,
   parseVerdict,
   type Counts,
+  type Forge,
   type Frontier,
   type InboxPointer,
   type OpenGate,
@@ -80,10 +81,8 @@ interface GateResolveOptions {
 }
 
 interface FrontierSetOptions {
-  readonly thread: string;
-  readonly snapshot?: string;
-  readonly anchor?: number;
   readonly repo?: string;
+  readonly forge: Forge;
   readonly prs?: readonly number[];
 }
 
@@ -475,39 +474,37 @@ function createProgram(io: Io): Command {
 
   const frontier = program
     .command("frontier")
-    .description("manage the T3 stack frontier")
+    .description("manage the stack frontier")
     .action(() => requireSubcommand(program));
-  leaf(frontier, "set", "resolve the registered T3 stack and set the frontier")
+  leaf(
+    frontier,
+    "set",
+    "resolve the pull request base chain and set the frontier"
+  )
     .addOption(
       new Option(
         "--repo <dir>",
         "repository directory (or ORCH_REPO)"
       ).env("ORCH_REPO")
     )
+    .addOption(
+      new Option("--forge <forge>", "pull request forge")
+        .choices(["gh", "origin"])
+        .default("gh")
+    )
     .option(
       "--prs <n,...>",
       "optional expected pull request order pin",
       prList
     )
-    .requiredOption("--thread <id>", "owning T3 thread ID")
-    .option("--snapshot <file>", "complete list_thread_pull_requests parent export")
-    .option("--anchor <pr>", "select the chain containing this PR", positiveInteger)
     .action((options: FrontierSetOptions) =>
       runStore(
         program,
         io,
         (store) =>
           store.frontier.set({
-            source: {
-              ...(options.snapshot === undefined
-                ? { kind: "acp" as const }
-                : { kind: "parent-export" as const, path: options.snapshot }),
-              threadId: options.thread,
-              selector: options.anchor === undefined
-                ? { kind: "only-stack" }
-                : { kind: "anchored", pr: options.anchor },
-            },
             repo: frontierRepo(options),
+            forge: options.forge,
             prs: options.prs,
           }),
         frontierLine

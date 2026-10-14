@@ -18,7 +18,7 @@ If you are a delegated worker, your brief names exactly one file. Write only tha
 | "each worker gets its own worktree or branch" | `t3_thread_launch` with `workspaceStrategy`: `{"type":"worktree","baseRef":...,"branch":...}`, `{"type":"existing_worktree","worktreePath":...}`, or `{"type":"root"}`. One writer per worktree. |
 | `/loop`, poll loops, `scripts/watch-pr` | `watch_pull_request`: T3 watches the PR and wakes the thread on checks finishing, new comments, or conflicts. Arm it, end the turn, triage on wake. For other cadences use `schedule_task`. |
 | Hourly audit ticks, recurring runs | `schedule_task` with `{"type":"interval","everyMs":...}` or `{"type":"fixed_time","timeOfDay":...,"weekdays":[...]}`; `run_scheduled_task_now` for an immediate run. |
-| Stack bookkeeping with `gt`, manual PR lists | `link_pull_request` for every layer, immediately; `list_thread_pull_requests` returns the stack bottom to top. |
+| A built-in PR tool tracking the PRs it made | `link_pull_request` for every PR, immediately; `list_thread_pull_requests` shows what the thread tracks. Stack order still comes from the forge's base chain through `orch`. |
 | `agent-transcripts/*.jsonl` mining | `t3_thread_read`, `t3_thread_search`; `t3_queue_list`/`t3_queue_read`/`t3_queue_edit`/`t3_queue_reorder`/`t3_queue_cancel`/`t3_queue_promote_to_steer` for queued input. |
 | `AskQuestion` | Ask plainly in the thread. `t3_pending_request_list`/`t3_pending_request_read`/`t3_pending_request_respond` answer questions in other threads. |
 | `control-ui`, `control-cli` (from cursor-team-kit) | `preview_*` browser tools and `device_*` simulator tools; `preview_recording_start`/`preview_recording_stop` and `device_screenshot` for evidence; `browser.preview` shows a file to the user. |
@@ -83,7 +83,12 @@ and is outside this fork's authorized scope.
 
 Official pstack is the only upstream. The T3 port is ours: port official
 changes with the map above, and never fetch, diff or copy from another T3 port,
-including uzairansaruzi/p3-stack. For official updates, follow
+including uzairansaruzi/p3-stack. Port every official change. A difference from
+official is allowed only for T3 transport (a Cursor mechanism with no T3
+equivalent as written, mapped through the table above) or for an approved delta
+listed in UPSTREAM.md. "The fork already has its own version" is not a reason to
+skip an official change: when official removes the reason for a T3 adapter, drop
+the adapter and take official. For official updates, follow
 `upstream/MAINTENANCE.md`. `upstream/sources.json` records observed and
 reviewed revisions separately. Detection must never advance
 the reviewed baseline or install changes; those happen through a reviewed PR

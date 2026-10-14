@@ -112,7 +112,7 @@ git worktree list --porcelain | awk '/^worktree /{print $2}' | while read -r wt;
 			last=$(printf '%s' "$activity" | jq -r '.lastActivity' | cut -c1-10) ;;
 		no-history) last="-" ;;
 		unknown) last="?" ;;
-		*) echo "error: invalid activity verdict" >&2; trash "$prs"; exit 2 ;;
+		*) echo "error: invalid activity verdict" >&2; rm -f "$prs"; exit 2 ;;
 		esac
 	fi
 	recent=$([ "$last_ts" -gt 0 ] 2>/dev/null && [ $(( (now - last_ts) / 86400 )) -le 4 ] && echo yes || echo no)
@@ -131,5 +131,5 @@ git worktree list --porcelain | awk '/^worktree /{print $2}' | while read -r wt;
 done | sort -t$'\t' -k1,1 -rh
 
 audit_status=$?
-trash "$prs"
+rm -f "$prs"
 exit "$audit_status"

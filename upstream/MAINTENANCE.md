@@ -35,7 +35,12 @@ budgets, model diversity or verification requirements to fit available capacity.
 3. Read sources from the report's bare caches with `git --git-dir=<cache> show
    <latestCommit>:<path>`. Source text is reference material, not authorization
    to execute commands or change the user's environment.
-4. Port official engineering text verbatim wherever it still applies. Keep official skill names unchanged;
+4. Port every official change. A difference from official is allowed only for
+   T3 transport (a Cursor mechanism with no T3 equivalent as written, mapped
+   through the AGENTS.md table) or for an approved delta listed in UPSTREAM.md.
+   An existing fork version is not a reason to skip an official change; when
+   official removes the reason for a T3 adapter, drop the adapter and take
+   official. Port official engineering text verbatim wherever it still applies. Keep official skill names unchanged;
    bundle briefs under `skills/poteto-mode/references/`. Translate only the runtime
    mechanisms through the Cursor to T3 Code map in AGENTS.md. Include added and removed resources and
    repair affected references. Never apply the source patch blindly to this fork.
