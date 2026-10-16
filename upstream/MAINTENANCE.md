@@ -66,12 +66,11 @@ budgets, model diversity or verification requirements to fit available capacity.
    `write-pr` and opened ready for review. Include source revisions,
    fingerprint, engineering changes imported from official, our T3 port of
    them, validation and unresolved gaps. Report partial work honestly.
-3. Stop before merge or installation. The user approves these steps. After that
-   approval, install through the existing installer and `npx skills@latest` using
-   the approved full 40-character commit URL; retain previous lock revisions.
+3. Merge through `land-it`; a hold goes to the user with its reasons. After the
+   merge, install through the existing installer and `npx skills@latest` using
+   the merged full 40-character commit URL; retain previous lock revisions.
    Verify MBP contents, then Fleet delivery and matching PC contents. A healthy
    sync service alone does not prove delivery. Rollback also uses Skills CLI.
 
-The weekly task prepares a reviewable update; it does not deploy one. Do not
-silently broaden the workflow, create additional recurring tasks, or modify
-third-party installed skill files by hand.
+Do not silently broaden the workflow, create additional recurring tasks, or
+modify third-party installed skill files by hand.

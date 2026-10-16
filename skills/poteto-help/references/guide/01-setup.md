@@ -4,10 +4,10 @@ In this page you install the skills, pick which models pstack uses, and run your
 
 ## Install the skills
 
-After installation approval, run the installer from the approved checkout:
+Merge through `land-it` first; a hold goes to the user with its reasons. Then run the installer from a checkout of the merged commit:
 
 ```bash
-./install.sh --source https://github.com/hcaiano/p3-stack/tree/<approved-full-40-character-commit>
+./install.sh --source https://github.com/hcaiano/p3-stack/tree/<merged-full-40-character-commit>
 ```
 
 The checkout and source URL must name the same revision, so new skill names are included. Installation uses `npx skills@latest`; preserve unrelated installed skills. See the [README](https://github.com/hcaiano/p3-stack/blob/main/README.md#install) for clone and update instructions.
