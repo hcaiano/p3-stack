@@ -356,7 +356,7 @@ skills or marks a fetched revision as reviewed.
 
 The weekly T3 task follows [upstream/MAINTENANCE.md](upstream/MAINTENANCE.md) to
 prepare one integration PR. It ports official changes to T3 Code, preserving
-official engineering and adapting only the runtime. Merge and global installation need user approval. See
+official engineering and adapting only the runtime. It merges through `land-it` and then installs the merged commit. See
 [UPSTREAM.md](UPSTREAM.md) for provenance and report details.
 
 ## Validation

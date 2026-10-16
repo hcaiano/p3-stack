@@ -132,7 +132,7 @@ detect official changes, port them to T3 Code, and prepare or update one
 reviewable PR. Each run compares official changes since the reviewed revision
 in `upstream/sources.json`.
 
-Merge and global installation require user approval. After approval, use a
-reviewed commit URL through the Skills CLI and verify MBP and PC delivery.
+Merge through `land-it`. After the merge, install the merged commit URL through
+the Skills CLI and verify MBP and PC delivery.
 Never mark a revision reviewed merely because it was fetched. A fork does not
 synchronize with official by itself.
