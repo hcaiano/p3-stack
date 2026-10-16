@@ -72,6 +72,5 @@ budgets, model diversity or verification requirements to fit available capacity.
    Verify MBP contents, then Fleet delivery and matching PC contents. A healthy
    sync service alone does not prove delivery. Rollback also uses Skills CLI.
 
-The weekly task prepares a reviewable update; it does not deploy one. Do not
-silently broaden the workflow, create additional recurring tasks, or modify
-third-party installed skill files by hand.
+Do not silently broaden the workflow, create additional recurring tasks, or
+modify third-party installed skill files by hand.

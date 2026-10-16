@@ -34,7 +34,7 @@ When the model rule is missing and it matters, ask whether the user wants to pic
 
 ## Get set up
 
-1. Install with the approved revision through the Skills CLI, as described in the [README](https://github.com/hcaiano/p3-stack/blob/main/README.md#install).
+1. Install the merged revision through the Skills CLI, as described in the [README](https://github.com/hcaiano/p3-stack/blob/main/README.md#install).
 2. Run [`/setup-pstack`](../setup-pstack/SKILL.md). It asks for a reasoning budget, maps a model to each role, and writes a rule. The rule applies to new chats.
 3. Start a real task with `/poteto-mode`, a goal, and a check that can pass or fail.
 

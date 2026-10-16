@@ -29,20 +29,21 @@ Requires Node.js/npx and the existing `t3-capacity` skill from
 `hcaiano/skills`. Installation uses the Skills CLI, not hand-edited installed
 copies. Keep an existing upstream `unslop`.
 
-After installation approval, use the approved full 40-character commit:
+Merge through `land-it` first; a hold goes to the user with its reasons. Then
+install the merged full 40-character commit:
 
 ```bash
 git clone https://github.com/hcaiano/p3-stack.git
 cd p3-stack
-approved_commit='<full-40-character-commit>'
-git checkout --detach "$approved_commit"
-approved_source="https://github.com/hcaiano/p3-stack/tree/$(git rev-parse HEAD)"
-./install.sh --dry-run --source "$approved_source"
-./install.sh --source "$approved_source"
+merged_commit='<full-40-character-commit>'
+git checkout --detach "$merged_commit"
+merged_source="https://github.com/hcaiano/p3-stack/tree/$(git rev-parse HEAD)"
+./install.sh --dry-run --source "$merged_source"
+./install.sh --source "$merged_source"
 ```
 
-After installation approval, check out the approved full 40-character commit
-and run its installer from that checkout. Pass
+After the merge, check out the merged full 40-character commit and run its
+installer from that checkout. Pass
 `--source https://github.com/hcaiano/p3-stack/tree/<full-40-character-commit>`
 using `git rev-parse HEAD` for that same commit. The installer discovers skill
 names locally, so its checkout must match the source revision to include new
@@ -93,7 +94,8 @@ Restricted candidate pools and fixed selections stay as chosen. See
 
 Existing project issues and acceptance criteria remain authoritative. In a p3
 task, p3 owns implementation and review; personal workflows remain installed for
-explicit use. The user's merge, production and other approval boundaries apply.
+explicit use. The [autonomy rule](skills/poteto-mode/SKILL.md#autonomy) applies:
+what a revert cannot undo waits for the user; the rest proceeds.
 The personal global instructions load `poteto-mode` for engineering tasks by
 default. New sessions pick up this configuration; existing sessions may need an
 explicit invocation. Other installations can enable the same default using
@@ -356,8 +358,9 @@ skills or marks a fetched revision as reviewed.
 
 The weekly T3 task follows [upstream/MAINTENANCE.md](upstream/MAINTENANCE.md) to
 prepare one integration PR. It ports official changes to T3 Code, preserving
-official engineering and adapting only the runtime. It merges through `land-it` and then installs the merged commit. See
-[UPSTREAM.md](UPSTREAM.md) for provenance and report details.
+official engineering and adapting only the runtime. It merges through `land-it`,
+which sends a hold to the user with its reasons, and then installs the merged
+commit. See [UPSTREAM.md](UPSTREAM.md) for provenance and report details.
 
 ## Validation
 

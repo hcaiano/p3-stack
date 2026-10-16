@@ -105,6 +105,12 @@ official updates.
   `skills/poteto-mode/playbooks/multi-phase-plan.md`,
   `skills/poteto-mode/playbooks/babysit.md` and
   `skills/poteto-mode/playbooks/opening-a-pr.md`.
+- **Revertible deploys proceed.** Approved on 2026-10-16. Agents pause only for
+  writes a revert cannot undo: force-push to shared branches, data deletion,
+  customer messages, and a deploy that runs a destructive migration or
+  publishes a release. A deploy that a revert undoes proceeds. Official pauses
+  for every deploy. Files: `skills/poteto-mode/SKILL.md` and
+  `skills/poteto-mode/playbooks/orchestrate.md`.
 
 ## Checking for updates
 
@@ -132,7 +138,8 @@ detect official changes, port them to T3 Code, and prepare or update one
 reviewable PR. Each run compares official changes since the reviewed revision
 in `upstream/sources.json`.
 
-Merge through `land-it`. After the merge, install the merged commit URL through
-the Skills CLI and verify MBP and PC delivery.
+Merge through `land-it`; a hold goes to the user with its reasons. After the
+merge, install the merged commit URL through the Skills CLI and verify MBP and
+PC delivery.
 Never mark a revision reviewed merely because it was fetched. A fork does not
 synchronize with official by itself.
