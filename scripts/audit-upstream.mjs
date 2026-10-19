@@ -27,6 +27,7 @@ for (const line of inventory.trim().split('\n')) {
   const [entry, path] = line.split('\t');
   const blob = entry.split(' ')[2];
   let target = path.startsWith('agents/') ? `skills/poteto-mode/references/${path.slice(7)}` : path;
+  if (path === 'docs/harness/claude-code.md') target = 'skills/poteto-mode/references/t3-execution.md';
   let disposition = 'compare';
   if (path.startsWith('skills/unslop/')) disposition = 'separate-skills-cli-update';
   else if (path.startsWith('automations/benny/')) disposition = 'unresolved-automation-port';

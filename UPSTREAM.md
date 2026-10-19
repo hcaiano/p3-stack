@@ -3,8 +3,8 @@
 Upstream: official pstack, https://github.com/cursor/plugins/tree/main/pstack.
 This fork tracks no other source.
 
-Reviewed official revision: `1e5c90a4b6f249917bd21fe361b3a2a7deb741b8`
-(0.15.24), reconciled on 2026-10-14 against the complete official tree. The
+Reviewed official revision: `d457567332aa6989e753ea289f30ea2bfbc80bc0`
+(0.15.28), reconciled on 2026-10-19 against the complete official tree. The
 first T3 adaptation had no recorded import base; the 0.15.20 audit in
 `upstream/audits/2026-10-12/` restored the official content before this
 baseline. Do not claim a byte-identical import: the T3 port and the deltas below
