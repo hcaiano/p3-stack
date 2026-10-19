@@ -140,6 +140,21 @@ official updates.
   the agent acts on the stated default and says so. File:
   `skills/poteto-mode/SKILL.md`.
 
+- **A short core for delegates.** Approved on 2026-10-19 after a trace audit:
+  `SKILL.md` was read 9,315 times in five days, mostly by delegates that never
+  run the playbook. `SKILL.md` keeps what every agent follows: the
+  Non-negotiables that bind any agent, Principles, Autonomy, Writing the reply
+  and Comments, with a pointer section for Subagents. The runner's own triggers
+  and the Playbooks list moved to `references/playbook-runner.md`; the Subagents
+  rules moved to `references/subagents.md`, read by the runner and by any agent
+  before it spawns. `poteto-agent` reads the core, its playbook step and the
+  principles it applies. The text moved unchanged apart from relative paths.
+  Files: `skills/poteto-mode/SKILL.md`,
+  `skills/poteto-mode/references/playbook-runner.md`,
+  `skills/poteto-mode/references/subagents.md`,
+  `skills/poteto-mode/references/poteto-agent.md`, `skills/poteto-help/SKILL.md`,
+  both copies of the guide's `02-poteto-mode.md` and `README.md`.
+
 ## Checking for updates
 
 ```bash
