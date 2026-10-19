@@ -111,6 +111,18 @@ official updates.
   publishes a release. A deploy that a revert undoes proceeds. Official pauses
   for every deploy. Files: `skills/poteto-mode/SKILL.md` and
   `skills/poteto-mode/playbooks/orchestrate.md`.
+- **Architect for new structure.** Approved on 2026-10-19 after the workflow
+  retro: `architect` ran 649 times in a week, mostly on changes inside existing
+  modules. It now triggers on a new module, data model or public contract;
+  official triggers on any code crossing a function boundary. Files:
+  `skills/poteto-mode/SKILL.md` and the `feature`, `bug-fix`, `perf-issue`
+  and `refactoring` playbooks, and the `poteto-help` map.
+- **One video, for screen flows.** Approved on 2026-10-19 after the workflow
+  retro: a week had about four takes per published video, and videos of
+  command-line changes. The review gate records one video of the final head,
+  only when a flow across screens changes; a failed take means fixing the
+  harness. Screenshots stay. File:
+  `skills/poteto-mode/playbooks/multi-phase-plan.md`.
 
 ## Checking for updates
 
