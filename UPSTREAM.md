@@ -123,6 +123,16 @@ official updates.
   only when a flow across screens changes; a failed take means fixing the
   harness. Screenshots stay. File:
   `skills/poteto-mode/playbooks/multi-phase-plan.md`.
+- **Bounded code briefs.** Approved on 2026-10-19 after a trace review of three
+  weeks of runs: delegates did as well as the parent on briefed work but
+  over-built and drew more corrections when they chose scope or coordinated.
+  Outside `hardest tasks`, a code brief names the files, the chosen approach,
+  the acceptance commands and what is out of scope; a code delegate adds no
+  unnamed module, migration, dependency or PR and starts no children. A
+  delegate that owns a PR through merge or starts children reads
+  `judgment and prose`. The parent rewrites delegate reports in plain language.
+  Files: `skills/poteto-mode/SKILL.md` and
+  `skills/poteto-mode/references/poteto-agent.md`.
 
 ## Checking for updates
 
