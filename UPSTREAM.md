@@ -134,6 +134,12 @@ official updates.
   `skills/poteto-mode/references/t3-execution.md` and
   `skills/setup-pstack/SKILL.md`.
 
+- **Ask once.** Approved on 2026-10-19 after a trace audit: one goal sent the
+  same question seven times before solving it alone. The Never Block on the
+  Human entry adds that a question asked again without new evidence is a stall;
+  the agent acts on the stated default and says so. File:
+  `skills/poteto-mode/SKILL.md`.
+
 ## Checking for updates
 
 ```bash
