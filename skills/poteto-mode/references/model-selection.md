@@ -83,8 +83,8 @@ Open `capacity` needs no setup rerun to consider it. Preference pools stay uncha
 restrictions exclude other qualifying catalog entries. Setup edits the stored
 preferences when the user requests a configuration change.
 
-A role's effort is the one `pstack-models.md` gives it: its own line, an
-`# effort` header that names it, or the `# budget` line. With none of these, the
+A role's effort is the one `pstack-models.md` gives it: an `# effort` header
+that names it, or else the `# budget` line. With none of these, the
 role keeps the official default, `xhigh`, as poteto-mode's Subagents section
 says. Verification keeps the `swarm workers` effort. Translating model slugs to
 catalog IDs must retain that effort through the model's actual reasoning option.

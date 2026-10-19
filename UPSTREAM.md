@@ -123,6 +123,18 @@ official updates.
   only when a flow across screens changes; a failed take means fixing the
   harness. Screenshots stay. File:
   `skills/poteto-mode/playbooks/multi-phase-plan.md`.
+- **Bounded code briefs.** Approved on 2026-10-19 after a trace review of three
+  weeks of runs: delegates did as well as the parent on briefed work but
+  over-built and drew more corrections when they chose scope or coordinated.
+  Outside `hardest tasks`, a code brief names the files, the chosen approach,
+  the acceptance commands, what is out of scope and any PR; a code delegate adds
+  no unnamed module, migration, dependency or PR and starts no children beyond
+  the reviewers and panels a required skill starts. Owners (Autopilot PR owners,
+  Feature's fan-out owner, Orchestrate coordinators) read `judgment and prose`
+  instead of the code role, and Orchestrate's brief template gains an APPROACH
+  field. Summaries reach the user in plain language. Files:
+  `skills/poteto-mode/references/subagents.md`, `skills/poteto-mode/references/poteto-agent.md`
+  and `skills/poteto-mode/playbooks/orchestrate.md`.
 
 - **One effort source.** Approved on 2026-10-19 after a trace audit: the
   Subagents section started every role at `xhigh` and adjusted it per job, while

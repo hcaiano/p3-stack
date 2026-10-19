@@ -40,6 +40,7 @@ Your prompts to agents are your only product, and a sloppy brief compounds into 
 ```
 GOAL         one sentence, the outcome, executable by a stranger with no chat access
 SCOPE        paths this unit may write; paths it may not; its exclusive worktree or branch
+APPROACH     the approach already chosen; the PR this unit opens, if any
 CONTEXT      pointers to files and PRs; upstream reports pasted in full when this unit
              depends on them, because workers cannot see siblings
 ACCEPTANCE   checkable criteria, one per line

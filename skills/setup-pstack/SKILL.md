@@ -44,7 +44,7 @@ that this controls effort, not subscription spending. Show the current setting
 and the existing options. With no configuration, say that `large` matches the
 skill defaults. The official default is `xhigh`, resolved through each model's
 live reasoning options; `large` keeps those defaults. The budget sets the
-effort of every role that has no `# effort` header or effort on its own line.
+effort of every role that no `# effort` header names.
 
 - `unlimited — max reasoning`
 - `large — xhigh reasoning`
