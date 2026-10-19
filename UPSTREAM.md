@@ -127,12 +127,14 @@ official updates.
   weeks of runs: delegates did as well as the parent on briefed work but
   over-built and drew more corrections when they chose scope or coordinated.
   Outside `hardest tasks`, a code brief names the files, the chosen approach,
-  the acceptance commands and what is out of scope; a code delegate adds no
-  unnamed module, migration, dependency or PR and starts no children. A
-  delegate that owns a PR through merge or starts children reads
-  `judgment and prose`. The parent rewrites delegate reports in plain language.
-  Files: `skills/poteto-mode/SKILL.md` and
-  `skills/poteto-mode/references/poteto-agent.md`.
+  the acceptance commands, what is out of scope and any PR; a code delegate adds
+  no unnamed module, migration, dependency or PR and starts no children beyond
+  the reviewers and panels a required skill starts. Owners (Autopilot PR owners,
+  Feature's fan-out owner, Orchestrate coordinators) read `judgment and prose`
+  instead of the code role, and Orchestrate's brief template gains an APPROACH
+  field. Summaries reach the user in plain language. Files:
+  `skills/poteto-mode/SKILL.md`, `skills/poteto-mode/references/poteto-agent.md`
+  and `skills/poteto-mode/playbooks/orchestrate.md`.
 
 ## Checking for updates
 
