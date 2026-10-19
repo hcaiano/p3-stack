@@ -124,6 +124,16 @@ official updates.
   harness. Screenshots stay. File:
   `skills/poteto-mode/playbooks/multi-phase-plan.md`.
 
+- **One effort source.** Approved on 2026-10-19 after a trace audit: the
+  Subagents section started every role at `xhigh` and adjusted it per job, while
+  `pstack-models.md` set each role's effort, so verifiers ran at mixed levels.
+  A role now takes the effort `pstack-models.md` gives it, and the bundled
+  `xhigh` only when the file names none; the per-job raise and lower steps are
+  gone. Files: `skills/poteto-mode/SKILL.md`,
+  `skills/poteto-mode/references/model-selection.md`,
+  `skills/poteto-mode/references/t3-execution.md` and
+  `skills/setup-pstack/SKILL.md`.
+
 ## Checking for updates
 
 ```bash
