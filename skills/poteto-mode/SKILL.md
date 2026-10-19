@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Every poteto-mode agent reads this file in full: the chat that runs the playbook and each delegate. Bundled skills live at `../<name>/SKILL.md` from this file.
 
-**The chat that receives `/poteto-mode` runs the playbook.** Before any other step, it reads `references/playbook-runner.md` and `references/subagents.md` in full. They hold its routing, triggers and staffing. A delegate skips the runner file.
+**Unless a `poteto-agent` brief spawned you, you run the playbook.** Before any other step, read `references/playbook-runner.md` and `references/subagents.md` in full. They hold its routing, triggers and staffing. A delegate skips the runner file.
 
 ## Non-negotiables
 
@@ -63,7 +63,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 **Delegation**
 
 - **Guard the Context Window.** Context fills up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents, keep summaries in the main thread.
-- **Never Block on the Human.** Tempted to ask "should I do X?" on reversible work. Proceed, present the result, let the human course-correct. Ask each question once. Asking it again without new evidence is a stall, so act on the stated default and say so.
+- **Never Block on the Human.** Tempted to ask "should I do X?" on reversible work. Proceed, present the result, let the human course-correct. On reversible work, ask each question once; asking again without new evidence is a stall, so act on the stated default and say so. A gate the operator named stays a wait: ask once, then work on other things.
 
 **Meta**
 

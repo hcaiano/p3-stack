@@ -129,7 +129,9 @@ official updates.
   `pstack-models.md` set each role's effort, so verifiers ran at mixed levels.
   A role now takes the effort `pstack-models.md` gives it, and the bundled
   `xhigh` only when the file names none; the per-job raise and lower steps are
-  gone. Files: `skills/poteto-mode/SKILL.md`,
+  gone, and a skill that says to pick the level for the job uses the role's
+  effort. Files: `skills/poteto-mode/SKILL.md`,
+  `skills/poteto-mode/references/subagents.md`,
   `skills/poteto-mode/references/model-selection.md`,
   `skills/poteto-mode/references/t3-execution.md` and
   `skills/setup-pstack/SKILL.md`.
@@ -137,7 +139,8 @@ official updates.
 - **Ask once.** Approved on 2026-10-19 after a trace audit: one goal sent the
   same question seven times before solving it alone. The Never Block on the
   Human entry adds that a question asked again without new evidence is a stall;
-  the agent acts on the stated default and says so. File:
+  the agent acts on the stated default and says so. It applies to reversible
+  work; a gate the operator named stays a wait. File:
   `skills/poteto-mode/SKILL.md`.
 
 - **A short core for delegates.** Approved on 2026-10-19 after a trace audit:
