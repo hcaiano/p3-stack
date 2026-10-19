@@ -151,6 +151,30 @@ test('the auditor rejects a bundled guide that drops its verification instructio
   assert.match(missing.stderr, /Bundled guide must preserve docs\/guide\/verify.md/);
 });
 
+test('the official harness adapter is compared with the T3 execution adapter', () => {
+  const f = guideAuditFixture();
+  mkdirSync(join(f.repo, 'pstack/docs/harness'), { recursive: true });
+  writeFileSync(join(f.repo, 'pstack/docs/harness/claude-code.md'), '# Official harness\n');
+  git(f.repo, 'add', '.'); git(f.repo, 'commit', '-m', 'harness source');
+  const reportPath = join(f.checkout, '.git/p3-upstream/report.json');
+  const report = JSON.parse(readFileSync(reportPath, 'utf8'));
+  report.sources[0].latestCommit = git(f.repo, 'rev-parse', 'HEAD');
+  writeFileSync(reportPath, JSON.stringify(report));
+  const target = 'skills/poteto-mode/references/t3-execution.md';
+  mkdirSync(join(f.checkout, 'skills/poteto-mode/references'), { recursive: true });
+  writeFileSync(join(f.checkout, target), '# T3 execution\n');
+  const result = f.run();
+  assert.equal(result.status, 0, result.stderr);
+  const output = join(f.checkout, '.git/p3-upstream/audit');
+  const inventory = JSON.parse(readFileSync(join(output, 'inventory.json'), 'utf8'));
+  const adapter = inventory.files.find(file => file.source === 'docs/harness/claude-code.md');
+  assert.equal(adapter.target, target);
+  assert.equal(adapter.present, true);
+  const diff = readFileSync(adapter.diffPath, 'utf8');
+  assert.match(diff, /-# Official harness/);
+  assert.match(diff, /\+# T3 execution/);
+});
+
 test('an excluded packaging target keeps a null JSON digest and a whitespace-clean TSV', () => {
   const f = guideAuditFixture();
   writeFileSync(join(f.repo, 'pstack/plugin.json'), '{}\n');
