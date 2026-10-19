@@ -49,7 +49,7 @@ Tests alone are not sufficient verification. A PR is verified only when its unit
   - [ ] <PR id> and <PR id> are independent and first. Both branch from `main`.
   - [ ] <PR id> after <PR id>.
 - [ ] Hold the file boundaries. <PR id or class> touches only `<glob>`.
-- [ ] Hold the review gate. <PR ids> change an interaction. They wait for the operator's review in chat with screenshots and a video before merge.
+- [ ] Hold the review gate. <PR ids> change an interaction. They wait for the operator's review in chat with screenshots, plus one video when a flow across screens changes, before merge.
 
 ### PR mechanics, for every PR
 
@@ -120,8 +120,8 @@ Each live lane runs in its own isolated child workspace at the PR head. Use supp
 **Review gate.** The operator reviews before merge.
 
 - [ ] Copy lane <n> screenshots into `<media path>/<pr-id>-review-<slug>.png`.
-- [ ] Record a 30 to 60 second video of the change on a lane VM. Save it as `<media path>/<pr-id>-review.mp4`.
-- [ ] Post the screenshots and the video in chat. Stop at merge-ready. Wait for the operator's click.
+- [ ] When the PR changes a flow across screens, record one 30 to 60 second video of its final head on a lane VM. Save it as `<media path>/<pr-id>-review.mp4`. After a failed take, fix the harness and record once more.
+- [ ] Post the screenshots, and the video when there is one, in chat. Stop at merge-ready. Wait for the operator's click.
 
 **Merge.**
 

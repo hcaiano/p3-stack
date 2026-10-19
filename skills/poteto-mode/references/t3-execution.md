@@ -119,12 +119,13 @@ Browser, device, PR-watch and scheduling calls follow their live T3 tool contrac
 
 A child is _stalled_ when its run still reads `running` and its thread has had no
 new activity for 60 minutes: a provider can send its final answer and leave the
-run open, so the completion notification never arrives. When a wave of async
-children starts, create one `schedule_task` interval of 3600000 ms bound to the
-current thread, keep its ID, and end the turn; delete it with
-`delete_scheduled_task` once no child is running. Each run re-reads this whole
-thread, so keep one such wake per thread and never schedule one to wait on a
-pull request: `watch_pull_request` covers that. On each run, read every running
+run open, so the completion notification never arrives. Only Grok children
+have stalled; other children rely on their completion notification. While a
+Grok child runs, keep one `schedule_task` interval of 3600000 ms bound to the
+current thread whose prompt is only this stall check, keep its ID, and end the
+turn; delete it with `delete_scheduled_task` once no Grok child is running.
+Each run re-reads this whole thread, so carry other work in its own wake, and
+wait on a pull request with `watch_pull_request`. On each run, read every running
 child with `t3_thread_read` in `view: "activity"`, paging to the newest item; any
 item in the last 60 minutes means it is healthy. For a stalled child, take its
 final assistant message, recovered in full, as the result when it answers the
