@@ -43,7 +43,15 @@ file to its fork target, disposition, source blob and target SHA-256. Every
   manifest version bumps have no T3 target. The two lowercase skill-name fixes
   already match this fork.
 - Regenerate the bundled guide from `docs/guide/`, changing only packaged links.
-  Preserve `watch_pull_request` instead of the official watcher or Origin loop.
+  Preserve `watch_pull_request` for events. Read readiness with the one-shot
+  evaluator on GitHub or the Origin CLI when Origin is the forge.
+
+## Review corrections
+
+The two-model review found two documentation omissions. The README now ports
+official's persistent-mode wording through global instructions. The guide and
+its bundled copy now include official's Origin readiness path alongside the
+T3 PR watch. Both corrections stay within the findings' scope.
 
 ## Preserved deltas and limits
 

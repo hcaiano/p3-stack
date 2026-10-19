@@ -2,7 +2,7 @@ source	target	disposition	present	blob	sha256
 .cursor-plugin/plugin.json	.cursor-plugin/plugin.json	vendor-packaging	false	7754f381a8845086604cc3d98f2a696619b4cd12	-
 .gitignore	.gitignore	compare	true	aafcb345668bd80cbb256b066898d4df8988da0e	8ffe9de56bd30c1a95cd945262d6e3ac355ada4111551dde41f67851b9f1fc55
 LICENSE	LICENSE	compare	true	6b5400237fdf6545be0b8fae370d6f2fcff8fb25	84195d1f9f76cc9ad7c1290981473fc725d9d255dfccc9bbe40d5639928158e2
-README.md	README.md	compare	true	8d350cc17cde60942ecac373c8189c38169c77eb	5b44971d3de68484ed57146102e2b54887850a91b0b12c871c749ce1f9603640
+README.md	README.md	compare	true	8d350cc17cde60942ecac373c8189c38169c77eb	321dff6d240e4d6824bd7152cc5e013056cd40b025c4f86d35a302104d619e8f
 agents/comment-sicko.md	skills/poteto-mode/references/comment-sicko.md	compare	true	209e3704dfa75022060c936bd3f3362fa3bbe254	3e239e40b7b4b9beb2cf7f3ccc57f2388eb8b69bd1ba8ae888ef87ef6e0e2116
 agents/poteto-agent.md	skills/poteto-mode/references/poteto-agent.md	compare	true	e1d2df2e8c3c4954b87ee1b29655c898bc7ee699	af0b5648d3f1afcb08cc63df73e7f852c0ce7dea21e2d2c691ad9ba5ad5108df
 assets/logo.png	assets/logo.png	vendor-packaging	false	3754e87cb0e1362f17428bc84c661166ee145156	-
@@ -23,7 +23,7 @@ docs/guide/02-poteto-mode.md	docs/guide/02-poteto-mode.md	compare	true	db16b5e95
 docs/guide/03-understand.md	docs/guide/03-understand.md	compare	true	e26661f913e2ba31a0f043df3ede772461fd6a96	1ac97cbad51c15c18b3aade8634d81c8bbe50d2b3135c75c113ddb2a6dcb7af0
 docs/guide/04-design.md	docs/guide/04-design.md	compare	true	65862086a58780b258fdb490dcafedd75b9cce18	cff616278303b533e617c5c4408af6d28895edbb8687d6ce99bb5dd1f6644a6c
 docs/guide/05-build-and-clean.md	docs/guide/05-build-and-clean.md	compare	true	dbadc3d41294ab2cc3cde04f96b861dd294e496e	fa25ec95427d0aa6bdfe53790fb6267625bc52f3bdc5b96ad04ddbae3eac1c4e
-docs/guide/06-verify-and-ship.md	docs/guide/06-verify-and-ship.md	compare	true	3c7b3c4dd0a256165f308f051b7125b9c5b37b62	95ee3db05a8b689caa2ff60b14dd01828719280695859bbc4a6b6a12d4437ee5
+docs/guide/06-verify-and-ship.md	docs/guide/06-verify-and-ship.md	compare	true	3c7b3c4dd0a256165f308f051b7125b9c5b37b62	9a1e508b036cd96252855be2a6a7edda754c7bb8d3c2e736d956220de673d179
 docs/guide/07-overnight.md	docs/guide/07-overnight.md	compare	true	dd4230d8cc242638095f648f5f3e7b5bd46f61a9	d06eedf0df7730607328de3c4ae1032ebd9c4a5ac99620795d20c72e33129535
 docs/guide/08-principles.md	docs/guide/08-principles.md	compare	true	d2921500bb44643ac3f841fa03e19e0b3a240c8b	0b26b85292f0c09768abe727c9e92987dbf81f5b439a4871034c2fd1c4cb1723
 docs/guide/09-make-it-yours.md	docs/guide/09-make-it-yours.md	compare	true	8d1c4b4f951bbb203ff1288e02ce91e8b6832a43	4c20659d0a13e657ec89e3d6182f78dc799837c5161295b141406d84606fdbcf

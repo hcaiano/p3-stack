@@ -164,7 +164,7 @@ when invoked it:
 
 the full rules and playbooks live in [`skills/poteto-mode/SKILL.md`](./skills/poteto-mode/SKILL.md).
 
-to keep [`/poteto-mode`](./skills/poteto-mode/SKILL.md) on across turns, enable it in your global instructions using [the default-mode guide](./docs/default-mode.md). it applies itself when a playbook matches or the task needs rigor, and stays out of the way otherwise. start a new session after changing global instructions; existing sessions may retain their initial context. `/poteto-mode` remains the explicit command. say so to opt out.
+to keep [`/poteto-mode`](./skills/poteto-mode/SKILL.md) on across turns, enable it in your global instructions using [the default-mode guide](./docs/default-mode.md). it stays in context every turn until you change those instructions to turn it off. start a new session after changing global instructions; existing sessions may retain their initial context. `/poteto-mode` remains the explicit command.
 
 [`/poteto-mode`](./skills/poteto-mode/SKILL.md) works with T3 Code's `schedule_task` for recurring work and `watch_pull_request` for pr checks, comments and conflicts. arm the watch or schedule, then end the turn so T3 can wake it. you can make T3 Code work for many hours without sacrificing rigor.
 
