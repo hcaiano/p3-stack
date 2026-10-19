@@ -134,6 +134,6 @@ Work you'll review later routes through [`/figure-it-out`](../../../figure-it-ou
 
 **Pitfall:** don't enumerate skills in your prompt ("use /how, then /architect, then /arena..."). The playbook already sequences them, and a hand-written sequence usually reorders or drops steps the playbook would have kept. Name a skill only when you want to override a specific choice.
 
-Read [`poteto-mode`](../../../poteto-mode/SKILL.md) itself for the full routing rules.
+Read [`poteto-mode`'s playbook runner](../../../poteto-mode/references/playbook-runner.md) for the full routing rules.
 
 Next: [Understand the code](./03-understand.md).

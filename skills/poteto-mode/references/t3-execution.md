@@ -44,8 +44,8 @@ user explicitly prohibits alternatives. Use current catalog IDs
 and supported option keys.
 
 Resolve each panel seat without changing the skill's count or diversity rules.
-Start from the official default `xhigh` reasoning unless an authorized user budget
-overrides it, then adjust per job as poteto-mode's Subagents section says; resolve the actual option key and supported value from the catalog.
+Use the effort `pstack-models.md` gives the role, or the official default `xhigh`
+when it names none, as poteto-mode's Subagents section says; resolve the actual option key and supported value from the catalog.
 If no eligible target can meet the required effort, report the limitation.
 Two providers or accounts serving the same model do not add model diversity.
 Unknown quota is not confirmed headroom. Follow the automatic fallback below.

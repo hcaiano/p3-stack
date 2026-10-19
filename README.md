@@ -162,7 +162,7 @@ when invoked it:
 2. routes to the other skills as the steps fire.
 3. writes unslopped replies framed for the consumer and the maintainer.
 
-the full rules and playbooks live in [`skills/poteto-mode/SKILL.md`](./skills/poteto-mode/SKILL.md).
+the rules every agent follows live in [`skills/poteto-mode/SKILL.md`](./skills/poteto-mode/SKILL.md); the routing and the playbook list live in [`references/playbook-runner.md`](./skills/poteto-mode/references/playbook-runner.md), and the spawn rules in [`references/subagents.md`](./skills/poteto-mode/references/subagents.md).
 
 to keep [`/poteto-mode`](./skills/poteto-mode/SKILL.md) on across turns, enable it in your global instructions using [the default-mode guide](./docs/default-mode.md). it stays in context every turn until you change those instructions to turn it off. start a new session after changing global instructions; existing sessions may retain their initial context. `/poteto-mode` remains the explicit command.
 
@@ -275,7 +275,7 @@ help:              /poteto-help which skill should i use to review this branch?
 
 [`/poteto-mode`](./skills/poteto-mode/SKILL.md) runs in the chat that receives it. that chat owns the playbook, the todo list, and every subagent spawn.
 
-p3-stack bundles [`poteto-agent`](./skills/poteto-mode/references/poteto-agent.md) as the wrapper for delegates spawned during a run. it reads `poteto-mode` in full, including its inline principles index, before doing any work. delegating without the wrapper skips that read and drifts. do not spawn `poteto-agent` to run the playbook itself.
+p3-stack bundles [`poteto-agent`](./skills/poteto-mode/references/poteto-agent.md) as the wrapper for delegates spawned during a run. it reads `poteto-mode`'s core `SKILL.md` in full, including its inline principles index, before doing any work, and skips the runner-only routing file. delegating without the wrapper skips that read and drifts. do not spawn `poteto-agent` to run the playbook itself.
 
 [`/poteto-mode`](./skills/poteto-mode/SKILL.md) and [`poteto-agent`](./skills/poteto-mode/references/poteto-agent.md) route through the same wrapper.
 
