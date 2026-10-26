@@ -21,7 +21,7 @@ Every candidate gets the same prompt, so the prompt is the contract.
 
 ## Phase B: Fan out
 
-Spawn all N subagents in one message with `delegate_task` and `mode: "async"`, each with the task, the path to the shared grounding, its own output path, and instructions to produce the artifact and a short rationale naming the alternatives it considered and what it rejected. Retain each task ID, once nothing independent is left, end the turn until their completion notifications wake you, then read each result with `task_status`, and stop with `task_cancel`. Every brief stands alone. T3 child agents get only the brief, never the parent's context.
+Spawn all N subagents in one message with `delegate_task` and `mode: "async"`, each with the task, the path to the shared grounding, its own output path, and instructions to produce the artifact and a short rationale naming the alternatives it considered and what it rejected. Retain each task ID, once nothing independent is left, end the turn until their completion notifications wake you, then read each result with `task_status`, and `task_cancel` only a child whose status is not terminal. Every brief stands alone. T3 child agents get only the brief, never the parent's context.
 
 If a candidate produces no output, proceed with N-1 and note the dropout.
 
