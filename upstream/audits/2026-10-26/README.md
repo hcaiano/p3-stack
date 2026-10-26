@@ -29,7 +29,8 @@ saved pre-integration report.
 ## T3 transport
 
 - `reflect`: official's `plugins/cache/` and `.cursor/skills/` destinations map
-  to Skills CLI installs and a `<skill>-local` copy in `.agents/skills/`.
+  to Skills CLI installs and a `<skill>-local` copy that the CLI installs, so
+  each agent gets its link.
 - `worktree-audit.sh`: official's GNU `stat` and `date` fix targets the Cursor
   transcript scan, which the fork replaced with T3 thread activity. Not ported.
 - No target: plugin manifest version bumps and the Claude Code auto-update note
