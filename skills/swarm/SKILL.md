@@ -21,12 +21,12 @@ Open a todolist with one entry per phase before launching anything.
 
 1. State the done predicate and the artifact or report the swarm must return.
 2. Choose the shape. Partition into slices, race N workers on identical briefs, or mix both. For a race or mixed shape, declare `first pass`, `rank all`, or `best-of` before spawning.
-4. Pick the worker model from the `swarm workers` line in `pstack-models.md`. If the file or that line is missing, use its bundled default at `xhigh` reasoning through live catalog option keys unless the user chooses a budget. For `auto` or `inherit-parent`, resolve the parent target. If `delegate_task` rejects an entry, follow the execution adapter's authorized fallback preserving effort and required diversity and say so. For a model race, name each arm's model up front. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
-5. Give each worker its own writable output when it writes. When workers verify or measure commits, each brief names the exact SHAs. A measurement brief also names the method (sample count, what one sample is, order). The worker records both in its result.
+3. Pick the worker model from the `swarm workers` line in `pstack-models.md`. If the file or that line is missing, use its bundled default at `xhigh` reasoning through live catalog option keys unless the user chooses a budget. For `auto` or `inherit-parent`, resolve the parent target. If `delegate_task` rejects an entry, follow the execution adapter's authorized fallback preserving effort and required diversity and say so. For a model race, name each arm's model up front. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
+4. Give each worker its own writable output when it writes. When workers verify or measure commits, each brief names the exact SHAs. A measurement brief also names the method (sample count, what one sample is, order). The worker records both in its result.
 
 ## Phase B: Fan out
 
-Spawn all N workers in one message with `delegate_task`, `mode: "async"`, and the step 4 model. Resolve `auto` or `inherit-parent` to the parent target. Retain each task ID, once nothing independent is left, end the turn until their completion notifications wake you, then read each result with `task_status`, and stop with `task_cancel`. Use supported child isolation for each worker's workspace. Report a factual limitation if the required isolation is unavailable. `t3_thread_launch` creates a top-level conversation and is allowed only when the user explicitly requests separate conversations.
+Spawn all N workers in one message with `delegate_task`, `mode: "async"`, and the step 3 model. Resolve `auto` or `inherit-parent` to the parent target. Retain each task ID, once nothing independent is left, end the turn until their completion notifications wake you, then read each result with `task_status`, and stop with `task_cancel`. Use supported child isolation for each worker's workspace. Report a factual limitation if the required isolation is unavailable. `t3_thread_launch` creates a top-level conversation and is allowed only when the user explicitly requests separate conversations.
 
 When a worker must start from a non-default pushed branch, carry that exact branch into supported child isolation and the self-contained brief. For an explicitly requested separate top-level conversation, pass that branch as `workspaceStrategy.baseRef` to `t3_thread_launch`. Report a factual limitation when the child runtime cannot provide the required starting branch.
 
@@ -40,4 +40,4 @@ Read the terminal results. Drop a result that does not record the SHAs and metho
 
 ## Phase D: Report
 
-Return one consolidated in-chat report with the table, issue one-liners, gaps or dropouts, and the race rule when used.
+Return one consolidated in-chat report with a result table, issue one-liners, gaps or dropouts, and the race rule when used.
