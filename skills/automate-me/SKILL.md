@@ -39,7 +39,7 @@ Survey recent agent conversations within that scope for recurring patterns. Run 
 - Process conventions (worktrees, commits, PRs, review/merge tooling)
 - Meta preferences (fixing skills mid-task, proposing new ones)
 
-Retain task IDs, once nothing independent is left, end the turn until their completion notifications wake you, then read each result with `task_status`, and stop with `task_cancel`. T3 child agents get only the brief, never the parent's context.
+Retain task IDs, once nothing independent is left, end the turn until their completion notifications wake you, then read each result with `task_status`, and `task_cancel` only a child whose status is not terminal. T3 child agents get only the brief, never the parent's context.
 
 Cross-check across slices before elevating a signal. Patterns seen in 2+ slices are high-confidence. Lone signals are weak and usually get dropped.
 

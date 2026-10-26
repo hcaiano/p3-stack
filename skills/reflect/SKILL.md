@@ -32,7 +32,7 @@ Each reviewer and the synthesizer name a role line in `pstack-models.md` and a b
 | Tooling | `reflect tooling` | `reflect tooling` bundled default, `xhigh` | `references/tooling-reviewer.md` |
 | Divergent | `reflect judgment, divergent, synthesizer` | `reflect judgment, divergent, synthesizer` bundled default, `xhigh` | `references/divergent-reviewer.md` |
 
-Pass each template verbatim, substituting the readable active thread ID or, only when it is unavailable or unreadable, the session digest where marked. Reviewers return findings through `task_status`. Retain task IDs and stop with `task_cancel`. T3 child agents get only the brief, never the parent's context.
+Pass each template verbatim, substituting the readable active thread ID or, only when it is unavailable or unreadable, the session digest where marked. Reviewers return findings through `task_status`. Retain task IDs and `task_cancel` only a child whose status is not terminal. T3 child agents get only the brief, never the parent's context.
 
 ## 3. Synthesize
 
