@@ -48,6 +48,8 @@ Present the synthesizer's full Accepted / Rejected / Backlog output and wait for
 
 File each Backlog item to your team's devex or backlog tracker without waiting. Only the Accepted list waits for approval.
 
+Never edit a skill that the Skills CLI installed. Before approval, show its destination, a renamed copy at `~/.agents/local-skills/<skill>-local/` that you install with `npx skills@latest add <path>` (add `--global` for a user-level install), so the CLI links it for each agent. After approval, copy the skill folder there, give the copy its own `name`, edit the copy, and install it. The original stays active, so tell the user to call the `-local` name or remove the original. Never open a PR or push.
+
 Follow each approved row's Routing exactly:
 
 - Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): the parent does it directly.
