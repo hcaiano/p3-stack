@@ -147,6 +147,7 @@ official updates.
   `skills/poteto-mode/references/model-selection.md`,
   `skills/poteto-mode/references/t3-execution.md` and
   `skills/setup-pstack/SKILL.md`.
+
 - **Standard speed.** Approved on 2026-10-29: fast agents burn the user's
   usage, and only the user turns fast mode on, by hand. Every spawn runs at
   standard speed with the model's fast option set off, on its standard model ID.
