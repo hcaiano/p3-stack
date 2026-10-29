@@ -2,7 +2,7 @@
 
 Resolve named roles and child transport through the installed `../references/t3-execution.md`. Use self-contained `delegate_task` briefs, `mode: "async"`, retained task IDs; once nothing independent is left, end the turn until their completion notifications wake you, then read each result with `task_status`, and `task_cancel` only a child whose status is not terminal. T3 child agents get only the brief, never the parent's context. Required worker isolation uses supported child worktrees or branches. `t3_thread_launch` is only for explicitly requested separate top-level conversations. Report a factual limitation if the child runtime cannot provide required isolation.
 
-**You own this task. Plan, review, verify.** Delegate investigation and the fix to subagents, stay in the lead. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section.
+**You own this task. Plan, review, verify.** Delegate investigation and the fix to subagents, stay in the lead. Set each subagent's reasoning level and speed per the Subagents section.
 
 Be scientific. Every shipped line traces to runtime evidence. Belt-and-suspenders that "might help" is a hypothesis, not a fix. It does not ship. When evidence refutes a hypothesis, revert what it motivated. The smallest change the evidence justifies ships, nothing more.
 

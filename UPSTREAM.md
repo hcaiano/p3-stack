@@ -148,6 +148,16 @@ official updates.
   `skills/poteto-mode/references/t3-execution.md` and
   `skills/setup-pstack/SKILL.md`.
 
+- **Standard speed.** Approved on 2026-10-29: fast agents burn the user's
+  usage, and only the user turns fast mode on, by hand. Every spawn runs at
+  standard speed with the model's fast option set off, on its standard model ID.
+  Official uses fast mode for urgent jobs and fast verification. Grok seats are
+  exempt and keep their configured fast settings. Skills that pointed to the
+  Subagents section for "fast or standard speed" now point to it for speed.
+  Files: `skills/poteto-mode/references/subagents.md`,
+  `skills/poteto-mode/references/t3-execution.md`,
+  `skills/setup-pstack/SKILL.md` and every skill and playbook with that pointer.
+
 - **Ask once.** Approved on 2026-10-19 after a trace audit: one goal sent the
   same question seven times before solving it alone. The Never Block on the
   Human entry adds that a question asked again without new evidence is a stall;

@@ -60,6 +60,8 @@ the model's actual effort option: `unlimited` takes the highest reasoning value;
 highest supported value at or below it, otherwise report the mismatch. Preserve
 catalog-specific option keys and distinguish effort from workflow modes. Apply
 the preference when resolving each capacity seat; keep policy entries dynamic.
+Record no fast-mode option, fast service tier or fast model variant: every role
+runs at standard speed, except Grok, per poteto-mode's Subagents section.
 
 **(c) Show the resulting selection.** Show roles grouped by identical policy,
 preference pools, explicit strict restrictions, reasoning overrides and unresolved choices. One
