@@ -49,8 +49,8 @@ official updates.
   `skills/poteto-mode/playbooks/feature.md`, `skills/poteto-mode/SKILL.md`, `skills/poteto-help/SKILL.md`,
   `skills/technical-writing/SKILL.md` and `skills/benchmark-checklist/SKILL.md`.
 - **Autopilot PR timing.** An Autopilot-full or Autopilot-stack owner opens
-  its PR only when the shipped code is final and self-proof and `review-it`
-  have both passed on that exact head. It writes the PR with `write-pr`, opens it
+  its PR only when the shipped code is final and self-proof and the root's
+  `review-it` receipt both cover that exact head. It writes the PR with `write-pr`, opens it
   ready, links it, reports the code-ready head, and starts the babysit loop in
   `drive` mode. Official opens the PR before self-proof. Files:
   `skills/poteto-mode/playbooks/autopilot-full.md`,
@@ -60,7 +60,7 @@ official updates.
 - **Fewer child agents.** `no-comments` applies the comment brief in the
   calling agent for a scope of 20 changed files or fewer and delegates only
   larger scopes: in T3 every child is a full thread whose completion wakes a
-  large parent. Files: `skills/no-comments/SKILL.md`.
+  large parent. A delegate applies it itself at any scope. Files: `skills/no-comments/SKILL.md`.
 - **One review per change.** `show-me-your-work` skips its cross-model trail
   review when `review-it` already reviewed the run's changes, because both put
   a second model on the same work. Files: `skills/show-me-your-work/SKILL.md`.
@@ -128,13 +128,28 @@ official updates.
   over-built and drew more corrections when they chose scope or coordinated.
   Outside `hardest tasks`, a code brief names the files, the chosen approach,
   the acceptance commands, what is out of scope and any PR; a code delegate adds
-  no unnamed module, migration, dependency or PR and starts no children beyond
-  the reviewers and panels a required skill starts. Owners (Autopilot PR owners,
-  Feature's fan-out owner, Orchestrate coordinators) read `judgment and prose`
+  no unnamed module, migration, dependency or PR and starts no children.
+  Autopilot PR owners and the Orchestrate coordinator read `judgment and prose`
   instead of the code role, and Orchestrate's brief template gains an APPROACH
   field. Summaries reach the user in plain language. Files:
   `skills/poteto-mode/references/subagents.md`, `skills/poteto-mode/references/poteto-agent.md`
   and `skills/poteto-mode/playbooks/orchestrate.md`.
+
+- **Leaf delegates.** Approved on 2026-10-31: delegates that owned a PR ran
+  `review-it` and spawned their own reviewers, three levels deep, after the
+  user had asked for no nesting. Only the chat that runs the playbook spawns.
+  Every delegate is a leaf: it returns any review, panel, swarm or fan-out to
+  the chat, which staffs it and sends the result to a fresh round. Official
+  lets owners fan out and Orchestrate nest sub-coordinators at depth 3. Files:
+  `skills/poteto-mode/references/poteto-agent.md`,
+  `skills/poteto-mode/references/subagents.md`,
+  `skills/poteto-mode/playbooks/orchestrate.md`,
+  `skills/poteto-mode/playbooks/feature.md`,
+  `skills/poteto-mode/playbooks/autopilot-full.md`,
+  `skills/poteto-mode/playbooks/opening-a-pr.md`,
+  `skills/poteto-mode/playbooks/multi-phase-plan.md`,
+  `skills/poteto-mode/playbooks/pause-safely.md`,
+  `skills/no-comments/SKILL.md` and `skills/show-me-your-work/SKILL.md`.
 
 - **One effort source.** Approved on 2026-10-19 after a trace audit: the
   Subagents section started every role at `xhigh` and adjusted it per job, while
