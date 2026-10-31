@@ -1,6 +1,6 @@
 # Subagents
 
-Read this file in full before you spawn any subagent. Only the chat that runs the playbook spawns. Every delegate is a leaf, so depth stays at two: the chat and its delegates. A delegate that needs reviewers, a panel or more workers returns that need to the chat, which staffs it. `../SKILL.md` holds the other rules.
+Read this file in full before you spawn any subagent. Only the chat that runs the playbook spawns. Every delegate is a leaf, so depth stays at two: the chat and its delegates. A delegate that needs reviewers, a panel or more workers returns that need to the chat, which staffs it. For `review-it`, the delegate ends its run with the pinned head and what `review-it` steps 1 and 2 recorded. The chat runs step 3 and every confirmation review, a fresh round of the delegate gets the findings and does step 4, and the chat writes the receipt and sends it with the next round. `../SKILL.md` holds the other rules.
 
 Read `t3-execution.md` before selecting models or executing a playbook. It owns account selection, catalog option keys, automatic authorized missing-usage fallback and live T3 transport constraints. Resolve installed paths relative to this skill. A `t3_thread_launch` requires an explicit user request for separate top-level conversations; otherwise use supported child isolation or report the factual runtime limitation. Put the absolute path of poteto-mode's `SKILL.md` in every `poteto-agent` brief.
 

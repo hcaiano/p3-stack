@@ -18,6 +18,6 @@ Resolve named roles and child transport through the installed `../references/t3-
 7. If the design is contested, grade the change `high` when you run `review-it` before opening the PR: its `xhigh` interrogate round is the contested-design `interrogate`.
 8. Run **Opening a PR**.
 
-Code-coupled work (one feature, one migration) goes to a single owner with the checkpoint inline. When independent parts remain after the blocking phase, the chat fans them out, never the owner. Parent-level fan-out is for slices that produce independent artifacts (audits, cross-subsystem investigations, competing experiments). Rewrite the checkpoint at phase boundaries. Spawn a fresh owner rather than chaining interrupts.
+Code-coupled work (one feature, one migration) goes to a single owner with the checkpoint inline. When parts can run in parallel after the blocking phase, the owner returns after that phase and the chat fans out the parts that remain. Rewrite the checkpoint at phase boundaries. Spawn a fresh owner rather than chaining interrupts.
 
 **Reply:** what you built, what you chose and why, the throughput checkpoint, open decisions. Tables for design alternatives.
