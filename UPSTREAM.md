@@ -148,8 +148,8 @@ official updates.
   `skills/poteto-mode/playbooks/autopilot-full.md`,
   `skills/poteto-mode/playbooks/opening-a-pr.md`,
   `skills/poteto-mode/playbooks/multi-phase-plan.md`,
-  `skills/poteto-mode/playbooks/pause-safely.md` and
-  `skills/no-comments/SKILL.md`.
+  `skills/poteto-mode/playbooks/pause-safely.md`,
+  `skills/no-comments/SKILL.md` and `skills/show-me-your-work/SKILL.md`.
 
 - **One effort source.** Approved on 2026-10-19 after a trace audit: the
   Subagents section started every role at `xhigh` and adjusted it per job, while
