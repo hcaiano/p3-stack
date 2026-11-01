@@ -1,5 +1,5 @@
 # pstack global model configuration
-# Official default reasoning is xhigh; resolve its option key through the live catalog.
+# Default reasoning is high; resolve its option key through the live catalog.
 # An authorized reasoning budget may override it. Otherwise retain the invoking skill's requirements.
 # Ordinary capacity fallback is automatic; model preferences and fallback order come from the selected configuration.
 # capacity resolves from the live T3 catalog and account usage for each wave.

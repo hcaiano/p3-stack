@@ -41,9 +41,9 @@ user choices are authorization to keep them; ask only for unresolved preferences
 **(a) Reasoning preference.** Keep the skill's requirements by omitting `# budget`
 unless the user chooses an override. When they ask to change reasoning, explain
 that this controls effort, not subscription spending. Show the current setting
-and the existing options. With no configuration, say that `large` matches the
-skill defaults. The official default is `xhigh`, resolved through each model's
-live reasoning options; `large` keeps those defaults. The budget sets the
+and the existing options. With no configuration, roles run at the default,
+`high`, resolved through each model's live reasoning options; `large` raises
+them to `xhigh`. The budget sets the
 effort of every role that no `# effort` header names.
 
 - `unlimited — max reasoning`
