@@ -36,15 +36,14 @@ missing billing mapping is an unresolved account identity.
 `capacity` chooses among models satisfying the invoking skill's role requirements,
 then among their accounts using headroom, pace and resets. Ordered pools keep
 the user's preference tiers; `t3-capacity --candidate` computes the choice.
-All enabled accounts are eligible, including both Codex accounts, Claude, Grok
-and Cursor. Do not impose
-an additional model ranking or reasoning-effort cap. Keep explicit model/account
+All enabled accounts are eligible: Claude, Codex, Grok and Cursor. Model
+ranking and effort ceilings come from `pstack-models.md`; add none of your own. Keep explicit model/account
 choices and the existing `inherit-parent`/`auto` semantics. Configured pools, singleton seats and named targets are preferences unless the
 user explicitly prohibits alternatives. Use current catalog IDs
 and supported option keys.
 
 Resolve each panel seat without changing the skill's count or diversity rules.
-Use the effort `pstack-models.md` gives the role, or the official default `xhigh`
+Use the effort `pstack-models.md` gives the role, or `high`
 when it names none, as poteto-mode's Subagents section says; resolve the actual option key and supported value from the catalog.
 Set speed to standard with fast mode off on every seat except Grok, as the same section says.
 If no eligible target can meet the required effort, report the limitation.

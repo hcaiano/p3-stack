@@ -32,7 +32,7 @@ report to the execution adapter's resolver. Missing usage permits an attempt on
 a confirmed mapping and remains unknown usage.
 
 An unqualified model ID allows all enabled accounts exposing that exact ID.
-For example, both Codex accounts can serve one GPT model without requiring two
+For example, several Codex accounts can serve one GPT model without requiring two
 pool entries. This is account choice, not two different models for a review.
 
 For panel roles, top-level commas separate seats; alternatives inside brackets
@@ -85,7 +85,7 @@ preferences when the user requests a configuration change.
 
 A role's effort is the one `pstack-models.md` gives it: an `# effort` header
 that names it, or else the `# budget` line. With none of these, the
-role keeps the official default, `xhigh`, as poteto-mode's Subagents section
+role keeps the default, `high`, as poteto-mode's Subagents section
 says. Verification keeps the `swarm workers` effort. Translating model slugs to
 catalog IDs must retain that effort through the model's actual reasoning option.
 A user-selected budget is an effort preference, not a spending limit. Resolve
