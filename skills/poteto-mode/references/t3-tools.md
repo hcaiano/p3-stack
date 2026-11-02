@@ -1,22 +1,9 @@
 # T3 inputs for the portable tools
 
 Resolve `<installed-poteto-mode>` from the skill's installation. The bundled
-Bun scripts retain the official store and readiness policy. Native T3 tools
+Bun scripts retain the official readiness policy. Native T3 tools
 supply the readiness and activity inputs and the wakes. Run commands through the
 host's required foreground launcher.
-
-## Frontier
-
-The frontier uses official `orch` unchanged. Run it in the stacker's clone with
-a branch of the stack checked out:
-
-```sh
-bun <installed-poteto-mode>/scripts/orch/orch.ts --store <store> --json frontier set --repo <repo> [--forge origin]
-```
-
-It walks the PR base chain with `gh`, or with `origin` when the program resolved
-the forge to Origin. `link_pull_request` still registers every PR with the
-thread, but the thread's PR list is not a frontier input.
 
 ## PR readiness
 

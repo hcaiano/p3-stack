@@ -3,8 +3,8 @@
 Upstream: official pstack, https://github.com/cursor/plugins/tree/main/pstack.
 This fork tracks no other source.
 
-Reviewed official revision: `99b609a72323b70204eab407c622f436e858e112`
-(0.15.32), reconciled on 2026-10-26 against the complete official tree. The
+Reviewed official revision: `ae5650febf4320793844c12c4adaa937f417f8da`
+(0.15.36), reconciled on 2026-11-02 against the complete official tree. The
 first T3 adaptation had no recorded import base; the 0.15.20 audit in
 `upstream/audits/2026-10-12/` restored the official content before this
 baseline. Do not claim a byte-identical import: the T3 port and the deltas below
@@ -93,13 +93,14 @@ official updates.
 - **Rebase once.** Approved on 2026-10-14. In a busy monorepo trunk moves about
   every 10 minutes and CI takes 10 to 23 minutes, so a rule that rebases during
   CI or review never ends. An Autopilot-full owner rebases onto current trunk
-  once, before it opens the PR; in Autopilot-stack the root owns every rebase.
+  once, before it opens the PR; Autopilot-stack applies the same rule, with each
+  PR rebasing onto its parent PR's branch and the stack root onto trunk.
   CI, review, babysit and fix rounds stay on that base, and there is no
   merge-prep rebase. Right before the merge, official's pre-merge test, plus its
   fix-round trunk-CI clause, still decides: rebase and wait for CI only when the
   code that would land was never tested (a conflict, a file both sides changed,
   a change to which checks run for the PR, or trunk breaking the PR's CI). Official's lockfile and
-  caller-or-dependency rules stay. Stack topology rules are unchanged. Files:
+  caller-or-dependency rules stay. Files:
   `skills/poteto-mode/playbooks/autopilot-full.md`,
   `skills/poteto-mode/playbooks/autopilot-stack.md`,
   `skills/poteto-mode/playbooks/multi-phase-plan.md`,
@@ -130,8 +131,8 @@ official updates.
   the acceptance commands, what is out of scope and any PR; a code delegate adds
   no unnamed module, migration, dependency or PR and starts no children.
   Autopilot PR owners and the Orchestrate coordinator read `judgment and prose`
-  instead of the code role, and Orchestrate's brief template gains an APPROACH
-  field. Summaries reach the user in plain language. Files:
+  instead of the code role, and Orchestrate's briefs name the approach
+  already chosen. Summaries reach the user in plain language. Files:
   `skills/poteto-mode/references/subagents.md`, `skills/poteto-mode/references/poteto-agent.md`
   and `skills/poteto-mode/playbooks/orchestrate.md`.
 
