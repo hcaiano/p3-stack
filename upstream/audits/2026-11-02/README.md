@@ -67,4 +67,5 @@ The dormant Benny pack is unchanged and `unslop` did not change. No other T3
 port was fetched, diffed or copied.
 
 `review-it` is a separate skill in `hcaiano/skills`. It still reads
-`interrogate` output as "Act On" findings. That wording needs an update there.
+`interrogate` output as "Act On" findings. That wording needs an update there:
+hcaiano/skills#204.
