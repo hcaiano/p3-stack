@@ -140,7 +140,7 @@ official updates.
   `review-it` and spawned their own reviewers, three levels deep, after the
   user had asked for no nesting. Only the chat that runs the playbook spawns.
   Every delegate is a leaf: it returns any review, panel, swarm or fan-out to
-  the chat, which staffs it and sends the result to a fresh round. Official
+  the chat, which staffs it and sends the result to the delegate's next round. Official
   lets owners fan out and Orchestrate nest sub-coordinators at depth 3. Files:
   `skills/poteto-mode/references/poteto-agent.md`,
   `skills/poteto-mode/references/subagents.md`,
@@ -203,8 +203,9 @@ official updates.
   its run ends. A fresh agent with consolidated scope takes it only when that
   agent failed, compacted or is gone. Reviews and re-checks stay fresh. Files:
   `skills/poteto-mode/references/t3-execution.md`,
-  `skills/poteto-mode/references/subagents.md` and
-  `skills/poteto-mode/playbooks/orchestrate.md`.
+  `skills/poteto-mode/references/subagents.md`,
+  `skills/poteto-mode/playbooks/orchestrate.md` and
+  `skills/poteto-mode/playbooks/autopilot-full.md`.
 - **Browser and device work stays in the owning thread.** Approved on
   2026-11-04 after a trace audit: a devbox thread briefed a Codex child on the
   Mac to capture a logged-in page. The child had no access to the user's
