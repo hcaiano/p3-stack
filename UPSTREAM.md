@@ -205,7 +205,8 @@ official updates.
   `skills/poteto-mode/playbooks/shipping.md`,
   `skills/poteto-mode/playbooks/orchestrate.md`,
   `skills/poteto-mode/playbooks/multi-phase-plan.md`,
-  `skills/poteto-mode/playbooks/autopilot-full.md`.
+  `skills/poteto-mode/playbooks/autopilot-full.md`,
+  `skills/poteto-mode/SKILL.md`.
 
 ## Checking for updates
 
