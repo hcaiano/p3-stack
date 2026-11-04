@@ -36,7 +36,7 @@ Pass each template verbatim, substituting the readable active thread ID or, only
 
 ## 3. Synthesize
 
-One child by the transport rule in `../poteto-mode/references/t3-execution.md`, with a self-contained brief and the model from the `reflect judgment, divergent, synthesizer` line, default its bundled value at `xhigh` reasoning unless the user chooses a budget. It spot-verifies citations through MCP. Preserve that access. Pass `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. It returns an Accepted / Rejected / Backlog list.
+One `delegate_task` call with `mode: "async"`, a self-contained brief, and the model from the `reflect judgment, divergent, synthesizer` line, default its bundled value at `xhigh` reasoning unless the user chooses a budget. It spot-verifies citations through MCP. Preserve that access. Pass `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. It returns an Accepted / Rejected / Backlog list.
 
 ## 4. Structural enforcement check
 

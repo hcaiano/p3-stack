@@ -281,9 +281,9 @@ p3-stack bundles [`poteto-agent`](./skills/poteto-mode/references/poteto-agent.m
 
 [`/poteto-mode`](./skills/poteto-mode/SKILL.md) and [`poteto-agent`](./skills/poteto-mode/references/poteto-agent.md) route through the same wrapper.
 
-p3-stack also bundles [Comment Sicko](./skills/poteto-mode/references/comment-sicko.md), a comment-editing delegate that leaves application code unchanged, passed as a self-contained child brief. usually invoke it through [`/no-comments`](./skills/no-comments/SKILL.md), not directly.
+p3-stack also bundles [Comment Sicko](./skills/poteto-mode/references/comment-sicko.md), a comment-editing delegate that leaves application code unchanged, passed as a brief to `delegate_task`. usually invoke it through [`/no-comments`](./skills/no-comments/SKILL.md), not directly.
 
-spawn child work by the transport rule in the [T3 execution adapter](./skills/poteto-mode/references/t3-execution.md), with a self-contained brief pointing at the installed wrapper. T3 child agents get only the brief, never the parent's context. use `mode: "async"` for background work, retain the task ID, drain with `task_status`, and `task_cancel` only a child whose status is not terminal. resolve models by named role through the shared execution adapter. `t3_thread_launch` and `create_threads` create top-level conversations and require an explicit user request; otherwise use supported child isolation. keep one writer per worktree. if the required isolation is unavailable, report the limitation.
+spawn child work with `delegate_task` and a self-contained brief pointing at the installed wrapper. T3 child agents get only the brief, never the parent's context. use `mode: "async"` for background work, retain the task ID, drain with `task_status`, and `task_cancel` only a child whose status is not terminal. resolve models by named role through the shared execution adapter. `t3_thread_launch` and `create_threads` create top-level conversations and require an explicit user request; otherwise use supported child isolation. keep one writer per worktree. if the required isolation is unavailable, report the limitation.
 
 ## principles
 
