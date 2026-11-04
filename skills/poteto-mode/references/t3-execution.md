@@ -106,8 +106,10 @@ PR readiness or worktree audit scripts. Their source policies remain intact;
 this reference defines only the T3 boundary exports and continuations.
 
 Use `delegate_task` for child work, with a complete brief and retained task ID.
-Each review/fix round uses a new delegation carrying prior findings and the current
-commit. Never continue a delegated round through `t3_thread_send`.
+Each review round uses a new delegation carrying prior findings and the current
+commit. A fix round goes to the child that wrote the code, after its run ends:
+one `t3_thread_send` with the findings and the current commit. Use a new
+delegation only when that child failed, compacted or no longer exists.
 Pass absolute paths to the installed worker briefs in this references directory.
 
 `t3_thread_launch` and `create_threads` create top-level conversations and require
