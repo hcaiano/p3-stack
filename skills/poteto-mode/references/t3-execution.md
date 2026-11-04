@@ -105,26 +105,22 @@ Read [portable tool inputs](t3-tools.md) when using the bundled orchestration,
 PR readiness or worktree audit scripts. Their source policies remain intact;
 this reference defines only the T3 boundary exports and continuations.
 
-Use a native subagent when the child uses this thread's provider, a model it
-offers, and no settings beyond the parent's: Claude `Agent` in the foreground,
-or Codex `spawn_agent` then wait. T3 shows it under this thread.
-Use `delegate_task` only for another provider's model, other options (such as a
-role's effort), its own checkout (`isolation: "worktree"`), background work,
-or an explicit request to use `delegate_task`.
+Start every child with `delegate_task`, T3's subagent: it runs inside this
+thread, and T3 shows and settles it with this thread. Do not use a provider's
+own subagent tool (Claude `Agent`, Codex `spawn_agent`).
 
 A child runs on this machine. Pass `target.environmentId` only when the user
 names that machine or the work needs something only that machine has. Never
-use it to reach another project. `delegate_task` runs in this thread's project.
-For work in another local project, a native subagent uses absolute paths; a
-`delegate_task` child uses `isolation: "shared"` and absolute paths in its brief.
-Never move work to another machine for this.
+use it to reach another project: on another machine the child loses its link
+to this thread. `delegate_task` runs in this thread's project. For work in
+another local project, use `isolation: "shared"` and absolute paths in the
+brief.
 
-Give every child a complete brief. Retain each `delegate_task` task ID.
-Each review round uses a new child carrying prior findings and the current
+Give every child a complete brief and retain its task ID.
+Each review round uses a new delegation carrying prior findings and the current
 commit. A fix round goes to the child that wrote the code, after its run ends:
-use its transport's follow-up tool, one `t3_thread_send` for a `delegate_task`
-child, with the findings and the current commit. Use a new child only when
-that child failed, compacted or no longer exists.
+one `t3_thread_send` with the findings and the current commit. Use a new
+delegation only when that child failed, compacted or no longer exists.
 Pass absolute paths to the installed worker briefs in this references directory.
 
 `t3_thread_launch` and `create_threads` create top-level conversations and require
