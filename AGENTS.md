@@ -12,7 +12,7 @@ If you are a delegated worker, your brief names exactly one file. Write only tha
 
 | pstack | p3-stack |
 |---|---|
-| `Task` tool, `subagent_type`, `run_in_background` | A T3 child: native subagent or `delegate_task`, by the transport rule in [t3-execution.md](skills/poteto-mode/references/t3-execution.md), with a self-contained brief. For `delegate_task` children: `mode: "async"` for background work; once nothing independent is left, end the turn until the completion notification wakes you, then read the result with `task_status`; `task_cancel` only for a child that is not terminal |
+| `Task` tool, `subagent_type`, `run_in_background` | `delegate_task`, T3's subagent, by the transport rule in [t3-execution.md](skills/poteto-mode/references/t3-execution.md), with a self-contained brief; `mode: "async"` for background work; once nothing independent is left, end the turn until the completion notification wakes you, then read the result with `task_status`; `task_cancel` only for a child that is not terminal |
 | Model slugs (`claude-opus-5-5-max`, `grok-4.7-xhigh-fast`, `gpt-5.6-sol-max`) | Named roles resolved from `orchestrator_capabilities` by `setup-pstack` (role names below). Never hardcode a slug. |
 | "cloud agent", `environment: "cloud"`, `cloud_base_branch` | A delegated child task. Use `t3_thread_launch` only when the user explicitly requests separate top-level conversations. |
 | "each worker gets its own worktree or branch" | Child isolation by the transport rule in `t3-execution.md`. Use `t3_thread_launch` with `workspaceStrategy` only for explicitly requested top-level conversations. One writer per worktree. |
@@ -42,8 +42,8 @@ Keep these names exactly.
 - pstack's voice: terse, declarative, lowercase-friendly, no filler.
 - Frontmatter: `name`, one-line `description`, `disable-model-invocation: true` where the source has it. Drop Cursor UI fields (`icon`, `color`, `mode`, `reminder`).
 - Use T3 tool names exactly: `delegate_task`, `task_status`, `watch_pull_request`, `link_pull_request`, `schedule_task`, `t3_thread_launch`, `t3_thread_read`, `t3_thread_search`, `preview_*`, `device_*`.
-- Skills staff subagents through T3 Code children (native subagent or `delegate_task`). Do not use headless provider CLIs.
-- Child briefs are self-contained. `delegate_task` children get only the brief, never the parent's context. Say this where pstack says "every brief stands alone".
+- Skills staff subagents through T3 Code (`delegate_task`), never through a provider's own subagent tool or a headless provider CLI.
+- Child briefs are self-contained. T3 child agents get only the brief, never the parent's context. Say this where pstack says "every brief stands alone".
 - Never bullet a Cursor tool into a skill, even as a fallback.
 
 ## Definition of done for a skill

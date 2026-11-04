@@ -30,7 +30,7 @@ Spawn all N workers in one message with `delegate_task`, `mode: "async"`, and th
 
 When a worker must start from a non-default pushed branch, carry that exact branch into supported child isolation and the self-contained brief. For an explicitly requested separate top-level conversation, pass that branch as `workspaceStrategy.baseRef` to `t3_thread_launch`. Report a factual limitation when the child runtime cannot provide the required starting branch.
 
-Every brief stands alone. `delegate_task` children get only the brief, never the parent's context. Include the goal, scope, exact slice or race arm, how to verify, and what to report. Reports use `PASS`, `ISSUES`, or `BLOCKED` with evidence. A worker that can prove a defect reports `ISSUES` and lists every issue it can prove, not only the first.
+Every brief stands alone. T3 child agents get only the brief, never the parent's context. Include the goal, scope, exact slice or race arm, how to verify, and what to report. Reports use `PASS`, `ISSUES`, or `BLOCKED` with evidence. A worker that can prove a defect reports `ISSUES` and lists every issue it can prove, not only the first.
 
 If a worker drops out, proceed with N-1 and note it.
 
