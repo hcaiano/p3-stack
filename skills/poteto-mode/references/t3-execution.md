@@ -106,8 +106,6 @@ PR readiness or worktree audit scripts. Their source policies remain intact;
 this reference defines only the T3 boundary exports and continuations.
 
 Use `delegate_task` for child work, with a complete brief and retained task ID.
-The child runs inside this thread on this machine; for code in another project,
-give it absolute paths.
 Each review round uses a new delegation carrying prior findings and the current
 commit. A fix round goes to the child that wrote the code, after its run ends:
 one `t3_thread_send` with the findings and the current commit. Use a new
