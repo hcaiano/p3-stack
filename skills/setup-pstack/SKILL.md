@@ -65,7 +65,8 @@ runs at standard speed, except Grok, per poteto-mode's Subagents section.
 
 **(c) Show the resulting selection.** Show roles grouped by identical policy,
 preference pools, explicit strict restrictions, reasoning overrides and unresolved choices. One
-`delegate_task` runs per panel seat, not per pool candidate. `arena cross-judge
+child runs per panel seat, not per pool candidate, by the transport rule in
+`../poteto-mode/references/t3-execution.md`. `arena cross-judge
 pool` retains Arena's own selection rules: Arena runs one judge, tries only values from a family other than the parent's in list order, so order the list by preference, and never judges with an `inherit-parent` or `auto` value. `swarm workers` is the default for
 each worker unless its workflow assigns another choice. Use automatic fallback when usage is unknown or a preferred target is unavailable.
 Try configured alternatives, then suitable enabled catalog models, preserving
