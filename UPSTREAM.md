@@ -195,6 +195,18 @@ official updates.
   `skills/poteto-mode/references/subagents.md`,
   `skills/poteto-mode/references/poteto-agent.md`, `skills/poteto-help/SKILL.md`,
   both copies of the guide's `02-poteto-mode.md` and `README.md`.
+- **Browser and device work stays in the owning thread.** Approved on
+  2026-11-04 after a trace audit: a devbox thread briefed a Codex child on the
+  Mac to capture a logged-in page. The child had no access to the user's
+  browser profiles, so it only reported a blocker, and the child thread showed
+  in the sidebar with no parent. The thread that owns the goal now drives
+  `preview_*` and `device_*` itself; children keep gates, perf, audit and code.
+  Files: `skills/poteto-mode/references/t3-execution.md`,
+  `skills/poteto-mode/playbooks/shipping.md`,
+  `skills/poteto-mode/playbooks/orchestrate.md`,
+  `skills/poteto-mode/playbooks/multi-phase-plan.md`,
+  `skills/poteto-mode/playbooks/autopilot-full.md`,
+  `skills/poteto-mode/SKILL.md`.
 
 ## Checking for updates
 
