@@ -68,7 +68,7 @@ Tests alone are not sufficient verification. A PR is verified only when its unit
 
 ### Boot recipe, for every live lane
 
-Each live lane runs in its own isolated child workspace at the PR head. Use supported child isolation with `delegate_task`; if the required machine or process isolation is unavailable, report the factual runtime limitation. `t3_thread_launch` creates a top-level conversation and is only for explicitly requested separate conversations. Drive through `preview_*` for browser UIs, an actual attached CDP/control adapter for Electron, a real foreground terminal/PTY driver for CLIs and TUIs, and `device_*` with the repo's simulator driver for native mobile.
+The root runs each live lane itself at the PR head, in its own tab or device session (`references/t3-execution.md`). Gates, perf and audit lanes stay `delegate_task` children with supported child isolation. Drive through `preview_*` for browser UIs, an actual attached CDP/control adapter for Electron, a real foreground terminal/PTY driver for CLIs and TUIs, and `device_*` with the repo's simulator driver for native mobile.
 
 - [ ] `git fetch origin <head-branch> && git checkout <head SHA>`.
 - [ ] <Start the backend and the surface. Wait for ready.>
@@ -97,7 +97,7 @@ Each live lane runs in its own isolated child workspace at the PR head. Use supp
 
 - [ ] <Test file and the case it gains.> Run `<command>`.
 
-**Verify, live.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked. Ten lanes on `<swarm workers model>` at the PR head, per the boot recipe.
+**Verify, live.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked. Ten lanes on `<root model>` at the PR head, run by the root itself, per the boot recipe.
 
 - [ ] Lane 1. Regression lane against trunk. Run <the same load-bearing scenario> at trunk and head. If trunk lacks the feature, record that and gate <the behavior the diff adds plus the end state the user waits for>. Save `<slug>.png`. Pass when <predicate>.
 - [ ] Lane 2. <Scenario.> Save `<slug>.png`. Pass when <predicate>.

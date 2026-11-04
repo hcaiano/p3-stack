@@ -116,6 +116,11 @@ launching a thread for a worktree. Otherwise use supported child isolation.
 If the required isolation is unavailable, report the runtime limitation rather
 than silently changing a parallel workflow. Shell `cd` does not rebind T3 threads.
 Browser, device, PR-watch and scheduling calls follow their live T3 tool contracts.
+The thread that owns the goal drives the browser (`preview_*`) and devices
+(`device_*`) itself, in tabs and sessions it opens. A child can run on another
+machine or provider without the user's browser profiles, so a brief gives a
+child no browser or device step; a child that reaches one returns it to its
+parent as a step left.
 
 A child is _stalled_ when its run still reads `running` and its thread has had no
 new activity for 60 minutes: a provider can send its final answer and leave the
