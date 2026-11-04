@@ -93,7 +93,7 @@ The contract above drives one task to one finish condition. Some nights hold mor
 
 ## Run many projects in parallel
 
-A T3 Code project gives one coordinator agent a persistent thread. The coordinator doesn't write code. It directs children by the transport rule in [the T3 execution adapter](../../skills/poteto-mode/references/t3-execution.md). The executing host must stay available for local work. That's the shape the Orchestrate playbook expects. Start your prompts to the coordinator with `/poteto-mode`, and the subagents it spawns follow the playbooks.
+A T3 Code project gives one coordinator agent a persistent thread. The coordinator doesn't write code. It directs delegated child tasks through `delegate_task`. The executing host must stay available for local work. That's the shape the Orchestrate playbook expects. Start your prompts to the coordinator with `/poteto-mode`, and the subagents it spawns follow the playbooks.
 
 A few habits help:
 

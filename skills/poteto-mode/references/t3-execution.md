@@ -105,18 +105,9 @@ Read [portable tool inputs](t3-tools.md) when using the bundled orchestration,
 PR readiness or worktree audit scripts. Their source policies remain intact;
 this reference defines only the T3 boundary exports and continuations.
 
-Start every child with `delegate_task`, T3's subagent: it runs inside this
-thread, and T3 shows and settles it with this thread. Do not use a provider's
-own subagent tool (Claude `Agent`, Codex `spawn_agent`).
-
-A child runs on this machine. Pass `target.environmentId` only when the user
-names that machine or the work needs something only that machine has. Never
-use it to reach another project: on another machine the child loses its link
-to this thread. `delegate_task` runs in this thread's project. For work in
-another local project, use `isolation: "shared"` and absolute paths in the
-brief.
-
-Give every child a complete brief and retain its task ID.
+Use `delegate_task` for child work, with a complete brief and retained task ID.
+The child runs inside this thread on this machine; for code in another project,
+give it absolute paths.
 Each review round uses a new delegation carrying prior findings and the current
 commit. A fix round goes to the child that wrote the code, after its run ends:
 one `t3_thread_send` with the findings and the current commit. Use a new

@@ -1,6 +1,6 @@
 # Running the playbook
 
-The chat that receives `/poteto-mode` runs the playbook. It owns the todo list and every child spawn by the transport rule in `t3-execution.md`. Read this file and `subagents.md` in full before any other step. `../SKILL.md` holds the rules every agent follows.
+The chat that receives `/poteto-mode` runs the playbook. It owns the todo list and every `delegate_task` spawn. Read this file and `subagents.md` in full before any other step. `../SKILL.md` holds the rules every agent follows.
 
 ## Runner triggers
 

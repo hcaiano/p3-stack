@@ -43,7 +43,7 @@ The user's global instructions enable `/poteto-mode`; `/setup-pstack` resolves m
 
 If cost is the worry, say where the tokens go and how to spend fewer. pstack spends extra tokens on subagents and review panels. Rerun `/setup-pstack` and pick a smaller budget or cheaper models. A role set to `auto` or `inherit-parent` runs on the chat's model, which saves tokens when the chat runs on Auto or a cheaper model. A shorter panel list runs fewer subagents, one for each entry. Save `/poteto-mode` for work that needs rigor.
 
-p3-stack ports pstack to T3 Code. Its skills use the Agent Skills format. Children follow the transport rule in [`t3-execution.md`](../poteto-mode/references/t3-execution.md), named roles resolve through `orchestrator_capabilities`, recurring wakes use `schedule_task`, and PR events use `watch_pull_request`.
+p3-stack ports pstack to T3 Code. Its skills use the Agent Skills format. Delegation uses `delegate_task`, named roles resolve through `orchestrator_capabilities`, recurring wakes use `schedule_task`, and PR events use `watch_pull_request`.
 
 ## Start a task with `/poteto-mode`
 
@@ -51,7 +51,7 @@ p3-stack ports pstack to T3 Code. Its skills use the Agent Skills format. Childr
 
 The user's global instructions keep `/poteto-mode` on every turn. `/poteto-mode` is also available explicitly. See [Default mode](https://github.com/hcaiano/p3-stack/blob/main/docs/default-mode.md) for T3 Code setup.
 
-Mid-chat, "new task" makes the mode match a fresh playbook. `/poteto-mode` already uses the bundled `poteto-agent` brief for the subagents its playbook steps spawn. To get the same style from a subagent of your own, choose its transport by [`t3-execution.md`](../poteto-mode/references/t3-execution.md), with a self-contained brief pointing at poteto-mode's `references/poteto-agent.md`.
+Mid-chat, "new task" makes the mode match a fresh playbook. `/poteto-mode` already uses the bundled `poteto-agent` brief for the subagents its playbook steps spawn. To get the same style from a subagent of your own, use `delegate_task` with a self-contained brief pointing at poteto-mode's `references/poteto-agent.md`.
 
 ## Pick a skill
 
@@ -138,7 +138,7 @@ Principles are one-rule skills that `/poteto-mode` reads and cites in its replie
 | A new model choice had no effect | The rule from `/setup-pstack` applies to new chats. Start one. |
 | Runs cost more than expected | See the cost paragraph under Get set up. |
 | A skill didn't load on its own | The global instructions load `/poteto-mode`, which selects the needed skills. Explicit skill names remain available, and the mode doesn't run every skill. |
-| Parallel agents overwrote each other | Use child isolation by [`t3-execution.md`](../poteto-mode/references/t3-execution.md), or explicitly request separate T3 threads with owned worktrees. Report unavailable isolation. |
+| Parallel agents overwrote each other | Use supported child isolation, or explicitly request separate T3 threads with owned worktrees. Report unavailable isolation. |
 | An overnight run moved but finished nothing | `schedule_task` needs a check that can pass or fail, not a duration. See [guide page 7](references/guide/07-overnight.md). |
 | The reply claims success from a green build | Ask for the real command, flow, stored value, or profile. That's the prove-it-works principle. |
 
