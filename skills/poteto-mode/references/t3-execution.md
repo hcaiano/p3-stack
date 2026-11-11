@@ -55,8 +55,8 @@ A protected reading is a pacing signal, not an additional approval requirement.
 
 Manage ordinary capacity fallback automatically. Never ask permission because
 usage is missing, quota is exhausted, a preferred account/model is unavailable,
-or a preferred pool cannot staff the required panel. Try its configured tiers,
-then eligible live alternatives as later tiers under the model-selection policy.
+or a preferred pool cannot staff the required panel. Try its configured tiers
+under the model-selection policy; a model that is on none of them takes no seat.
 Re-read the selected configuration before every wave. Build every entry's
 complete declared tier list using the model-selection reference before capacity
 selection. Model preferences come from that file. Never derive a priority list

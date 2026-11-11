@@ -46,8 +46,8 @@ required panel. Arena's cross-judge pool retains Arena's own selection semantics
 Role entries and bracketed pools express preferences, not permission gates.
 When usage is missing or a preferred target cannot take work, manage the fallback
 without asking the operator. First try the configured alternatives and accounts.
-If they cannot staff the required role or panel, use suitable alternatives from
-the enabled live catalog as later preference tiers. A model-specific service
+If they cannot staff the required role or panel, report the limitation and
+continue independent work; a model on none of the role's tiers takes no seat. A model-specific service
 failure does not prove that its billing account or every model is exhausted.
 
 Read the selected configuration before each wave. Follow every configured tier
