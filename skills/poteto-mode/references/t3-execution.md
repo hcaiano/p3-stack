@@ -44,7 +44,7 @@ and supported option keys.
 
 Resolve each panel seat without changing the skill's count or diversity rules.
 Use the effort `pstack-models.md` gives the role, or `high`
-when it names none, as poteto-mode's Subagents section says; resolve the actual option key and supported value from the catalog, and pass it in `target.options` on every `delegate_task`: a call without options inherits the parent's effort.
+when it names none, as poteto-mode's Subagents section says; resolve the actual option key and supported value from the catalog.
 Set speed to standard with fast mode off on every seat except Grok, as the same section says.
 If no eligible target can meet the required effort, report the limitation.
 Two providers or accounts serving the same model do not add model diversity.
