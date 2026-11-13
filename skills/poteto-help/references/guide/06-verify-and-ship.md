@@ -131,7 +131,7 @@ A counterexample in model terms convinces you. The PM or designer who owns the b
 /poteto-mode open the pr. small ordered commits, evidence in the description.
 ```
 
-The [Opening a PR playbook](../../../poteto-mode/playbooks/opening-a-pr.md) works from a worktree, rebases the work into small ordered commits, cleans the diff, unslops the prose, runs `review-it`, writes the PR with `write-pr`, and returns the PR link. Five narrow PRs beat one fat one, and stacked follow-ups beat a growing branch.
+The [Opening a PR playbook](../../../poteto-mode/playbooks/opening-a-pr.md) works from a worktree, rebases the work into small ordered commits, cleans the diff, unslops the prose, runs `review-it`, writes the PR with `write-pr`, and returns the PR link. A goal ships in one PR; a stack holds only a part that must merge before the rest can work.
 
 ## Drive the PR to merge-ready with Babysit
 
